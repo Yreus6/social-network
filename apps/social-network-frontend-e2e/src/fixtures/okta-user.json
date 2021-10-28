@@ -1,7 +1,0 @@
-{
-  "sub": "test@example.com",
-  "name": "test user",
-  "email": "test@example.com",
-  "email_verified": true,
-  "groups": ["ROLE_USER"]
-}

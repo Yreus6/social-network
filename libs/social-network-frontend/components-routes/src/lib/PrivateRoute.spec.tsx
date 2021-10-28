@@ -1,10 +1,8 @@
 import '@testing-library/jest-dom';
-import { mockUser, render, screen, history, oktaAuth } from '@sn-htc/social-network-frontend/utils-testing';
+import { oktaAuth, screen, wrapper } from '@sn-htc/social-network-frontend/utils-testing';
 import { hasAnyAuthority, PrivateRoute } from './PrivateRoute';
 import { AUTHORITIES } from '@sn-htc/social-network-frontend/config-constants';
-import { Security } from '@okta/okta-react';
 import { Route } from 'react-router-dom';
-import { toRelativeUrl } from '@okta/okta-auth-js';
 import { waitFor } from '@testing-library/react';
 
 const TestComponent = () => {
@@ -14,37 +12,13 @@ const TestComponent = () => {
 };
 
 describe('Private Route', () => {
-  const restoreOriginalUri = (_, originalUrl) => {
-    history.replace(toRelativeUrl(originalUrl || '/', window.location.origin));
-  };
-
   describe('Authenticated', () => {
-    const wrapper = (Elem: JSX.Element) => {
-      oktaAuth.authStateManager.getAuthState = jest.fn(() => ({
-        isAuthenticated: true
-      }));
-      oktaAuth.getUser = jest.fn(() => new Promise(resolve => {
-        setTimeout(() => {
-          resolve(mockUser);
-        }, 100);
-      }));
-
-      return render(
-        <Security
-          oktaAuth={oktaAuth}
-          restoreOriginalUri={restoreOriginalUri}
-          onAuthRequired={() => history.push('/signin')}
-        >
-          {Elem}
-        </Security>
-      );
-    };
-
     it('should render component for authenticated user', async () => {
       wrapper(
         <PrivateRoute exact path='/'>
           <TestComponent />
-        </PrivateRoute>
+        </PrivateRoute>,
+        { isAuthenticated: true }
       );
 
       expect(await screen.findByRole('heading')).toHaveTextContent(/Test/);
@@ -54,7 +28,8 @@ describe('Private Route', () => {
       wrapper(
         <PrivateRoute exact path='/' hasAnyAuthorities={[AUTHORITIES.ADMIN]}>
           <TestComponent />
-        </PrivateRoute>
+        </PrivateRoute>,
+        { isAuthenticated: true }
       );
 
       expect(await screen.findByText(/You are not allowed to view this page/)).toBeInTheDocument();
@@ -62,22 +37,6 @@ describe('Private Route', () => {
   });
 
   describe('Unauthenticated', () => {
-    const wrapper = (Elem: JSX.Element) => {
-      oktaAuth.authStateManager.getAuthState = jest.fn(() => ({
-        isAuthenticated: false
-      }));
-
-      return render(
-        <Security
-          oktaAuth={oktaAuth}
-          restoreOriginalUri={restoreOriginalUri}
-          onAuthRequired={() => history.push('/signin')}
-        >
-          {Elem}
-        </Security>
-      );
-    };
-
     it('should redirect to Login page for unauthenticated user', async () => {
       let testLocation;
 
@@ -93,7 +52,8 @@ describe('Private Route', () => {
               return null;
             }}
           />
-        </>
+        </>,
+        { isAuthenticated: false }
       );
 
       await waitFor(() => expect(oktaAuth.getUser).toBeCalled());

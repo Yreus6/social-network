@@ -11,12 +11,20 @@
 // eslint-disable-next-line @typescript-eslint/no-namespace
 import { OktaAuth } from '@okta/okta-auth-js';
 
+Cypress.Commands.add('getBySel', (selector, ...args) => {
+  return cy.get(`[data-test=${selector}]`, ...args);
+});
+
+Cypress.Commands.add('getBySelLike', (selector, ...args) => {
+  return cy.get(`[data-test*=${selector}]`, ...args);
+});
+
 // Okta
 Cypress.Commands.add('loginByOktaApi', (username, password) => {
   const log = Cypress.log({
-    displayName: "OKTA LOGIN",
+    displayName: 'OKTA LOGIN',
     message: [`🔐 Authenticating | ${username}`],
-    autoEnd: false,
+    autoEnd: false
   });
 
   log.snapshot('before');
