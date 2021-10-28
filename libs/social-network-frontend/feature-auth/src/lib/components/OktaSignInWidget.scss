@@ -1,0 +1,40 @@
+body {
+  margin: 0 !important;
+}
+
+.auth-bg {
+  height: 100vh !important;
+  background: linear-gradient(251.67deg, #FBFCFF 4.15%, #F9FBFF 94.75%);
+}
+
+.auth-wrapper {
+  padding-top: 100px;
+}
+
+.auth-container {
+  margin: 0 auto 0 !important;
+  box-shadow: 0 0 15px rgba(90, 113, 196, 0.05) !important;
+}
+
+input {
+  border-radius: 4px !important;
+}
+
+.button-primary {
+  border-color: #007BFF !important;
+  background: #007BFF !important;
+  box-shadow: none !important;
+}
+
+.button-primary.btn-disable {
+  background: rgba(0, 123, 255, 0.5) !important;
+  border-color: rgba(0, 123, 255, 0) !important;
+}
+
+.button-primary:hover {
+  background: #0069D9 !important;
+}
+
+#okta-sign-in .focused-input, #okta-sign-in .link.help:focus {
+  box-shadow: none !important;
+}

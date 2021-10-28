@@ -2,6 +2,7 @@ import React, { MutableRefObject, useEffect, useRef } from 'react';
 import OktaSignIn from '@okta/okta-signin-widget';
 import '@okta/okta-signin-widget/dist/css/okta-sign-in.min.css';
 import { useHistory } from 'react-router-dom';
+import './OktaSignInWidget.scss';
 
 const OktaSignInWidget = ({ config, onSuccess, onError }) => {
   const history = useHistory();
@@ -42,7 +43,9 @@ const OktaSignInWidget = ({ config, onSuccess, onError }) => {
   }, [config, onSuccess, onError, history]);
 
   return (
-    <div ref={widgetRef} />
+    <div className='auth-bg'>
+      <div className='auth-wrapper' ref={widgetRef} />
+    </div>
   );
 };
 
