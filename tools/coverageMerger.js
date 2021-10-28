@@ -25,7 +25,7 @@ const getJsonFiles = function (src) {
   files.forEach((file, index) => {
     fs.copyFileSync(file, `reports/coverage-final-${index}.json`);
   });
-  exec('nyc merge reports', (err) => {
+  exec('yarn nyc merge reports', (err) => {
     if (err) {
       console.error(err);
       fs.rmdirSync('.nyc_output', { recursive: true, force: true });
