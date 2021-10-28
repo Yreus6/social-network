@@ -8,7 +8,7 @@ module.exports = {
   coverageDirectory: '../../../coverage/libs/shared/data-access',
   reporters: ['default', ['jest-sonar', {
     outputDirectory: 'build/test-results/jest',
-    outputName: 'social-network-frontend-data-access.xml',
+    outputName: 'shared-data-access.xml',
     reportedFilePath: 'absolute'
   }]]
 };

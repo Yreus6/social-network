@@ -15,7 +15,10 @@
         },
         "test": {
           "executor": "@nrwl/jest:jest",
-          "outputs": ["coverage/libs/shared/data-access"],
+          "outputs": [
+            "coverage/libs/shared/data-access",
+            "build/test-results/jest"
+          ],
           "options": {
             "jestConfig": "libs/shared/data-access/jest.config.js",
             "passWithNoTests": true
@@ -143,7 +146,8 @@
         "test": {
           "executor": "@nrwl/jest:jest",
           "outputs": [
-            "coverage/apps/social-network-frontend"
+            "coverage/apps/social-network-frontend",
+            "build/test-results/jest"
           ],
           "options": {
             "jestConfig": "apps/social-network-frontend/jest.config.js",
@@ -170,7 +174,8 @@
         "test": {
           "executor": "@nrwl/jest:jest",
           "outputs": [
-            "coverage/libs/social-network-frontend/components-routes"
+            "coverage/libs/social-network-frontend/components-routes",
+            "build/test-results/jest"
           ],
           "options": {
             "jestConfig": "libs/social-network-frontend/components-routes/jest.config.js",
@@ -271,7 +276,10 @@
         },
         "test": {
           "executor": "@nrwl/jest:jest",
-          "outputs": ["coverage/libs/social-network-frontend/data-access-home"],
+          "outputs": [
+            "coverage/libs/social-network-frontend/data-access-home",
+            "build/test-results/jest"
+          ],
           "options": {
             "jestConfig": "libs/social-network-frontend/data-access-home/jest.config.js",
             "passWithNoTests": true
@@ -336,7 +344,10 @@
         },
         "test": {
           "executor": "@nrwl/jest:jest",
-          "outputs": ["coverage/libs/social-network-frontend/feature-auth"],
+          "outputs": [
+            "coverage/libs/social-network-frontend/feature-auth",
+            "build/test-results/jest"
+          ],
           "options": {
             "jestConfig": "libs/social-network-frontend/feature-auth/jest.config.js",
             "passWithNoTests": true
@@ -361,7 +372,10 @@
         },
         "test": {
           "executor": "@nrwl/jest:jest",
-          "outputs": ["coverage/libs/social-network-frontend/feature-home"],
+          "outputs": [
+            "coverage/libs/social-network-frontend/feature-home",
+            "build/test-results/jest"
+          ],
           "options": {
             "jestConfig": "libs/social-network-frontend/feature-home/jest.config.js",
             "passWithNoTests": true
