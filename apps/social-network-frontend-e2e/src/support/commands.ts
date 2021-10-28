@@ -53,6 +53,10 @@ Cypress.Commands.add('loginByOktaApi', (username, password) => {
 
         log.snapshot('after');
         log.end();
+      })
+      .catch((err) => {
+        log.error(err);
+        log.end();
       });
   });
 });
