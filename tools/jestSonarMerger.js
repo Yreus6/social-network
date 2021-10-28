@@ -66,6 +66,7 @@ const getXmlFiles = function (src) {
   destStream.write(destString, 'utf8', (err) => {
     if (err) {
       console.error(err);
+      return;
     }
 
     destStream.end();

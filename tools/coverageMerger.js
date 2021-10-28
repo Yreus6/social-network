@@ -13,10 +13,10 @@ const getJsonFiles = function (src) {
 
 (async function(){
   if (fs.existsSync('.nyc_output')) {
-    fs.rmdirSync('.nyc_output', { recursive: true, force: true });
+    fs.rmSync('.nyc_output', { recursive: true, force: true });
   }
   if (fs.existsSync('reports')) {
-    fs.rmdirSync('reports', { recursive: true, force: true });
+    fs.rmSync('reports', { recursive: true, force: true });
   }
   fs.mkdirSync('.nyc_output');
   fs.mkdirSync('reports');
@@ -28,13 +28,13 @@ const getJsonFiles = function (src) {
   exec('yarn nyc merge reports', (err) => {
     if (err) {
       console.error(err);
-      fs.rmdirSync('.nyc_output', { recursive: true, force: true });
-      fs.rmdirSync('reports', { recursive: true, force: true });
+      fs.rmSync('.nyc_output', { recursive: true, force: true });
+      fs.rmSync('reports', { recursive: true, force: true });
       return;
     }
 
     fs.renameSync('./coverage.json', './.nyc_output/out.json');
-    fs.rmdirSync('reports', { recursive: true, force: true });
+    fs.rmSync('reports', { recursive: true, force: true });
 
     console.log('Files merged successfully!');
   });
