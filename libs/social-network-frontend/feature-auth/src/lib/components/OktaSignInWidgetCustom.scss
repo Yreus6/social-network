@@ -1,11 +1,16 @@
 .auth-login {
   height: 100vh !important;
-  overflow: scroll;
-  background: linear-gradient(251.67deg, #FBFCFF 4.15%, #F9FBFF 94.75%);
 
-  @media (max-width: 420px) {
+  background: linear-gradient(251.67deg, #fbfcff 4.15%, #f9fbff 94.75%);
+
+  .auth-wrapper {
+    padding-left: 3rem;
+    padding-right: 3rem;
+  }
+
+  @media (max-width: 425px) {
     .auth-wrapper {
-      padding: 50px 0.5rem 0;
+      padding: 2rem 1rem 0;
 
       .auth-container {
         height: 100vh;

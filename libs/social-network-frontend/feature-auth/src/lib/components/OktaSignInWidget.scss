@@ -33,7 +33,7 @@ $error-text-color: #e34843;
 $icon-button-bg-color: #fff;
 $button-bg-color: #fbfbfb;
 $dark-button-bg-color: #929292;
-$primary-button-bg-color: #007BFF;
+$primary-button-bg-color: #007bff;
 $success-button-bg-color: #537fff;
 $negative-button-bg-color: #c35151;
 $disabled-button-text-color: #aaa;
@@ -107,7 +107,7 @@ $modal-bg-color: #f9f9f9;
 
 @mixin button-shadow($drop-shadow-opacity) {
   box-shadow: rgba(#000, $drop-shadow-opacity) 0 1px 0,
-  rgba(255, 255, 255, 0.1) 0 1px 0 0 inset;
+    rgba(255, 255, 255, 0.1) 0 1px 0 0 inset;
 }
 
 @mixin button-template(
@@ -120,14 +120,14 @@ $modal-bg-color: #f9f9f9;
   color: $text-color;
   background-color: $bg-color;
   background: -o-linear-gradient(
-      top,
-      $bg-color 0%,
-      darken($bg-color, $gradient-factor) 100%
+    top,
+    $bg-color 0%,
+    darken($bg-color, $gradient-factor) 100%
   ); /* Opera 11.10+ */
   background: -ms-linear-gradient(
-      top,
-      $bg-color 0%,
-      darken($bg-color, $gradient-factor) 100%
+    top,
+    $bg-color 0%,
+    darken($bg-color, $gradient-factor) 100%
   ); /* IE10+ */
   background: linear-gradient($bg-color, darken($bg-color, $gradient-factor));
   border-color: darken($bg-color, $border-factor);
@@ -141,18 +141,18 @@ $modal-bg-color: #f9f9f9;
     $hover-bg-color: lighten($bg-color, 3%);
     background-color: $hover-bg-color;
     background: -o-linear-gradient(
-        top,
-        $hover-bg-color 0%,
-        darken($hover-bg-color, $gradient-factor) 100%
+      top,
+      $hover-bg-color 0%,
+      darken($hover-bg-color, $gradient-factor) 100%
     ); /* Opera 11.10+ */
     background: -ms-linear-gradient(
-        top,
-        $hover-bg-color 0%,
-        darken($hover-bg-color, $gradient-factor) 100%
+      top,
+      $hover-bg-color 0%,
+      darken($hover-bg-color, $gradient-factor) 100%
     ); /* IE10+ */
     background-image: linear-gradient(
-        $hover-bg-color,
-        darken($hover-bg-color, $gradient-factor)
+      $hover-bg-color,
+      darken($hover-bg-color, $gradient-factor)
     );
     border-color: darken($bg-color, $border-factor * 1.3);
     border-bottom-color: darken($bg-color, $border-bottom-factor * 1.2);
@@ -610,11 +610,11 @@ $modal-bg-color: #f9f9f9;
   .icon-button {
     /* -- Buttons' Colors -- */
     @include button-template(
-        $icon-button-bg-color,
-        0%,
-        $dark-text-color,
-        23%,
-        26%
+      $icon-button-bg-color,
+      0%,
+      $dark-text-color,
+      23%,
+      26%
     );
   }
 
@@ -989,26 +989,27 @@ input {
 }
 
 .button-primary {
-  border-color: #007BFF !important;
-  background: #007BFF !important;
+  border-color: #007bff !important;
+  background: #007bff !important;
   box-shadow: none !important;
 }
 
-.button-primary.btn-disable {
+.button-primary.btn-disabled {
   background: rgba(0, 123, 255, 0.5) !important;
   border-color: rgba(0, 123, 255, 0) !important;
 }
 
 .button-primary:hover {
-  background: #0069D9 !important;
+  background: #0069d9 !important;
 }
 
-#okta-sign-in .focused-input, #okta-sign-in .link.help:focus {
+#okta-sign-in .focused-input,
+#okta-sign-in .link.help:focus {
   box-shadow: none !important;
 }
 
 .auth-wrapper {
-  padding-top: 100px;
+  padding-top: 5vh;
 }
 
 .auth-container {
@@ -1017,7 +1018,7 @@ input {
 }
 
 .button-primary {
-  border-color: #007BFF !important;
+  border-color: #007bff !important;
   box-shadow: none !important;
 }
 
@@ -1027,5 +1028,5 @@ input {
 }
 
 .button-primary:hover {
-  background: #0069D9 !important;
+  background: #0069d9 !important;
 }
