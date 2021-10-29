@@ -2,13 +2,6 @@ import { getForbidden, getGreeting } from '../support/Auth.po';
 
 describe('Authentication and Authorization', () => {
   describe('Unauthenticated user', () => {
-    it('should render landing page for unauthenticated user', () => {
-      cy.visit('/');
-      cy.getBySel('socivio-landing').should('be.visible')
-        .and('contain.html', '<h3>Socivio</h3>');
-      cy.percySnapshot('Landing');
-    });
-
     it('should redirect unauthenticated user to signin page', () => {
       cy.visit('/protected');
       cy.location('pathname').should('equal', '/signin');
@@ -27,6 +20,15 @@ describe('Authentication and Authorization', () => {
       cy.get('h1').should('be.visible')
         .and('contain.text', 'Welcome');
       cy.percySnapshot('Redirect to Home');
+    });
+
+    it('should redirect user to landing page after logout', () => {
+      cy.visit('/');
+      cy.getBySel('logout-btn').click();
+      cy.wait(2000);
+      cy.getBySel('socivio-landing').should('be.visible')
+        .and('contain.html', '<h3>Socivio</h3>');
+      cy.percySnapshot('Redirect to Landing');
     });
 
     it('should display error message for user has not enough authorities', () => {
