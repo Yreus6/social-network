@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useOktaAuth } from '@okta/okta-react';
 import { UserInfo } from '@sn-htc/social-network-frontend/components-routes';
-import { LandingPage } from './LandingPage';
+import Landing from './components/Landing';
 
 export const Home = () => {
   const { authState, oktaAuth } = useOktaAuth();
@@ -26,9 +26,9 @@ export const Home = () => {
 
   return (
     <div>
-      {!authState.isAuthenticated && <LandingPage />}
+      {!authState.isAuthenticated && <Landing />}
       {authState.isAuthenticated && !userInfo
-      && <div>Loading user information...</div>
+        && <div>Loading user information...</div>
       }
       {authState.isAuthenticated && userInfo && (
         <div>

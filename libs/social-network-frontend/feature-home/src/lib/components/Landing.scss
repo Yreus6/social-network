@@ -1,0 +1,40 @@
+.auth-landing {
+  background: url("https://res.cloudinary.com/htcompany-cloud/image/upload/w_1920/v1635427330/social-network/background/htc-landing_agtlks.png") no-repeat center center;
+  background-size: cover;
+  display: flex;
+  height: 100vh;
+  overflow: scroll;
+
+  .logo {
+    flex-basis: 100%;
+    padding: 30vh 0 0 15vw;
+
+    h3 {
+      font-weight: 450;
+      font-size: clamp(1.5rem, 2.5vw, 6rem);
+    }
+
+    p {
+      font-size: 18px;
+    }
+  }
+
+  .auth-wrapper {
+    padding: 15vh 15vw 0 0;
+  }
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+    .logo {
+      display: none;
+    }
+    .auth-wrapper {
+      padding: 10vh 0 0;
+    }
+  }
+  @media (max-width: 425px) {
+    .auth-wrapper {
+      padding: 50px 0.5rem 0;
+    }
+  }
+}

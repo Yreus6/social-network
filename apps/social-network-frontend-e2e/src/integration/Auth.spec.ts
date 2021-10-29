@@ -2,6 +2,13 @@ import { getForbidden, getGreeting } from '../support/Auth.po';
 
 describe('Authentication and Authorization', () => {
   describe('Unauthenticated user', () => {
+    it('should render landing page for unauthenticated user', () => {
+      cy.visit('/');
+      cy.getBySel('socivio-landing').should('be.visible')
+        .and('contain.html', '<h3>Socivio</h3>');
+      cy.percySnapshot('Landing');
+    });
+
     it('should redirect unauthenticated user to signin page', () => {
       cy.visit('/protected');
       cy.location('pathname').should('equal', '/signin');

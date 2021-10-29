@@ -1,10 +1,12 @@
 import React, { MutableRefObject, useEffect, useRef } from 'react';
 import OktaSignIn from '@okta/okta-signin-widget';
 import '@okta/okta-signin-widget/dist/css/okta-sign-in.min.css';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
 import './OktaSignInWidget.scss';
+import './OktaSignInWidgetCustom.scss';
 
-const OktaSignInWidget = ({ config, onSuccess, onError }) => {
+export const OktaSignInWidget = ({ config, onSuccess, onError }) => {
+  const location = useLocation();
   const history = useHistory();
   const widgetRef = useRef() as MutableRefObject<HTMLDivElement>;
 
@@ -24,15 +26,28 @@ const OktaSignInWidget = ({ config, onSuccess, onError }) => {
 
     widget.on('afterRender', (context) => {
       if (context.controller === 'primary-auth') {
-        return;
+        if (location.pathname === '/') {
+          const signupLink = widgetRef.current.querySelector('.registration-link');
+          signupLink?.addEventListener('click', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            history.push('/signin/register');
+          });
+          const forgotPassLink = widgetRef.current.querySelector('.link.js-forgot-password');
+          forgotPassLink?.addEventListener('click', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            history.push('/signin/forgot-password');
+          });
+        }
+      } else {
+        const backLink = widgetRef.current.querySelector('.auth-footer .link');
+        backLink?.addEventListener('click', (e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          history.push('/signin');
+        });
       }
-
-      const backLink = widgetRef.current.querySelector('.auth-footer .link');
-      backLink?.addEventListener('click', (e) => {
-        e.preventDefault();
-        e.stopPropagation();
-        history.push('/signin');
-      });
     });
 
     widget.on('afterError', (context, error) => {
@@ -43,9 +58,7 @@ const OktaSignInWidget = ({ config, onSuccess, onError }) => {
   }, [config, onSuccess, onError, history]);
 
   return (
-    <div className='auth-bg'>
-      <div className='auth-wrapper' ref={widgetRef} />
-    </div>
+    <div className='auth-wrapper' ref={widgetRef} />
   );
 };
 

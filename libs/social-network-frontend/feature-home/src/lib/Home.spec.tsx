@@ -1,5 +1,5 @@
 import '@testing-library/jest-dom';
-import { wrapper, screen } from '@sn-htc/social-network-frontend/utils-testing';
+import { screen, wrapper } from '@sn-htc/social-network-frontend/utils-testing';
 import { Route } from 'react-router-dom';
 import { Home } from './Home';
 
@@ -10,7 +10,7 @@ describe('Home Page', () => {
       { isAuthenticated: false }
     );
 
-    expect(await screen.findByRole('heading')).toHaveTextContent(/Landing Page/);
+    expect(await screen.findByRole('heading')).toHaveTextContent(/Socivio/);
   });
 
   it('should display welcome message for authenticated user', async () => {
