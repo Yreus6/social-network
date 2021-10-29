@@ -25,7 +25,6 @@ describe('Authentication and Authorization', () => {
     it('should redirect user to landing page after logout', () => {
       cy.visit('/');
       cy.getBySel('logout-btn').click();
-      cy.wait(2000);
       cy.getBySel('socivio-landing').should('be.visible')
         .and('contain.html', '<h3>Socivio</h3>');
       cy.percySnapshot('Redirect to Landing');
