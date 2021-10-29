@@ -1,9 +1,8 @@
 .auth-landing {
   display: flex;
-  height: 100vh;
+  min-height: 100vh;
 
-  background: url('https://res.cloudinary.com/htcompany-cloud/image/upload/w_1920/v1635427330/social-network/background/htc-landing_agtlks.png')
-  no-repeat center center;
+  background: url('https://res.cloudinary.com/htcompany-cloud/image/upload/w_1920/v1635427330/social-network/background/htc-landing_agtlks.png') no-repeat center center;
   background-size: cover;
 
   .logo {
