@@ -8,6 +8,10 @@
 
 This project was generated using [Nx](https://nx.dev).
 
+## Serve
+
+Run `nx serve my-app` to run the project.
+
 ## Build
 
 Run `nx build my-app` to build the project. The build artifacts will be stored in the `dist/` directory. Use
