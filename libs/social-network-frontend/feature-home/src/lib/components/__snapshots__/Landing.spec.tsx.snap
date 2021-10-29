@@ -16,19 +16,15 @@ exports[`Landing Page should render correctly 1`] = `
     </p>
   </div>
   <div
-    class="auth-login"
+    class="auth-wrapper"
   >
-    <div
-      class="auth-wrapper"
-    >
-      <main
-        class="auth-container main-container no-beacon"
-        data-se="auth-container"
-        id="okta-sign-in"
-        style="display: none;"
-        tabindex="-1"
-      />
-    </div>
+    <main
+      class="auth-container main-container no-beacon"
+      data-se="auth-container"
+      id="okta-sign-in"
+      style="display: none;"
+      tabindex="-1"
+    />
   </div>
 </div>
 `;

@@ -27,13 +27,13 @@ export const OktaSignInWidget = ({ config, onSuccess, onError }) => {
     widget.on('afterRender', (context) => {
       if (context.controller === 'primary-auth') {
         if (location.pathname === '/') {
-          const signupLink = widgetRef.current.querySelector('.registration-link');
+          const signupLink = widgetRef.current?.querySelector('.registration-link');
           signupLink?.addEventListener('click', (e) => {
             e.preventDefault();
             e.stopPropagation();
             history.push('/signin/register');
           });
-          const forgotPassLink = widgetRef.current.querySelector('.link.js-forgot-password');
+          const forgotPassLink = widgetRef.current?.querySelector('.link.js-forgot-password');
           forgotPassLink?.addEventListener('click', (e) => {
             e.preventDefault();
             e.stopPropagation();
@@ -41,7 +41,7 @@ export const OktaSignInWidget = ({ config, onSuccess, onError }) => {
           });
         }
       } else {
-        const backLink = widgetRef.current.querySelector('.auth-footer .link');
+        const backLink = widgetRef.current?.querySelector('.auth-footer .link');
         backLink?.addEventListener('click', (e) => {
           e.preventDefault();
           e.stopPropagation();
@@ -55,7 +55,7 @@ export const OktaSignInWidget = ({ config, onSuccess, onError }) => {
     });
 
     return () => widget.remove();
-  }, [config, onSuccess, onError, history]);
+  }, [config, onSuccess, onError, history, location]);
 
   return (
     <div className='auth-wrapper' ref={widgetRef} />
