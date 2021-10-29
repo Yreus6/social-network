@@ -1,4 +1,4 @@
 import { OktaAuth } from '@okta/okta-auth-js';
-import { oktaAuthConfig } from '@sn-htc/social-network-frontend/config-constants';
+import { oktaAuthConfig } from './constants';
 
 export const oktaAuth = new OktaAuth(oktaAuthConfig);

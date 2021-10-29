@@ -1,7 +1,7 @@
 import { createApi } from '@reduxjs/toolkit/query/react';
 import { environment } from '@sn-htc/social-network-frontend/config-env';
 import { axiosBaseQuery } from '@sn-htc/shared/data-access';
-import { oktaAuth } from '@sn-htc/social-network-frontend/feature-auth';
+import { oktaAuth } from '@sn-htc/social-network-frontend/config-constants';
 
 export interface GenericResponse {
   content: string;

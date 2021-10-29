@@ -1,6 +1,6 @@
 import '@testing-library/jest-dom';
 import { wrapper, screen, oktaAuth } from '@sn-htc/social-network-frontend/utils-testing';
-import { Login } from '@sn-htc/social-network-frontend/feature-auth';
+import { Login } from './Login';
 import { oktaSignInConfig } from '@sn-htc/social-network-frontend/config-constants';
 import { Route } from 'react-router-dom';
 import { waitFor } from '@testing-library/react';
