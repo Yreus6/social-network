@@ -20,7 +20,7 @@ export const Login = ({ config }) => {
 
   return authState.isAuthenticated ?
     <Redirect to={{ pathname: '/' }} /> :
-    <div className='auth-login'>
+    <div className='auth-login' data-test='okta-auth'>
       <OktaSignInWidget
         config={config}
         onSuccess={onSuccess}
