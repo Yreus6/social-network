@@ -1,2 +1,1 @@
-export * from './lib/axiosBaseQuery';
-export * from './lib/errorResponse';
+export * from './lib/graphqlBaseApi';

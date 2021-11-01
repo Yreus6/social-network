@@ -1,8 +1,9 @@
 import '@testing-library/jest-dom';
 import { server, render, screen } from '@sn-htc/social-network-frontend/utils-testing';
 import Protected from './Protected';
-import { rest } from 'msw';
+import { graphql } from 'msw';
 import { environment } from '@sn-htc/social-network-frontend/config-env';
+import { GreetingQuery, GreetingQueryVariables } from '@sn-htc/social-network-frontend/data-access-home';
 
 describe('Protected Route', () => {
   it('should display title "Hello test@example.com!"', async () => {
@@ -11,16 +12,21 @@ describe('Protected Route', () => {
     expect(await screen.findByText(/Hello test@example.com/)).toBeInTheDocument();
   });
 
-  it('should show error when not authorized', async () => {
+  it('should show error when not have authority', async () => {
     server.use(
-      rest.get(`${environment.apiBaseUrl}/greeting`, (req, res, ctx) => {
-        return res(
-          ctx.status(403),
-          ctx.json({
-            detail: 'Forbidden'
-          })
-        );
-      })
+      graphql.link(`${environment.apiBaseUrl}/graphql`)
+        .query<GreetingQuery, GreetingQueryVariables>('greeting', (req, res, ctx) => {
+          return res(
+            ctx.errors([
+              {
+                message: 'Forbidden',
+                extensions: {
+                  classification: 'FORBIDDEN'
+                }
+              }
+            ])
+          );
+        })
     );
 
     render(<Protected />);

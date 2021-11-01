@@ -1,19 +1,22 @@
 package com.htcompany.snapplication;
 
+import com.htcompany.sncommon.security.AuthoritiesConstants;
+import org.springframework.graphql.data.method.annotation.QueryMapping;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.oauth2.jwt.Jwt;
+import org.springframework.stereotype.Controller;
 import reactor.core.publisher.Mono;
 
-@RestController
+@Controller
 public class HelloController {
 
-    @GetMapping("/greeting")
-    @PreAuthorize("hasAuthority('ROLE_USER')")
-    public Mono<GenericResponse> greeting(JwtAuthenticationToken token) {
-        return Mono.just(new GenericResponse(
-            String.format("Hello %s!", token.getName())
-        ));
+    @QueryMapping
+    @PreAuthorize("hasAuthority(\"" + AuthoritiesConstants.USER + "\")")
+    public Mono<String> greeting() {
+        return Mono.deferContextual(context -> {
+            Jwt jwt = context.get("jwt");
+
+            return Mono.just(String.format("Hello %s!", jwt.getSubject()));
+        });
     }
 }

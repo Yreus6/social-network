@@ -17,6 +17,12 @@ spring:
     name: Social Network Application
   main:
     allow-bean-definition-overriding: true
+  graphql:
+    websocket:
+      path: /graphql
+    cors:
+      allowed-origins: http://localhost:4200
+      allowed-methods: '*'
 
 server:
   port: 8080
@@ -28,9 +34,3 @@ okta:
 logging:
   level:
     com.htcompany: DEBUG
-
-application:
-  cors:
-    allowed-origins:
-      - http://localhost:4200
-    allowed-methods: '*'

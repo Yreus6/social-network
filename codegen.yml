@@ -1,0 +1,9 @@
+schema: '**/src/main/resources/graphql/*.graphqls'
+generates:
+  ./libs/social-network-frontend/data-access-home/src/lib/greeting.ts:
+    documents: 'apps/sn-application/src/main/resources/graphql/greeting.graphql'
+    plugins:
+      - typescript
+      - typescript-operations
+      - typescript-rtk-query:
+          importBaseApiFrom: '@sn-htc/shared/data-access'

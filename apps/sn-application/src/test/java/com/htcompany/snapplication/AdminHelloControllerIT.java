@@ -2,7 +2,7 @@ package com.htcompany.snapplication;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import com.htcompany.sncommon.config.MockJwtUserConfiguration;
+import com.htcompany.sncommon.config.MockJwtAdminConfiguration;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Import;
@@ -12,30 +12,21 @@ import org.springframework.graphql.test.tester.WebGraphQlTester;
 
 @AutoConfigureWebGraphQlTester
 @IntegrationTest
-@Import(MockJwtUserConfiguration.class)
-class HelloControllerIT {
+@Import(MockJwtAdminConfiguration.class)
+public class AdminHelloControllerIT {
 
     @Autowired
     private WebGraphQlTester graphQlTester;
 
     @Test
-    void givenUserAccessGreetingPage_whenLoginSuccess_thenHello() {
+    void givenUserAccessGreetingPage_whenNotHaveUserAuthority_thenForbidden() {
         this.graphQlTester.queryName("greeting")
-            .httpHeaders(headers -> headers.setBearerAuth("user"))
-            .execute()
-            .path("greeting").entity(String.class).satisfies(
-                s -> assertThat(s).contains("Hello")
-            );
-    }
-
-    @Test
-    void givenUserAccessGreetingPage_whenNotLogin_thenUnauthorized() {
-        this.graphQlTester.queryName("greeting")
+            .httpHeaders(headers -> headers.setBearerAuth("admin"))
             .execute()
             .errors()
             .satisfy(errors -> {
                 assertThat(errors).hasSize(1);
-                assertThat(errors.get(0).getErrorType()).isEqualTo(ErrorType.UNAUTHORIZED);
+                assertThat(errors.get(0).getErrorType()).isEqualTo(ErrorType.FORBIDDEN);
             });
     }
 }
