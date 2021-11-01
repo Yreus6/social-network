@@ -44,3 +44,10 @@ jobs:
           server: ${{ secrets.ARGOCD_SERVER }}
           username: ${{ secrets.ARGOCD_USERNAME }}
           password: ${{ secrets.ARGOCD_PASSWORD }}
+
+      - name: Upload GraphQL Schema
+        env:
+          APOLLO_KEY: ${{ secrets.APOLLO_KEY }}
+          APOLLO_VCS_COMMIT: ${{ github.event.pull_request.head.sha }}
+        run: |
+          yarn rover graph publish Socivio-Graph@current --schema ./apps/sn-application/src/main/resources/graphql/schema.graphqls
