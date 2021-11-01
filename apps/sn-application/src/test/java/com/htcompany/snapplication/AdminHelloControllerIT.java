@@ -13,7 +13,7 @@ import org.springframework.graphql.test.tester.WebGraphQlTester;
 @AutoConfigureWebGraphQlTester
 @IntegrationTest
 @Import(MockJwtAdminConfiguration.class)
-public class AdminHelloControllerIT {
+class AdminHelloControllerIT {
 
     @Autowired
     private WebGraphQlTester graphQlTester;
