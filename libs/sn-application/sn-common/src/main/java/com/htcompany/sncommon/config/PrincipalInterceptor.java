@@ -29,6 +29,7 @@ public class PrincipalInterceptor implements WebInterceptor {
 
                     return context.put("jwt", jwt);
                 } catch (Exception e) {
+                    Thread.currentThread().interrupt();
                     return context;
                 }
             } else {
