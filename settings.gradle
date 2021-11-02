@@ -9,6 +9,7 @@ pluginManagement {
 }
 
 rootProject.name = 'social-network'
+include('libs:sn-application:sn-user')
 include('libs:sn-application:sn-common')
 include('apps:sn-application')
 
