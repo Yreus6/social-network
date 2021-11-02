@@ -51,7 +51,7 @@
     "@graphql-codegen/typescript": "^2.3.0",
     "@graphql-codegen/typescript-operations": "^2.2.0",
     "@graphql-codegen/typescript-rtk-query": "^2.2.0",
-    "@jnxplus/nx-boot-gradle": "^0.2.0",
+    "@jnxplus/nx-boot-gradle": "^0.3.0",
     "@nrwl/cli": "13.0.1",
     "@nrwl/cypress": "13.0.1",
     "@nrwl/eslint-plugin-nx": "13.0.1",

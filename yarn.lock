@@ -2314,10 +2314,10 @@
   resolved "https://registry.npmjs.org/@jnxplus/ktlint/-/ktlint-0.0.1.tgz#21de50edf90a61584477a6a60fb875bbbe97ab36"
   integrity sha512-guSwHfEZ6hKx3ANQbjyF9z1HwDCoqB5U0y9hlX7zr21etfMTCgsHAbQbBa88yn8hHn8pwFJaYmTMlIOzpsjltw==
 
-"@jnxplus/nx-boot-gradle@^0.2.0":
-  version "0.2.0"
-  resolved "https://registry.npmjs.org/@jnxplus/nx-boot-gradle/-/nx-boot-gradle-0.2.0.tgz#509d3c8fead2227fa516e83b9dba015a832ed043"
-  integrity sha512-nFkhOrKTqt9VV23YONel1G3YQCaq6pdlPaA6j3MhDacg05+lPbqevHg/dJhYtsaGQ9WvEeSDF8a1VDexd6eLgw==
+"@jnxplus/nx-boot-gradle@^0.3.0":
+  version "0.3.0"
+  resolved "https://registry.npmjs.org/@jnxplus/nx-boot-gradle/-/nx-boot-gradle-0.3.0.tgz#dc3eba270357d1af9cd2b7819fc055372cbf1280"
+  integrity sha512-4tA1oZc86s9ql2ZumpvzRdAqBSjymLwVXUFDmrPHeP94S0bAVR3MB1mVBB3m6q7+8Wv3cIbXcHnLQmOBxylFWQ==
   dependencies:
     "@jnxplus/checkstyle" "0.0.1"
     "@jnxplus/ktlint" "0.0.1"
