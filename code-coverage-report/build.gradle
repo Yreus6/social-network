@@ -5,4 +5,6 @@ plugins {
 dependencies {
     implementation project(':apps:sn-application')
     implementation project(':libs:sn-application:sn-common')
+    implementation project(':libs:sn-application:sn-domain')
+    implementation project(':libs:sn-application:sn-user')
 }
