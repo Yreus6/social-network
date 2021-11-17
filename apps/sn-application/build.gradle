@@ -5,11 +5,9 @@ configurations {
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
 
-    implementation project(':libs:sn-application:sn-common')
+    implementation project(':libs:sn-application:sn-user')
 
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
 
-    testImplementation 'org.springframework.security:spring-security-test'
-    testImplementation 'org.springframework.graphql:spring-graphql-test:1.0.0-M3'
     testImplementation testFixtures(project(':libs:sn-application:sn-common'))
 }

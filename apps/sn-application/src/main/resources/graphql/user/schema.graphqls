@@ -1,0 +1,139 @@
+extend type Query {
+    getCurrentUser: User
+
+    getUserProfile(userId: ID!): Profile
+    getEducations(userId: ID!): [Education]
+    getJobs(userId: ID!): [Job]
+}
+
+extend type Mutation {
+    changeName(userId: ID!, nameInput: NameInput!): User
+    changeEmail(userId: ID!, email: String!): User
+    changePassword(userId: ID!, passwordInput: PasswordInput!): User
+    deactivate(userId: ID!): User
+
+    addEducation(userId: ID!, educationInput: EducationInput!): Education
+    addJob(userId: ID!, jobInput: JobInput!): Job
+
+    editAddress(userId: ID!, addressInput: AddressInput!): Profile
+    editBirthday(userId: ID!, birthdayInput: BirthdayInput!): Profile
+    editPhone(userId: ID!, phoneInput: PhoneInput!): Profile
+    editGender(userId: ID!, gender: String!): Profile
+    editBio(userId: ID!, biography: String!): Profile
+    editInterests(userId: ID!, interests: [String]!): Profile
+    editEducation(userId: ID!, educationId: ID!, educationInput: EducationInput!): Education
+    editJob(userId: ID!, jobId: ID!, jobInput: JobInput!): Job
+
+    removeEducation(userId: ID!, educationId: ID!): Education
+    removeJob(userId: ID!, jobId: ID!): Job
+}
+
+input PasswordInput {
+    oldPassword: String!
+    newPassword: String!
+}
+
+input NameInput {
+    firstName: String!
+    middleName: String
+    lastName: String!
+}
+
+input AddressInput {
+    city: String!
+    region: String!
+    country: String!
+    mode: String!
+}
+
+input BirthdayInput {
+    birthdate: String!
+    mode: String!
+}
+
+input PhoneInput {
+    phone: String!
+    mode: String!
+}
+
+input EducationInput {
+    school: String
+    isGraduate: Boolean
+    description: String
+    concentrations: [String]!
+    degree: String
+    fromDate: String
+    toDate: String
+    mode: String
+}
+
+input JobInput {
+    company: String
+    position: String
+    city: String
+    description: String
+    fromDate: String
+    toDate: String
+    mode: String
+}
+
+type User implements Node {
+    id: ID!
+    username: String!
+    email: String!
+    firstName: String!
+    middleName: String
+    lastName: String!
+}
+
+type Profile implements Node {
+    id: ID!
+    address: Address
+    birthday: Birthday
+    phoneNumber: PhoneNumber
+    gender: String
+    biography: String
+    joinedAt: DateTime
+    interests: [String]!
+    educations: [Education]!
+    jobs: [Job]!
+    user: User!
+}
+
+type Birthday {
+    birthdate: DateTime
+    mode: PrivacyType
+}
+
+type PhoneNumber {
+    phone: String
+    mode: PrivacyType
+}
+
+type Address {
+    city: String
+    region: String
+    country: String
+    mode: PrivacyType
+}
+
+type Education implements Node {
+    id: ID!
+    school: String
+    isGraduate: Boolean
+    description: String
+    concentrations: [String]!
+    degree: String
+    dateRange: DateRange
+    mode: PrivacyType
+}
+
+type Job implements Node {
+    id: ID!
+    company: String
+    position: String
+    city: String
+    description: String
+    dateRange: DateRange
+    mode: PrivacyType
+}

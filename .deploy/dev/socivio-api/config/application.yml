@@ -19,6 +19,19 @@ spring:
   graphql:
     websocket:
       path: /graphql
+  schema:
+    locations:
+      - classpath:/graphql/shared/
+      - classpath:/graphql/greeting/
+      - classpath:/graphql/user/
+  neo4j:
+    uri: neo4j+s://8903bc2e.databases.neo4j.io
+    authentication:
+      username: neo4j
+      password: LnhaRqYKYgl_m9KemJgdpwZRdxojfZgxy9t1LgDYE1w
+  data:
+    neo4j:
+      database: neo4j
 
 server:
   port: 8080

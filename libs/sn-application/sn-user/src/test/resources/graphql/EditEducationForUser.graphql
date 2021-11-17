@@ -1,0 +1,15 @@
+mutation EditEducationForUser($userId: ID!, $educationId: ID!, $educationInput: EducationInput!) {
+    editEducation(userId: $userId, educationId: $educationId, educationInput: $educationInput) {
+        id
+        school
+        isGraduate
+        description
+        concentrations
+        degree
+        dateRange {
+            fromDate
+            toDate
+        }
+        mode
+    }
+}

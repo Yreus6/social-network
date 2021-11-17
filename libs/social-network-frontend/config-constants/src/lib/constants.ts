@@ -18,13 +18,21 @@ export const oktaSignInConfig = {
   logo: 'https://res.cloudinary.com/htcompany-cloud/image/upload/v1634139856/social-network/logo/htc_ikzdrw.png',
   i18n: {
     'en': {
-      'primaryauth.username.placeholder': 'Email'
+      'primaryauth.username.placeholder': 'Email',
+      'password.forgot.email.or.username.placeholder': 'Email',
+      'password.forgot.email.or.username.tooltip': 'Email',
+      'account.unlock.email.or.username.placeholder': 'Email',
+      'account.unlock.email.or.username.tooltip': 'Email'
     }
   },
   features: {
     router: true,
     registration: true,
-    showPasswordToggleOnSignInPage: true
+    showPasswordToggleOnSignInPage: true,
+    selfServiceUnlock: true,
+    multiOptionalFactorEnroll: true,
+    scrollOnError: false,
+    autoPush: true
   },
   authParams: {
     scopes: ['openid', 'email', 'profile', 'groups', 'offline_access']

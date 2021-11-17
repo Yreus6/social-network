@@ -1,0 +1,28 @@
+query GetProfileForUser($userId: ID!) {
+    getUserProfile(userId: $userId) {
+        id
+        address {
+            city
+            region
+            country
+            mode
+        }
+        birthday {
+            birthdate
+            mode
+        }
+        phoneNumber {
+            phone
+            mode
+        }
+        gender
+        biography
+        joinedAt
+        interests
+        user {
+            firstName
+            middleName
+            lastName
+        }
+    }
+}

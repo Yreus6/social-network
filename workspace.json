@@ -52,9 +52,11 @@
         }
       },
       "tags": [],
-      "implicitDependencies": ["sn-application-common", "sn-application-user"]
+      "implicitDependencies": [
+        "sn-user"
+      ]
     },
-    "sn-application-common": {
+    "sn-common": {
       "root": "libs/sn-application/sn-common",
       "projectType": "library",
       "sourceRoot": "libs/sn-application/sn-common/src",
@@ -74,10 +76,30 @@
       },
       "tags": []
     },
-    "sn-application-user": {
+    "sn-user": {
       "root": "libs/sn-application/sn-user",
       "projectType": "library",
       "sourceRoot": "libs/sn-application/sn-user/src",
+      "targets": {
+        "build": {
+          "executor": "@jnxplus/nx-boot-gradle:build"
+        },
+        "lint": {
+          "executor": "@jnxplus/nx-boot-gradle:lint",
+          "options": {
+            "linter": "checkstyle"
+          }
+        },
+        "test": {
+          "executor": "./tools/executors/gradle-test:test"
+        }
+      },
+      "tags": []
+    },
+    "sn-domain": {
+      "root": "libs/sn-application/sn-domain",
+      "projectType": "library",
+      "sourceRoot": "libs/sn-application/sn-domain/src",
       "targets": {
         "build": {
           "executor": "@jnxplus/nx-boot-gradle:build"

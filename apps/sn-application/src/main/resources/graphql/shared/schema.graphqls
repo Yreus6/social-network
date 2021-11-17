@@ -1,0 +1,30 @@
+scalar DateTime
+scalar ConnectionCursor
+
+type Query
+type Mutation {
+    null: Boolean
+}
+type Subscription {
+    null: Boolean
+}
+
+interface Node {
+    id: ID!
+}
+
+enum PrivacyType {
+    PUBLIC, FRIEND, PRIVATE
+}
+
+type DateRange {
+    fromDate: DateTime
+    toDate: DateTime
+}
+
+type PageInfo {
+    hasNextPage: Boolean
+    hasPreviousPage: Boolean
+    startCursor: ConnectionCursor
+    endCursor: ConnectionCursor
+}

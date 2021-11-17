@@ -1,3 +1,7 @@
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter'
+
+    api project(':libs:sn-application:sn-domain')
+
+    testImplementation testFixtures(project(':libs:sn-application:sn-common'))
 }

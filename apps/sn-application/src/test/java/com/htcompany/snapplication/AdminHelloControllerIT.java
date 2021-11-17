@@ -2,6 +2,7 @@ package com.htcompany.snapplication;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import com.htcompany.sncommon.IntegrationTest;
 import com.htcompany.sncommon.config.MockJwtAdminConfiguration;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +21,7 @@ class AdminHelloControllerIT {
 
     @Test
     void givenUserAccessGreetingPage_whenNotHaveUserAuthority_thenForbidden() {
-        this.graphQlTester.queryName("greeting")
+        this.graphQlTester.queryName("Greeting")
             .httpHeaders(headers -> headers.setBearerAuth("admin"))
             .execute()
             .errors()

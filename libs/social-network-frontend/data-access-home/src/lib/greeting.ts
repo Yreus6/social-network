@@ -11,7 +11,34 @@ export type Scalars = {
   Boolean: boolean;
   Int: number;
   Float: number;
+  DateTime: Date;
 };
+
+export type DateRange = {
+  __typename?: 'DateRange';
+  fromDate?: Maybe<Scalars['DateTime']>;
+  toDate?: Maybe<Scalars['DateTime']>;
+};
+
+export type Image = {
+  id: Scalars['ID'];
+  imageUrl?: Maybe<Scalars['String']>;
+};
+
+export type Mutation = {
+  __typename?: 'Mutation';
+  null?: Maybe<Scalars['Boolean']>;
+};
+
+export type Node = {
+  id: Scalars['ID'];
+};
+
+export enum PrivacyType {
+  Friend = 'FRIEND',
+  Private = 'PRIVATE',
+  Public = 'PUBLIC'
+}
 
 export type Query = {
   __typename?: 'Query';
@@ -44,4 +71,5 @@ const injectedRtkApi = api.injectEndpoints({
 });
 
 export { injectedRtkApi as api };
+
 

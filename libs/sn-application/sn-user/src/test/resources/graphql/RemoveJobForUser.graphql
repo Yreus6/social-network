@@ -1,0 +1,14 @@
+mutation RemoveJobForUser($userId: ID!, $jobId: ID!) {
+    removeJob(userId: $userId, jobId: $jobId) {
+        id
+        company
+        position
+        city
+        description
+        dateRange {
+            fromDate
+            toDate
+        }
+        mode
+    }
+}

@@ -2,17 +2,15 @@ package com.htcompany.snapplication;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import com.htcompany.sncommon.config.MockJwtUserConfiguration;
+import com.htcompany.sncommon.IntegrationTest;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Import;
 import org.springframework.graphql.boot.test.tester.AutoConfigureWebGraphQlTester;
 import org.springframework.graphql.execution.ErrorType;
 import org.springframework.graphql.test.tester.WebGraphQlTester;
 
 @AutoConfigureWebGraphQlTester
 @IntegrationTest
-@Import(MockJwtUserConfiguration.class)
 class HelloControllerIT {
 
     @Autowired
@@ -20,7 +18,7 @@ class HelloControllerIT {
 
     @Test
     void givenUserAccessGreetingPage_whenLoginSuccess_thenHello() {
-        this.graphQlTester.queryName("greeting")
+        this.graphQlTester.queryName("Greeting")
             .httpHeaders(headers -> headers.setBearerAuth("user"))
             .execute()
             .path("greeting").entity(String.class).satisfies(
@@ -30,7 +28,7 @@ class HelloControllerIT {
 
     @Test
     void givenUserAccessGreetingPage_whenNotLogin_thenUnauthorized() {
-        this.graphQlTester.queryName("greeting")
+        this.graphQlTester.queryName("Greeting")
             .execute()
             .errors()
             .satisfy(errors -> {

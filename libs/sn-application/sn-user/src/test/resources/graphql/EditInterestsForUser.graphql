@@ -1,0 +1,6 @@
+mutation EditInterestsForUser($userId: ID!, $interests: [String]!) {
+    editInterests(userId: $userId, interests: $interests) {
+        id
+        interests
+    }
+}

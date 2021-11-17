@@ -1,8 +1,21 @@
 dependencies {
-	implementation 'org.springframework.boot:spring-boot-starter'
-    annotationProcessor "org.springframework.boot:spring-boot-configuration-processor"
+    implementation 'org.springframework.boot:spring-boot-starter'
+    annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
     api 'org.springframework.boot:spring-boot-starter-webflux'
-    api 'com.okta.spring:okta-spring-boot-starter:2.1.2'
+    api 'org.springframework.boot:spring-boot-starter-data-neo4j'
+    api 'eu.michael-simons.neo4j:neo4j-migrations-spring-boot-starter:1.0.0'
+    api "com.okta.spring:okta-spring-boot-starter:$oktaVersion"
+    api "com.okta.spring:okta-spring-sdk:$oktaVersion"
     api 'org.springframework.experimental:graphql-spring-boot-starter:1.0.0-M3'
     api 'org.zalando:problem-spring-webflux:0.27.0'
+    api 'com.zhokhov.graphql:graphql-java-datetime:4.1.0'
+    api 'org.apache.commons:commons-lang3'
+    api 'org.modelmapper:modelmapper:2.4.4'
+
+    testFixturesApi 'org.springframework.security:spring-security-test'
+    testFixturesApi 'org.springframework.graphql:spring-graphql-test:1.0.0-M3'
+    testFixturesApi "org.testcontainers:testcontainers:$testcontainersVersion"
+    testFixturesApi "org.testcontainers:neo4j:$testcontainersVersion"
+    testFixturesApi "org.testcontainers:junit-jupiter:$testcontainersVersion"
+    testFixturesApi 'com.github.javafaker:javafaker:1.0.2'
 }

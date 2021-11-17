@@ -11,7 +11,8 @@ public class JwtUtil {
 
     public static Mono<Jwt> createReactiveJwt(String tokenValue, List<String> authorities) {
         Map<String, Object> claims = new HashMap<>();
-        claims.put("sub", "12345");
+        claims.put("uid", "1");
+        claims.put("sub", "test@example.com");
         claims.put("groups", authorities);
 
         return Mono.just(new Jwt(

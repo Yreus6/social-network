@@ -1,0 +1,10 @@
+query GetUserFromOkta {
+    getCurrentUser {
+        id
+        username
+        email
+        firstName
+        middleName
+        lastName
+    }
+}

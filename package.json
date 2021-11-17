@@ -54,6 +54,7 @@
     "@jnxplus/nx-boot-gradle": "^0.3.0",
     "@nrwl/cli": "13.0.1",
     "@nrwl/cypress": "13.0.1",
+    "@nrwl/devkit": "13.0.1",
     "@nrwl/eslint-plugin-nx": "13.0.1",
     "@nrwl/jest": "13.0.1",
     "@nrwl/linter": "13.0.1",
