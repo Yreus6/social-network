@@ -36,6 +36,6 @@ public class ExceptionResolver extends DataFetcherExceptionResolverAdapter {
                 .build();
         }
 
-        return errorBuilder.build();
+        return null;
     }
 }

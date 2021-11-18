@@ -23,7 +23,7 @@ public class AdvancedConnection<T> extends DefaultConnection<T> {
         return "AdvancedConnection{" +
             "edges=" + this.getEdges() +
             ", pageInfo=" + this.getPageInfo() +
-            "totalCount=" + totalCount +
+            ", totalCount=" + totalCount +
             '}';
     }
 }

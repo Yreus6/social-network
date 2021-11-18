@@ -22,8 +22,6 @@ class UserMapperTest {
     @Mock
     private UserProfile oktaProfile;
 
-    private User user;
-
     @BeforeEach
     void setUp() {
         userMapper = new UserMapper();
@@ -31,7 +29,7 @@ class UserMapperTest {
 
     @Test
     void givenOktaUserNull_whenMapToUser_thenReturnNull() {
-        user = userMapper.userFromOkta(oktaUser);
+        User user = userMapper.userFromOkta(null);
 
         assertThat(user).isNull();
     }
@@ -46,7 +44,7 @@ class UserMapperTest {
         Mockito.when(oktaProfile.getMiddleName()).thenReturn("");
         Mockito.when(oktaProfile.getLastName()).thenReturn("user");
 
-        user = userMapper.userFromOkta(oktaUser);
+        User user = userMapper.userFromOkta(oktaUser);
 
         assertThat(user).isNotNull();
         assertThat(user.getId()).isEqualTo("1");
