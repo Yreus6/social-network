@@ -1,0 +1,5 @@
+mutation RemoveFriendRequestForUser($userId: ID!, $friendId: ID!) {
+    removeFriend(userId: $userId, friendId: $friendId) {
+        id
+    }
+}

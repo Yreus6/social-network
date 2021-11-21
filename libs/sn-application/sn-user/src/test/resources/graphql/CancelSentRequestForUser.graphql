@@ -1,0 +1,5 @@
+mutation CancelSentRequestForUser($userId: ID!, $targetId: ID!) {
+    cancelSentRequest(userId: $userId, targetId: $targetId) {
+        id
+    }
+}

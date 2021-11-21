@@ -1,0 +1,5 @@
+mutation SendFriendRequestForUser($userId: ID!, $targetId: ID!) {
+    sendFriendRequest(userId: $userId, targetId: $targetId) {
+        id
+    }
+}

@@ -1,9 +1,14 @@
 package com.htcompany.sndomain.user;
 
+import java.util.Collections;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
+import org.springframework.data.annotation.Version;
 import org.springframework.data.neo4j.core.schema.Id;
 import org.springframework.data.neo4j.core.schema.Node;
 import org.springframework.data.neo4j.core.schema.Property;
+import org.springframework.data.neo4j.core.schema.Relationship;
 
 @Node
 public class User {
@@ -24,8 +29,17 @@ public class User {
     @Property(name = "last_name")
     private String lastName;
 
-    private User() {
-    }
+    @Relationship(type = "REQUEST_FRIEND")
+    private Set<User> sentRequests;
+
+    @Relationship(type = "IS_FRIEND_WITH")
+    private Set<User> friends;
+
+    @Relationship(type = "FOLLOW")
+    private Set<User> followings;
+
+    @Version
+    private Long version;
 
     private User(String id, String username, String email, String firstName, String middleName, String lastName) {
         this.id = id;
@@ -34,6 +48,12 @@ public class User {
         this.firstName = firstName;
         this.middleName = middleName;
         this.lastName = lastName;
+        this.sentRequests = new HashSet<>();
+        this.friends = new HashSet<>();
+        this.followings = new HashSet<>();
+    }
+
+    private User() {
     }
 
     public static User of(String id, String username, String email, String firstName, String middleName,
@@ -51,6 +71,30 @@ public class User {
         this.setEmail(anEmail);
     }
 
+    public void sendRequest(User target) {
+        sentRequests.add(target);
+    }
+
+    public void removeSentRequest(User target) {
+        sentRequests.remove(target);
+    }
+
+    public void friendWith(User target) {
+        friends.add(target);
+    }
+
+    public void removeFriend(User friend) {
+        friends.remove(friend);
+    }
+
+    public void follow(User target) {
+        followings.add(target);
+    }
+
+    public void unfollow(User target) {
+        followings.remove(target);
+    }
+
     public String getId() {
         return id;
     }
@@ -63,28 +107,40 @@ public class User {
         return email;
     }
 
-    private void setEmail(String email) {
-        this.email = email;
-    }
-
     public String getFirstName() {
         return firstName;
-    }
-
-    private void setFirstName(String firstName) {
-        this.firstName = firstName;
     }
 
     public String getMiddleName() {
         return middleName;
     }
 
-    private void setMiddleName(String middleName) {
-        this.middleName = middleName;
-    }
-
     public String getLastName() {
         return lastName;
+    }
+
+    public Set<User> getSentRequests() {
+        return Collections.unmodifiableSet(sentRequests);
+    }
+
+    public Set<User> getFriends() {
+        return Collections.unmodifiableSet(friends);
+    }
+
+    public Set<User> getFollowings() {
+        return Collections.unmodifiableSet(followings);
+    }
+
+    private void setEmail(String email) {
+        this.email = email;
+    }
+
+    private void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    private void setMiddleName(String middleName) {
+        this.middleName = middleName;
     }
 
     private void setLastName(String lastName) {

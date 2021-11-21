@@ -4,6 +4,11 @@ extend type Query {
     getUserProfile(userId: ID!): Profile
     getEducations(userId: ID!): [Education]
     getJobs(userId: ID!): [Job]
+
+    getFriends(userId: ID!, first: Int, last: Int, before: String, after: String): UserConnection
+    getFollowings(userId: ID!, first: Int, last: Int, before: String, after: String): UserConnection
+    getFollowers(userId: ID!, first: Int, last: Int, before: String, after: String): UserConnection
+    getMutualFriends(userId: ID!, otherId: ID!, first: Int, last: Int, before: String, after: String): UserConnection
 }
 
 extend type Mutation {
@@ -26,6 +31,14 @@ extend type Mutation {
 
     removeEducation(userId: ID!, educationId: ID!): Education
     removeJob(userId: ID!, jobId: ID!): Job
+
+    sendFriendRequest(userId: ID!, targetId: ID!): User
+    confirmFriendRequest(userId: ID!, targetId: ID!): User
+    declineFriendRequest(userId: ID!, targetId: ID!): User
+    cancelSentRequest(userId: ID!, targetId: ID!): User
+    removeFriend(userId: ID!, friendId: ID!): User
+    follow(userId: ID!, followedId: ID!): User
+    unfollow(userId: ID!, followedId: ID!): User
 }
 
 input PasswordInput {
@@ -136,4 +149,15 @@ type Job implements Node {
     description: String
     dateRange: DateRange
     mode: PrivacyType
+}
+
+type UserConnection {
+    totalCount: Int
+    pageInfo: PageInfo!
+    edges: [UserEdge!]!
+}
+
+type UserEdge {
+    node: User!
+    cursor: ConnectionCursor!
 }
