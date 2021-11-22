@@ -16,6 +16,7 @@ import com.htcompany.snuser.repository.ProfileRepository;
 import com.htcompany.snuser.repository.UserRepository;
 import com.htcompany.snuser.service.mapper.JobMapper;
 import java.util.Date;
+import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -24,6 +25,7 @@ import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.config.Configuration;
+import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 @ExtendWith(MockitoExtension.class)
@@ -35,6 +37,8 @@ class JobServiceTest {
     private static final String TO_DATE = "2012-12-03T10:15:30Z";
 
     private static final String JOB_ID = "1";
+
+    private static final String USER_ID2 = "2";
 
     @Mock
     private ProfileRepository profileRepository;
@@ -54,7 +58,7 @@ class JobServiceTest {
             .setFieldAccessLevel(Configuration.AccessLevel.PRIVATE);
         JobMapper jobMapper = new JobMapper(mapper);
         jobService = new JobService(
-            jobRepository, profileRepository, jobMapper
+            jobRepository, profileRepository, userRepository, jobMapper
         );
 
         User user = User.of(USER_ID, "test", "test@example.com", "test", "", "user");
@@ -72,6 +76,49 @@ class JobServiceTest {
             .thenReturn(Mono.just(job));
         Mockito.lenient().when(jobRepository.save(job)).thenReturn(Mono.just(job));
         Mockito.lenient().when(jobRepository.delete(job)).thenReturn(Mono.empty());
+
+        User user2 = User.of(USER_ID2, "test2", "test2@example.com", "test2", "", "user2");
+        Mockito.lenient().when(userRepository.findFriendByUser(USER_ID, USER_ID2))
+            .thenReturn(Mono.just(user2));
+    }
+
+    @Test
+    void givenUser_whenGetAnotherJobsWithPrivatePrivacy_thenReturnJobs() {
+        Job job = Job.of("test", "", "", "", null, PrivacyType.PRIVATE);
+        Mockito.when(jobRepository.findJobsByUser(USER_ID))
+            .thenReturn(Flux.fromIterable(List.of(job)));
+
+        List<Job> jobs = jobService.getJobsForUser(USER_ID, USER_ID2).collectList().block();
+
+        assertThat(jobs).isNotNull();
+        assertThat(jobs).hasSize(0);
+    }
+
+    @Test
+    void givenUser_whenGetAnotherJobsWithFriendPrivacy_thenReturnJobs() {
+        Job job = Job.of("test", "", "", "", null, PrivacyType.FRIEND);
+        Mockito.when(userRepository.findFriendByUser(USER_ID, USER_ID2))
+            .thenReturn(Mono.empty());
+        Mockito.when(jobRepository.findJobsByUser(USER_ID))
+            .thenReturn(Flux.fromIterable(List.of(job)));
+
+        List<Job> jobs = jobService.getJobsForUser(USER_ID, USER_ID2).collectList().block();
+
+        assertThat(jobs).isNotNull();
+        assertThat(jobs).hasSize(0);
+    }
+
+    @Test
+    void givenUser_whenGetFriendJobsWithFriendPrivacy_thenReturnJobs() {
+        Job job = Job.of("test", "", "", "", null, PrivacyType.FRIEND);
+        Mockito.when(jobRepository.findJobsByUser(USER_ID))
+            .thenReturn(Flux.fromIterable(List.of(job)));
+
+        List<Job> jobs = jobService.getJobsForUser(USER_ID, USER_ID2).collectList().block();
+
+        assertThat(jobs).isNotNull();
+        assertThat(jobs).hasSize(1);
+        assertThat(jobs.get(0).getCompany()).isEqualTo("test");
     }
 
     @Test

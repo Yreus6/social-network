@@ -37,15 +37,54 @@ public class ProfileService {
     }
 
     @Transactional
-    public Mono<Profile> getProfileForUser(String userId) {
+    public Mono<Profile> getProfileForUser(String userId, String currentId) {
         return profileRepository.getProfileByUser(userId)
-            .switchIfEmpty(userRepository.findById(userId)
-                               .flatMap(user ->
-                                            profileRepository.save(Profile.of(
-                                                null, null, new Date(), null,
-                                                null, null, user)
-                                            )
-                               )
+            .flatMap(profile -> {
+                if (userId.equals(currentId)) {
+                    return Mono.just(profile);
+                } else {
+                    if (profile.getAddress() != null &&
+                        profile.getAddress().getMode().isPrivateMode()) {
+                        profile.changeAddress(null);
+                    }
+                    if (profile.getPhoneNumber() != null &&
+                        profile.getPhoneNumber().getMode().isPrivateMode()) {
+                        profile.changePhone(null);
+                    }
+                    if (profile.getBirthday() != null &&
+                        profile.getBirthday().getMode().isPrivateMode()) {
+                        profile.changeBirthday(null);
+                    }
+
+                    return userRepository.findFriendByUser(userId, currentId)
+                        .transform(userMono -> Mono.fromCompletionStage(userMono.toFuture().thenApply(u -> {
+                            if (u == null) {
+                                if (profile.getAddress() != null &&
+                                    profile.getAddress().getMode().isFriendMode()) {
+                                    profile.changeAddress(null);
+                                }
+                                if (profile.getPhoneNumber() != null &&
+                                    profile.getPhoneNumber().getMode().isFriendMode()) {
+                                    profile.changePhone(null);
+                                }
+                                if (profile.getBirthday() != null &&
+                                    profile.getBirthday().getMode().isFriendMode()) {
+                                    profile.changeBirthday(null);
+                                }
+                            }
+
+                            return profile;
+                        })));
+                }
+            })
+            .switchIfEmpty(
+                userRepository.findById(userId)
+                    .flatMap(user ->
+                                 profileRepository.save(Profile.of(
+                                     null, null, new Date(), null,
+                                     null, null, user)
+                                 )
+                    )
             );
     }
 

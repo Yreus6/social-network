@@ -23,7 +23,24 @@ public class EducationController {
 
     @QueryMapping
     public Flux<Education> getEducations(@Argument String userId) {
-        return educationService.getEducationsForUser(userId);
+        return Flux.deferContextual(ctx -> {
+            Jwt jwt = ctx.get("jwt");
+
+            return educationService.getEducationsForUser(userId, jwt.getClaimAsString("uid"));
+        });
+    }
+
+    @QueryMapping
+    @SuppressWarnings("unchecked")
+    public Mono<Education> getEducation(@Argument String userId, @Argument String educationId) {
+        return Mono.deferContextual(ctx -> {
+            Jwt jwt = ctx.get("jwt");
+
+            return (Mono<Education>) SecurityUtils.checkUser(
+                jwt.getClaimAsString("uid"), userId,
+                () -> educationService.getEducationForUser(userId, educationId)
+            );
+        });
     }
 
     @MutationMapping

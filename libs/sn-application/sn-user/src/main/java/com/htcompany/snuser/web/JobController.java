@@ -23,7 +23,24 @@ public class JobController {
 
     @QueryMapping
     public Flux<Job> getJobs(@Argument String userId) {
-        return jobService.getJobsForUser(userId);
+        return Flux.deferContextual(ctx -> {
+            Jwt jwt = ctx.get("jwt");
+
+            return jobService.getJobsForUser(userId, jwt.getClaimAsString("uid"));
+        });
+    }
+
+    @QueryMapping
+    @SuppressWarnings("unchecked")
+    public Mono<Job> getJob(@Argument String userId, @Argument String jobId) {
+        return Mono.deferContextual(ctx -> {
+            Jwt jwt = ctx.get("jwt");
+
+            return (Mono<Job>) SecurityUtils.checkUser(
+                jwt.getClaimAsString("uid"), userId,
+                () -> jobService.getJobForUser(userId, jobId)
+            );
+        });
     }
 
     @MutationMapping

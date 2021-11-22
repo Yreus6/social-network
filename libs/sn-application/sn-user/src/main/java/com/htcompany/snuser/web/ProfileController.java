@@ -28,7 +28,11 @@ public class ProfileController {
 
     @QueryMapping
     public Mono<Profile> getUserProfile(@Argument String userId) {
-        return profileService.getProfileForUser(userId);
+        return Mono.deferContextual(ctx -> {
+            Jwt jwt = ctx.get("jwt");
+
+            return profileService.getProfileForUser(userId, jwt.getClaimAsString("uid"));
+        });
     }
 
     @MutationMapping

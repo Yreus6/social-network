@@ -8,7 +8,7 @@ import reactor.core.publisher.Mono;
 
 public interface EducationRepository extends ReactiveNeo4jRepository<Education, String> {
 
-    @Query("MATCH (e:Education)-[r1:STUDIED]-(p:Profile)-[r2:HAS_PROFILE]-(u:User {id: $userId})\n" +
+    @Query("MATCH (e:Education)<-[r1:STUDIED]-(p:Profile)<-[r2:HAS_PROFILE]-(u:User {id: $userId})\n" +
         "RETURN e, collect(r1), collect(p), collect(r2), collect(u)")
     Flux<Education> findEducationsForUser(String userId);
 

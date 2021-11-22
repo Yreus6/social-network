@@ -2,7 +2,9 @@ package com.htcompany.snuser.web;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import com.github.javafaker.Faker;
 import com.htcompany.sncommon.IntegrationTest;
+import com.htcompany.sndomain.shared.PrivacyType;
 import com.htcompany.sndomain.user.*;
 import com.htcompany.snuser.config.TestUserContextConfiguration;
 import com.htcompany.snuser.graphql.input.AddressInput;
@@ -36,6 +38,8 @@ class ProfileControllerIT {
 
     private static final String USER_TOKEN = "user";
 
+    private static final String USER_ID2 = "2";
+
     @Autowired
     private WebGraphQlTester graphQlTester;
 
@@ -45,8 +49,11 @@ class ProfileControllerIT {
     @Autowired
     private ProfileRepository profileRepository;
 
+    private Faker faker;
+
     @BeforeEach
     void setUp() {
+        faker = new Faker();
         User user = userRepository.save(User.of(
             USER_ID,
             USERNAME,
@@ -57,8 +64,10 @@ class ProfileControllerIT {
         )).block();
 
         Profile profile = Profile.of(
-            null, null, new Date(), null, null, null, user
-        );
+            null, null, new Date(),
+            new Address("Hanoi", "Hanoi", "Vietnam", PrivacyType.PUBLIC),
+            new PhoneNumber("+84123456789", PrivacyType.PUBLIC),
+            new Birthday(new Date(), PrivacyType.PUBLIC), user);
         profileRepository.save(profile).block();
     }
 
@@ -73,6 +82,33 @@ class ProfileControllerIT {
                 assertThat(p).isNotNull();
                 assertThat(p.getUser()).isNotNull();
                 assertThat(p.getUser().getFirstName()).isEqualTo(USER_FIRSTNAME);
+            });
+    }
+
+    @Test
+    void givenUser_whenGetAnotherProfileWithFriendPrivacy_thenReturnProfile() {
+        User user2 = userRepository.save(User.of(
+            USER_ID2, faker.name().username(), faker.internet().emailAddress(),
+            faker.name().firstName(), "", faker.name().lastName()
+        )).block();
+        Profile profile = Profile.of(
+            null, null, new Date(),
+            new Address("Hanoi", "Hanoi", "Vietnam", PrivacyType.FRIEND),
+            new PhoneNumber("+84123456789", PrivacyType.FRIEND),
+            new Birthday(new Date(), PrivacyType.FRIEND), user2);
+        profileRepository.save(profile).block();
+
+        this.graphQlTester.queryName("GetProfileForUser")
+            .variable("userId", USER_ID2)
+            .httpHeaders(headers -> headers.setBearerAuth(USER_TOKEN))
+            .execute()
+            .path("getUserProfile").entity(Profile.class)
+            .satisfies(p -> {
+                assertThat(p).isNotNull();
+                assertThat(p.getUser()).isNotNull();
+                assertThat(p.getAddress()).isNull();
+                assertThat(p.getPhoneNumber()).isNull();
+                assertThat(p.getBirthday()).isNull();
             });
     }
 

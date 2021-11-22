@@ -2,8 +2,8 @@ package com.htcompany.snuser.service;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import com.htcompany.sndomain.user.Profile;
-import com.htcompany.sndomain.user.User;
+import com.htcompany.sndomain.shared.PrivacyType;
+import com.htcompany.sndomain.user.*;
 import com.htcompany.snuser.graphql.input.AddressInput;
 import com.htcompany.snuser.graphql.input.BirthdayInput;
 import com.htcompany.snuser.graphql.input.PhoneInput;
@@ -26,6 +26,7 @@ import reactor.core.publisher.Mono;
 class ProfileServiceTest {
 
     private static final String USER_ID = "1";
+    private static final String USER_ID2 = "2";
 
     @Mock
     private ProfileRepository profileRepository;
@@ -44,18 +45,24 @@ class ProfileServiceTest {
         profileService = new ProfileService(profileRepository, userRepository, profileMapper);
 
         User user = User.of(USER_ID, "test", "test@example.com", "test", "", "user");
+        User user2 = User.of(USER_ID2, "test2", "test2@example.com", "test2", "", "user2");
         Profile mock = Profile.of(
-            null, null, new Date(), null, null, null, user);
+            null, null, new Date(),
+            new Address("Hanoi", "Hanoi", "Vietnam", PrivacyType.PUBLIC),
+            new PhoneNumber("+84123456789", PrivacyType.PUBLIC),
+            new Birthday(new Date(), PrivacyType.PUBLIC), user);
         Mockito.lenient().when(userRepository.findById(USER_ID))
             .thenReturn(Mono.just(user));
         Mockito.lenient().when(profileRepository.getProfileByUser(USER_ID))
             .thenReturn(Mono.just(mock));
+        Mockito.lenient().when(userRepository.findFriendByUser(USER_ID, USER_ID2))
+            .thenReturn(Mono.just(user2));
         Mockito.lenient().when(profileRepository.save(mock)).thenReturn(Mono.just(mock));
     }
 
     @Test
     void givenUserHasProfile_whenGetProfile_thenReturnProfile() {
-        Profile profile = profileService.getProfileForUser(USER_ID).block();
+        Profile profile = profileService.getProfileForUser(USER_ID, USER_ID).block();
 
         assertThat(profile).isNotNull();
         assertThat(profile.getUser().getId()).isEqualTo(USER_ID);
@@ -65,10 +72,75 @@ class ProfileServiceTest {
     void givenUserNotHaveProfile_whenGetProfile_thenReturnNewProfile() {
         Mockito.when(profileRepository.getProfileByUser(USER_ID)).thenReturn(Mono.empty());
 
-        Profile profile = profileService.getProfileForUser(USER_ID).block();
+        Profile profile = profileService.getProfileForUser(USER_ID, USER_ID).block();
 
         assertThat(profile).isNotNull();
         assertThat(profile.getUser().getId()).isEqualTo(USER_ID);
+    }
+
+    @Test
+    void givenUser_whenAccessAnotherProfileWithPublicPrivacy_thenReturnProfile() {
+        Profile profile = profileService.getProfileForUser(USER_ID, USER_ID2).block();
+
+        assertThat(profile).isNotNull();
+        assertThat(profile.getAddress()).isNotNull();
+        assertThat(profile.getPhoneNumber()).isNotNull();
+        assertThat(profile.getBirthday()).isNotNull();
+    }
+
+    @Test
+    void givenUser_whenAccessAnotherProfileWithFriendPrivacy_thenReturnProfile() {
+        Mockito.when(userRepository.findFriendByUser(USER_ID, USER_ID2)).thenReturn(Mono.empty());
+        User user = userRepository.findById(USER_ID).block();
+        Profile mock = Profile.of(
+            null, null, new Date(),
+            new Address("Hanoi", "Hanoi", "Vietnam", PrivacyType.FRIEND),
+            new PhoneNumber("+84123456789", PrivacyType.FRIEND),
+            new Birthday(new Date(), PrivacyType.FRIEND), user);
+        Mockito.when(profileRepository.getProfileByUser(USER_ID)).thenReturn(Mono.just(mock));
+
+        Profile profile = profileService.getProfileForUser(USER_ID, USER_ID2).block();
+
+        assertThat(profile).isNotNull();
+        assertThat(profile.getAddress()).isNull();
+        assertThat(profile.getPhoneNumber()).isNull();
+        assertThat(profile.getBirthday()).isNull();
+    }
+
+    @Test
+    void givenUser_whenAccessFriendProfileWithFriendPrivacy_thenReturnProfile() {
+        User user = userRepository.findById(USER_ID).block();
+        Profile mock = Profile.of(
+            null, null, new Date(),
+            new Address("Hanoi", "Hanoi", "Vietnam", PrivacyType.FRIEND),
+            new PhoneNumber("+84123456789", PrivacyType.FRIEND),
+            new Birthday(new Date(), PrivacyType.FRIEND), user);
+        Mockito.when(profileRepository.getProfileByUser(USER_ID)).thenReturn(Mono.just(mock));
+
+        Profile profile = profileService.getProfileForUser(USER_ID, USER_ID2).block();
+
+        assertThat(profile).isNotNull();
+        assertThat(profile.getAddress()).isNotNull();
+        assertThat(profile.getPhoneNumber()).isNotNull();
+        assertThat(profile.getBirthday()).isNotNull();
+    }
+
+    @Test
+    void givenUser_whenAccessAnotherProfileWithPrivatePrivacy_thenReturnProfile() {
+        User user = userRepository.findById(USER_ID).block();
+        Profile mock = Profile.of(
+            null, null, new Date(),
+            new Address("Hanoi", "Hanoi", "Vietnam", PrivacyType.PRIVATE),
+            new PhoneNumber("+84123456789", PrivacyType.PRIVATE),
+            new Birthday(new Date(), PrivacyType.PRIVATE), user);
+        Mockito.when(profileRepository.getProfileByUser(USER_ID)).thenReturn(Mono.just(mock));
+
+        Profile profile = profileService.getProfileForUser(USER_ID, USER_ID2).block();
+
+        assertThat(profile).isNotNull();
+        assertThat(profile.getAddress()).isNull();
+        assertThat(profile.getPhoneNumber()).isNull();
+        assertThat(profile.getBirthday()).isNull();
     }
 
     @Test

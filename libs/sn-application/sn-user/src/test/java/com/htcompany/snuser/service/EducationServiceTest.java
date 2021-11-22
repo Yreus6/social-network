@@ -26,6 +26,7 @@ import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.config.Configuration;
+import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 @ExtendWith(MockitoExtension.class)
@@ -37,6 +38,8 @@ class EducationServiceTest {
     private static final String TO_DATE = "2012-12-03T10:15:30Z";
 
     private static final String EDUCATION_ID = "1";
+
+    private static final String USER_ID2 = "2";
 
     @Mock
     private ProfileRepository profileRepository;
@@ -56,7 +59,7 @@ class EducationServiceTest {
             .setFieldAccessLevel(Configuration.AccessLevel.PRIVATE);
         EducationMapper educationMapper = new EducationMapper(mapper);
         educationService = new EducationService(
-            educationRepository, profileRepository, educationMapper
+            educationRepository, profileRepository, userRepository, educationMapper
         );
 
         User user = User.of(USER_ID, "test", "test@example.com", "test", "", "user");
@@ -77,6 +80,61 @@ class EducationServiceTest {
             .thenReturn(Mono.just(education));
         Mockito.lenient().when(educationRepository.save(education)).thenReturn(Mono.just(education));
         Mockito.lenient().when(educationRepository.delete(education)).thenReturn(Mono.empty());
+
+        User user2 = User.of(USER_ID2, "test2", "test2@example.com", "test2", "", "user2");
+        Mockito.lenient().when(userRepository.findFriendByUser(USER_ID, USER_ID2))
+            .thenReturn(Mono.just(user2));
+    }
+
+    @Test
+    void givenUser_whenGetAnotherEducationsWithPrivatePrivacy_thenReturnEducations() {
+        Education education = Education.of(
+            "test", true, "", "", Collections.emptySet(),
+            null, PrivacyType.PRIVATE
+        );
+        Mockito.when(educationRepository.findEducationsForUser(USER_ID))
+            .thenReturn(Flux.fromIterable(List.of(education)));
+
+        List<Education> educations = educationService.getEducationsForUser(USER_ID, USER_ID2)
+            .collectList().block();
+
+        assertThat(educations).isNotNull();
+        assertThat(educations).hasSize(0);
+    }
+
+    @Test
+    void givenUser_whenGetAnotherEducationsWithFriendPrivacy_thenReturnEducations() {
+        Education education = Education.of(
+            "test", true, "", "", Collections.emptySet(),
+            null, PrivacyType.FRIEND
+        );
+        Mockito.when(userRepository.findFriendByUser(USER_ID, USER_ID2))
+            .thenReturn(Mono.empty());
+        Mockito.when(educationRepository.findEducationsForUser(USER_ID))
+            .thenReturn(Flux.fromIterable(List.of(education)));
+
+        List<Education> educations = educationService.getEducationsForUser(USER_ID, USER_ID2)
+            .collectList().block();
+
+        assertThat(educations).isNotNull();
+        assertThat(educations).hasSize(0);
+    }
+
+    @Test
+    void givenUser_whenGetFriendEducationsWithFriendPrivacy_thenReturnEducations() {
+        Education education = Education.of(
+            "test", true, "", "", Collections.emptySet(),
+            null, PrivacyType.FRIEND
+        );
+        Mockito.when(educationRepository.findEducationsForUser(USER_ID))
+            .thenReturn(Flux.fromIterable(List.of(education)));
+
+        List<Education> educations = educationService.getEducationsForUser(USER_ID, USER_ID2)
+            .collectList().block();
+
+        assertThat(educations).isNotNull();
+        assertThat(educations).hasSize(1);
+        assertThat(educations.get(0).getSchool()).isEqualTo("test");
     }
 
     @Test

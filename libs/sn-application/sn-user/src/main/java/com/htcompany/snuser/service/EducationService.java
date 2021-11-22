@@ -5,6 +5,7 @@ import com.htcompany.sndomain.user.Education;
 import com.htcompany.snuser.graphql.input.EducationInput;
 import com.htcompany.snuser.repository.EducationRepository;
 import com.htcompany.snuser.repository.ProfileRepository;
+import com.htcompany.snuser.repository.UserRepository;
 import com.htcompany.snuser.service.mapper.EducationMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,19 +19,47 @@ public class EducationService {
 
     private final ProfileRepository profileRepository;
 
+    private final UserRepository userRepository;
+
     private final EducationMapper mapper;
 
     public EducationService(
         EducationRepository educationRepository,
         ProfileRepository profileRepository,
+        UserRepository userRepository,
         EducationMapper mapper) {
         this.educationRepository = educationRepository;
         this.profileRepository = profileRepository;
+        this.userRepository = userRepository;
         this.mapper = mapper;
     }
 
-    public Flux<Education> getEducationsForUser(String userId) {
-        return educationRepository.findEducationsForUser(userId);
+    public Flux<Education> getEducationsForUser(String userId, String currentId) {
+        return educationRepository.findEducationsForUser(userId)
+            .flatMap(education -> {
+                if (userId.equals(currentId)) {
+                    return Mono.just(education);
+                } else {
+                    if (education.getMode().isPrivateMode()) {
+                        return Mono.empty();
+                    }
+
+                    return userRepository.findFriendByUser(userId, currentId)
+                        .transform(userMono -> Mono.fromCompletionStage(userMono.toFuture().thenApply(u -> {
+                            if (u == null) {
+                                if (education.getMode().isFriendMode()) {
+                                    return null;
+                                }
+                            }
+
+                            return education;
+                        })));
+                }
+            });
+    }
+
+    public Mono<Education> getEducationForUser(String userId, String educationId) {
+        return getEducationByUser(userId, educationId);
     }
 
     @Transactional

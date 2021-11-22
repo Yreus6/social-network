@@ -41,6 +41,8 @@ class JobControllerIT {
     private static final String FROM_DATE = "2011-12-03T10:15:30Z";
     private static final String TO_DATE = "2012-12-03T10:15:30Z";
 
+    private static final String USER_ID2 = "2";
+
     @Autowired
     private WebGraphQlTester graphQlTester;
 
@@ -88,7 +90,7 @@ class JobControllerIT {
         for (int i = 0; i < 100; ++i) {
             Job job = Job.of(
                 faker.company().name(), "Manager", "Hanoi",
-                "Description", null, PrivacyType.FRIEND
+                "Description", null, PrivacyType.PUBLIC
             );
             Job savedJob = jobRepository.save(job).block();
             p.addJob(savedJob);
@@ -101,6 +103,49 @@ class JobControllerIT {
             .execute()
             .path("getJobs[*].id").entityList(String.class)
             .hasSize(100);
+    }
+
+    @Test
+    void givenUser_whenGetAnotherJobsWithFriendPrivacy_thenReturnJobs() {
+        jobRepository.deleteAll().block();
+        User user2 = userRepository.save(User.of(
+            USER_ID2, faker.name().username(), faker.internet().emailAddress(),
+            faker.name().firstName(), "", faker.name().lastName()
+        )).block();
+        Profile p = profileRepository.save(Profile.of(
+            null, null, new Date(),
+            null, null, null, user2)
+        ).block();
+        Job job = Job.of(
+            faker.company().name(), "Manager", "Hanoi",
+            "Description", null, PrivacyType.FRIEND
+        );
+        p.addJob(job);
+        profileRepository.save(p).block();
+
+        this.graphQlTester.queryName("GetJobsForUser")
+            .variable("userId", USER_ID2)
+            .httpHeaders(headers -> headers.setBearerAuth(USER_TOKEN))
+            .execute()
+            .path("getJobs").entityList(Job.class)
+            .satisfies(jobs -> {
+                assertThat(jobs).isNotNull();
+                assertThat(jobs).hasSize(0);
+            });
+    }
+
+    @Test
+    void givenUser_whenGetJob_thenReturnJob() {
+        this.graphQlTester.queryName("GetJobForUser")
+            .variable("userId", USER_ID)
+            .variable("jobId", jobId)
+            .httpHeaders(headers -> headers.setBearerAuth(USER_TOKEN))
+            .execute()
+            .path("getJob").entity(Job.class)
+            .satisfies(j -> {
+                assertThat(j).isNotNull();
+                assertThat(j.getCompany()).isEqualTo("abc");
+            });
     }
 
     @Test

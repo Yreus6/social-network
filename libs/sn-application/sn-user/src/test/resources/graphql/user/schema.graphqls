@@ -4,6 +4,8 @@ extend type Query {
     getUserProfile(userId: ID!): Profile
     getEducations(userId: ID!): [Education]
     getJobs(userId: ID!): [Job]
+    getEducation(userId: ID!, educationId: ID!): Education
+    getJob(userId: ID!, jobId: ID!): Job
 
     getFriends(userId: ID!, first: Int, last: Int, before: String, after: String): UserConnection
     getFollowings(userId: ID!, first: Int, last: Int, before: String, after: String): UserConnection

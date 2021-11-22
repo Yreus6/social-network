@@ -1,0 +1,15 @@
+query GetEducationForUser($userId: ID!, $educationId: ID!) {
+    getEducation(userId: $userId, educationId: $educationId) {
+        id
+        school
+        isGraduate
+        description
+        concentrations
+        degree
+        dateRange {
+            fromDate
+            toDate
+        }
+        mode
+    }
+}

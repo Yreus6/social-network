@@ -43,6 +43,8 @@ class EducationControllerIT {
     private static final String FROM_DATE = "2011-12-03T10:15:30Z";
     private static final String TO_DATE = "2012-12-03T10:15:30Z";
 
+    private static final String USER_ID2 = "2";
+
     @Autowired
     private WebGraphQlTester graphQlTester;
 
@@ -93,7 +95,7 @@ class EducationControllerIT {
         for (int i = 0; i < 100; ++i) {
             Education education = Education.of(
                 faker.pokemon().name(), true, "", "", Collections.emptySet(),
-                null, PrivacyType.FRIEND
+                null, PrivacyType.PUBLIC
             );
             Education savedEdu = educationRepository.save(education).block();
             p.addEducation(savedEdu);
@@ -106,6 +108,50 @@ class EducationControllerIT {
             .execute()
             .path("getEducations[*].id").entityList(String.class)
             .hasSize(100);
+    }
+
+    @Test
+    void givenUser_whenGetAnotherEducationsWithFriendPrivacy_thenReturnEducations() {
+        educationRepository.deleteAll().block();
+        User user2 = userRepository.save(User.of(
+            USER_ID2, faker.name().username(), faker.internet().emailAddress(),
+            faker.name().firstName(), "", faker.name().lastName()
+        )).block();
+        Profile p = profileRepository.save(Profile.of(
+            null, null, new Date(),
+            null, null, null, user2)
+        ).block();
+        Education education = Education.of(
+            faker.pokemon().name(), true, "", "", Collections.emptySet(),
+            null, PrivacyType.FRIEND
+        );
+        Education savedEdu = educationRepository.save(education).block();
+        p.addEducation(savedEdu);
+        profileRepository.save(p).block();
+
+        this.graphQlTester.queryName("GetEducationsForUser")
+            .variable("userId", USER_ID2)
+            .httpHeaders(headers -> headers.setBearerAuth(USER_TOKEN))
+            .execute()
+            .path("getEducations").entityList(Education.class)
+            .satisfies(edus -> {
+                assertThat(edus).isNotNull();
+                assertThat(edus).hasSize(0);
+            });
+    }
+
+    @Test
+    void givenUser_whenGetEducation_thenReturnEducation() {
+        this.graphQlTester.queryName("GetEducationForUser")
+            .variable("userId", USER_ID)
+            .variable("educationId", educationId)
+            .httpHeaders(headers -> headers.setBearerAuth(USER_TOKEN))
+            .execute()
+            .path("getEducation").entity(Education.class)
+            .satisfies(edu -> {
+                assertThat(edu).isNotNull();
+                assertThat(edu.getSchool()).isEqualTo("abc");
+            });
     }
 
     @Test
