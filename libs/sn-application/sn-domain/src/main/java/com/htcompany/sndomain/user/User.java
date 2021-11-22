@@ -72,7 +72,9 @@ public class User {
     }
 
     public void sendRequest(User target) {
-        sentRequests.add(target);
+        if (isNotSelf(target)) {
+            sentRequests.add(target);
+        }
     }
 
     public void removeSentRequest(User target) {
@@ -80,7 +82,9 @@ public class User {
     }
 
     public void friendWith(User target) {
-        friends.add(target);
+        if (isNotSelf(target)) {
+            friends.add(target);
+        }
     }
 
     public void removeFriend(User friend) {
@@ -88,7 +92,9 @@ public class User {
     }
 
     public void follow(User target) {
-        followings.add(target);
+        if (isNotSelf(target)) {
+            followings.add(target);
+        }
     }
 
     public void unfollow(User target) {
@@ -147,17 +153,30 @@ public class User {
         this.lastName = lastName;
     }
 
+    private void setVersion(Long version) {
+        this.version = version;
+    }
+
+    private boolean isNotSelf(User u) {
+        return !this.getId().equals(u.getId());
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         User user = (User) o;
-        return Objects.equals(id, user.id) && Objects.equals(username, user.username);
+        return Objects.equals(id, user.id) &&
+            Objects.equals(username, user.username) &&
+            Objects.equals(email, user.email) &&
+            Objects.equals(firstName, user.firstName) &&
+            Objects.equals(middleName, user.middleName) &&
+            Objects.equals(lastName, user.lastName);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, username);
+        return Objects.hash(id, username, email, firstName, middleName, lastName);
     }
 
     @Override

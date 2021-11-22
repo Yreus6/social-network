@@ -31,7 +31,15 @@ public class UserService {
         com.okta.sdk.resource.user.User oktaUser = oktaClient.getUser(userId);
         User user = mapper.userFromOkta(oktaUser);
 
-        return userRepository.save(user);
+        return userRepository.findById(userId)
+            .flatMap(found -> {
+                if (found.equals(user)) {
+                    return Mono.just(found);
+                }
+
+                return userRepository.save(user);
+            })
+            .switchIfEmpty(userRepository.save(user));
     }
 
     public Mono<User> changeNameForUser(String userId, NameInput nameInput) {
