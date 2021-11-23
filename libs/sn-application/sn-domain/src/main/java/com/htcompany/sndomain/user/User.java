@@ -153,10 +153,6 @@ public class User {
         this.lastName = lastName;
     }
 
-    private void setVersion(Long version) {
-        this.version = version;
-    }
-
     private boolean isNotSelf(User u) {
         return !this.getId().equals(u.getId());
     }
