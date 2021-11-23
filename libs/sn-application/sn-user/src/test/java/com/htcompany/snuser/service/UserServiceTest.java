@@ -85,12 +85,13 @@ class UserServiceTest {
     }
 
     @Test
-    void givenEmptyUser_whenFindUser_thenThrowException() {
+    void givenEmptyUser_whenChangeName_thenThrowException() {
         Mockito.when(userRepository.findById(USER_ID)).thenReturn(Mono.empty());
 
-        assertThatThrownBy(() -> userService.getUserById(USER_ID).block())
-            .isInstanceOf(EntityNotFoundException.class)
-            .hasMessage("Could not find user");
+        NameInput nameInput = new NameInput("test1", "test", "user");
+
+        assertThatThrownBy(() -> userService.changeNameForUser(USER_ID, nameInput).block())
+            .isInstanceOf(EntityNotFoundException.class);
     }
 
     @Test

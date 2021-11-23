@@ -102,7 +102,7 @@ public class UserService {
             });
     }
 
-    protected Mono<User> getUserById(String id) {
+    private Mono<User> getUserById(String id) {
         return userRepository.findById(id)
             .switchIfEmpty(
                 Mono.error(new EntityNotFoundException("Could not find user"))
