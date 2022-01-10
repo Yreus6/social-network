@@ -22,6 +22,10 @@ export const PrivateRoute = ({ hasAnyAuthorities = [], children, ...rest }: Priv
         setAuthorities(userAuthorities);
       });
     }
+
+    return () => {
+      setAuthorities(null);
+    };
   }, [authState, oktaAuth]);
 
   return (
