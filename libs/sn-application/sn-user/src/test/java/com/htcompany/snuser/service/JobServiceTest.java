@@ -69,9 +69,11 @@ class JobServiceTest {
         Mockito.lenient().when(profileRepository.getProfileByUser(USER_ID))
             .thenReturn(Mono.just(profile));
         Mockito.lenient().when(profileRepository.save(profile)).thenReturn(Mono.just(profile));
+        Mockito.lenient().when(profileRepository.findById((String) null))
+            .thenReturn(Mono.just(profile));
 
         DateRange dateRange = DateRangeService.createDateRange(FROM_DATE, TO_DATE);
-        Job job = Job.of("test", "", "", "", dateRange, PrivacyType.PUBLIC);
+        Job job = Job.of("test", "", "", "", false, dateRange, PrivacyType.PUBLIC);
         Mockito.lenient().when(jobRepository.findJobByUser(USER_ID, JOB_ID))
             .thenReturn(Mono.just(job));
         Mockito.lenient().when(jobRepository.save(job)).thenReturn(Mono.just(job));
@@ -84,7 +86,7 @@ class JobServiceTest {
 
     @Test
     void givenUser_whenGetAnotherJobsWithPrivatePrivacy_thenReturnJobs() {
-        Job job = Job.of("test", "", "", "", null, PrivacyType.PRIVATE);
+        Job job = Job.of("test", "", "", "", false, null, PrivacyType.PRIVATE);
         Mockito.when(jobRepository.findJobsByUser(USER_ID))
             .thenReturn(Flux.fromIterable(List.of(job)));
 
@@ -96,7 +98,7 @@ class JobServiceTest {
 
     @Test
     void givenUser_whenGetAnotherJobsWithFriendPrivacy_thenReturnJobs() {
-        Job job = Job.of("test", "", "", "", null, PrivacyType.FRIEND);
+        Job job = Job.of("test", "", "", "", false, null, PrivacyType.FRIEND);
         Mockito.when(userRepository.findFriendByUser(USER_ID, USER_ID2))
             .thenReturn(Mono.empty());
         Mockito.when(jobRepository.findJobsByUser(USER_ID))
@@ -110,7 +112,7 @@ class JobServiceTest {
 
     @Test
     void givenUser_whenGetFriendJobsWithFriendPrivacy_thenReturnJobs() {
-        Job job = Job.of("test", "", "", "", null, PrivacyType.FRIEND);
+        Job job = Job.of("test", "", "", "", false,  null, PrivacyType.FRIEND);
         Mockito.when(jobRepository.findJobsByUser(USER_ID))
             .thenReturn(Flux.fromIterable(List.of(job)));
 
@@ -126,7 +128,7 @@ class JobServiceTest {
         Job job = jobService.addJobForUser(
             USER_ID,
             new JobInput(
-                "test", "", "", "", FROM_DATE, TO_DATE, "PUBLIC"
+                "test", "", "", "", false, FROM_DATE, TO_DATE, "PUBLIC"
             )
         ).block();
 
@@ -137,7 +139,7 @@ class JobServiceTest {
     @Test
     void givenUser_whenEditExistJob_thenReturnUpdatedJob() {
         JobInput jobInput = new JobInput(
-            "test1", "", "", "", FROM_DATE, TO_DATE, "FRIEND"
+            "test1", "", "", "", false, FROM_DATE, TO_DATE, "FRIEND"
         );
         Job updated = jobService.editJobForUser(USER_ID, JOB_ID, jobInput).block();
 
@@ -150,7 +152,7 @@ class JobServiceTest {
         Mockito.when(jobRepository.findJobByUser(USER_ID, "2")).thenReturn(Mono.empty());
 
         JobInput jobInput = new JobInput(
-            "test1", "", "", "", FROM_DATE, TO_DATE, "FRIEND"
+            "test1", "", "", "", false, FROM_DATE, TO_DATE, "FRIEND"
         );
 
         assertThatThrownBy(() -> jobService.editJobForUser(USER_ID, "2", jobInput).block())

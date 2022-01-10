@@ -54,6 +54,36 @@ public class UserConnectionService {
             );
     }
 
+    public Mono<Connection<User>> getFriendRequestsForUser(DataFetchingEnvironment env) {
+        String userId = env.getArgument("userId");
+
+        return userRepository.findFriendRequestsByUser(userId)
+            .collectList()
+            .map(requests -> new AdvancedListConnection<>(requests)
+                .getWithCount(env, requests.size())
+            );
+    }
+
+    public Mono<Connection<User>> getSentRequestsForUser(DataFetchingEnvironment env) {
+        String userId = env.getArgument("userId");
+
+        return userRepository.findSentRequestsByUser(userId)
+            .collectList()
+            .map(requests -> new AdvancedListConnection<>(requests)
+                .getWithCount(env, requests.size())
+            );
+    }
+
+    public Mono<Connection<User>> getFriendSuggestionsForUser(DataFetchingEnvironment env) {
+        String userId = env.getArgument("userId");
+
+        return userRepository.findFriendSuggestionsForUser(userId)
+            .collectList()
+            .map(suggestions -> new AdvancedListConnection<>(suggestions)
+                .getWithCount(env, suggestions.size())
+            );
+    }
+
     public Mono<User> sendFriendRequestForUser(String userId, String targetId) {
         return userRepository.findById(userId)
             .zipWith(userRepository.findById(targetId))
@@ -86,16 +116,18 @@ public class UserConnectionService {
     public Mono<User> confirmFriendRequestForUser(String userId, String targetId) {
         return getFriendRequestByUser(userId, targetId)
             .flatMap(requestUser -> userRepository.findById(userId)
-                .flatMap(user -> {
-                    requestUser.removeSentRequest(user);
-                    user.friendWith(requestUser);
-                    requestUser.friendWith(user);
-                    user.follow(requestUser);
-                    requestUser.follow(user);
+                .flatMap(user -> userRepository.findById(requestUser.getId())
+                    .flatMap(reqUser -> {
+                        reqUser.removeSentRequest(user);
+                        user.friendWith(reqUser);
+                        reqUser.friendWith(user);
+                        user.follow(reqUser);
+                        reqUser.follow(user);
 
-                    return userRepository.save(requestUser)
-                        .then(userRepository.save(user));
-                })
+                        return userRepository.save(reqUser)
+                            .then(userRepository.save(user));
+                    })
+                )
             );
     }
 
@@ -125,15 +157,17 @@ public class UserConnectionService {
     public Mono<User> removeFriendForUser(String userId, String friendId) {
         return getFriendByUser(userId, friendId)
             .flatMap(friend -> userRepository.findById(userId)
-                .flatMap(user -> {
-                    user.removeFriend(friend);
-                    friend.removeFriend(user);
-                    user.unfollow(friend);
-                    friend.unfollow(user);
+                .flatMap(user -> userRepository.findById(friend.getId())
+                    .flatMap(f -> {
+                        user.removeFriend(f);
+                        f.removeFriend(user);
+                        user.unfollow(f);
+                        f.unfollow(user);
 
-                    return userRepository.save(friend)
-                        .then(userRepository.save(user));
-                })
+                        return userRepository.save(f)
+                            .then(userRepository.save(user));
+                    })
+                )
             );
     }
 
@@ -158,6 +192,30 @@ public class UserConnectionService {
                     return userRepository.save(user);
                 })
             );
+    }
+
+    public Mono<Integer> countFriendsForUser(String userId) {
+        return userRepository.findFriendsByUser(userId).count().map(Long::intValue);
+    }
+
+    public Mono<Integer> countMutualFriendsForUsers(String userId, String otherId) {
+        return userRepository.findMutualFriendsBetweenUsers(userId, otherId)
+            .count().map(Long::intValue);
+    }
+
+    public Mono<Boolean> isFriend(String userId, String targetId) {
+        return userRepository.findFriendByUser(userId, targetId)
+            .hasElement();
+    }
+
+    public Mono<Boolean> isFollowing(String userId, String targetId) {
+        return userRepository.findFollowingByUser(userId, targetId)
+            .hasElement();
+    }
+
+    public Mono<Boolean> isRequestFriend(String userId, String targetId) {
+        return userRepository.findSentRequestByUser(userId, targetId)
+            .hasElement();
     }
 
     private Mono<User> getFriendRequestByUser(String userId, String targetId) {

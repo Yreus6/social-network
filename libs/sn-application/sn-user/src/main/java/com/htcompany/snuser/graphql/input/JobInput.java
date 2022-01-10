@@ -10,6 +10,8 @@ public class JobInput {
 
     private final String description;
 
+    private final Boolean isCurrentWork;
+
     private final String fromDate;
 
     private final String toDate;
@@ -18,11 +20,12 @@ public class JobInput {
 
     public JobInput(
         String company, String position, String city, String description,
-        String fromDate, String toDate, String mode) {
+        Boolean isCurrentWork, String fromDate, String toDate, String mode) {
         this.company = company;
         this.position = position;
         this.city = city;
         this.description = description;
+        this.isCurrentWork = isCurrentWork;
         this.fromDate = fromDate;
         this.toDate = toDate;
         this.mode = mode;
@@ -42,6 +45,10 @@ public class JobInput {
 
     public String getDescription() {
         return description;
+    }
+
+    public Boolean getIsCurrentWork() {
+        return isCurrentWork;
     }
 
     public String getFromDate() {

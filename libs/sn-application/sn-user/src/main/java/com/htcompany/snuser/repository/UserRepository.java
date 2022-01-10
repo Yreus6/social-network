@@ -40,12 +40,17 @@ public interface UserRepository extends ReactiveNeo4jRepository<User, String> {
         "RETURN f, collect(r), collect(u)")
     Mono<User> findFollowingByUser(String userId, String followedId);
 
-    @Query("MATCH (f:User)-[r:FOLLOW]->(u:User {id: $userId})\n" +
-        "RETURN f, collect(r), collect(u)")
+    @Query("MATCH (u:User)-[r:FOLLOW]->(f:User {id: $userId})\n" +
+        "RETURN u, collect(r), collect(f)")
     Flux<User> findFollowersByUser(String userId);
 
     @Query("MATCH (f:User)<-[:IS_FRIEND_WITH]-(u1:User {id: $user1Id})\n" +
         "MATCH (f)<-[:IS_FRIEND_WITH]-(u2:User {id: $user2Id})\n" +
         "RETURN f, collect(u1), collect(u2)")
     Flux<User> findMutualFriendsBetweenUsers(String user1Id, String user2Id);
+
+    @Query("MATCH (f2:User)-[:IS_FRIEND_WITH]-(f1:User)-[:IS_FRIEND_WITH]-(u:User {id: $userId})\n" +
+        "WHERE f2.id <> $userId\n" +
+        "RETURN f2, collect(f1), collect(u)")
+    Flux<User> findFriendSuggestionsForUser(String userId);
 }

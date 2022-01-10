@@ -9,6 +9,24 @@ generates:
       - typescript-operations
       - typescript-rtk-query:
           importBaseApiFrom: '@sn-htc/shared/data-access'
+          exportHooks: true
     config:
       scalars:
         DateTime: Date
+        ConnectionCursor: string
+
+  ./libs/social-network-frontend/data-access-user/src/lib/userProfile.ts:
+    schema:
+      - 'apps/sn-application/src/main/resources/graphql/shared/*.graphqls'
+      - 'apps/sn-application/src/main/resources/graphql/user/*.graphqls'
+    documents: 'libs/sn-application/sn-user/src/test/resources/graphql/*.graphql'
+    plugins:
+      - typescript
+      - typescript-operations
+      - typescript-rtk-query:
+          importBaseApiFrom: '@sn-htc/shared/data-access'
+          exportHooks: true
+    config:
+      scalars:
+        DateTime: Date
+        ConnectionCursor: string

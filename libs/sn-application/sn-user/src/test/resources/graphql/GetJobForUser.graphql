@@ -5,6 +5,7 @@ query GetJobForUser($userId: ID!, $jobId: ID!) {
         position
         city
         description
+        isCurrentWork
         dateRange {
             fromDate
             toDate

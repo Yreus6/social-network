@@ -70,6 +70,8 @@ class EducationServiceTest {
         Mockito.lenient().when(profileRepository.getProfileByUser(USER_ID))
             .thenReturn(Mono.just(profile));
         Mockito.lenient().when(profileRepository.save(profile)).thenReturn(Mono.just(profile));
+        Mockito.lenient().when(profileRepository.findById((String) null))
+            .thenReturn(Mono.just(profile));
 
         DateRange dateRange = DateRangeService.createDateRange(FROM_DATE, TO_DATE);
         Education education = Education.of(

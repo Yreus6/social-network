@@ -9,6 +9,7 @@ dependencies {
     api 'org.springframework.experimental:graphql-spring-boot-starter:1.0.0-M3'
     api 'org.zalando:problem-spring-webflux:0.27.0'
     api 'com.zhokhov.graphql:graphql-java-datetime:4.1.0'
+    api 'com.graphql-java:graphql-java-extended-scalars:17.0'
     api 'org.apache.commons:commons-lang3'
     api 'org.modelmapper:modelmapper:2.4.4'
 

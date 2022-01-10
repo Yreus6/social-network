@@ -11,6 +11,7 @@ export type Scalars = {
   Boolean: boolean;
   Int: number;
   Float: number;
+  ConnectionCursor: string;
   DateTime: Date;
 };
 
@@ -20,11 +21,6 @@ export type DateRange = {
   toDate?: Maybe<Scalars['DateTime']>;
 };
 
-export type Image = {
-  id: Scalars['ID'];
-  imageUrl?: Maybe<Scalars['String']>;
-};
-
 export type Mutation = {
   __typename?: 'Mutation';
   null?: Maybe<Scalars['Boolean']>;
@@ -32,6 +28,14 @@ export type Mutation = {
 
 export type Node = {
   id: Scalars['ID'];
+};
+
+export type PageInfo = {
+  __typename?: 'PageInfo';
+  endCursor?: Maybe<Scalars['ConnectionCursor']>;
+  hasNextPage?: Maybe<Scalars['Boolean']>;
+  hasPreviousPage?: Maybe<Scalars['Boolean']>;
+  startCursor?: Maybe<Scalars['ConnectionCursor']>;
 };
 
 export enum PrivacyType {
@@ -48,6 +52,7 @@ export type Query = {
 export type Subscription = {
   __typename?: 'Subscription';
   greeting?: Maybe<Scalars['Int']>;
+  null?: Maybe<Scalars['Boolean']>;
 };
 
 export type GreetingQueryVariables = Exact<{ [key: string]: never; }>;
@@ -57,19 +62,19 @@ export type GreetingQuery = { __typename?: 'Query', greeting?: string | null | u
 
 
 export const GreetingDocument = `
-    query greeting {
+    query Greeting {
   greeting
 }
     `;
 
 const injectedRtkApi = api.injectEndpoints({
   endpoints: (build) => ({
-    greeting: build.query<GreetingQuery, GreetingQueryVariables | void>({
+    Greeting: build.query<GreetingQuery, GreetingQueryVariables | void>({
       query: (variables) => ({ document: GreetingDocument, variables })
     })
   })
 });
 
 export { injectedRtkApi as api };
-
+export const { useGreetingQuery, useLazyGreetingQuery } = injectedRtkApi;
 

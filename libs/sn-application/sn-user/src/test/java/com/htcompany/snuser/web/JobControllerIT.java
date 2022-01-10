@@ -75,7 +75,7 @@ class JobControllerIT {
             null, null, new Date(), null, null, null, user
         );
         Profile savedProfile = profileRepository.save(profile).block();
-        Job job = Job.of("abc", "", "", "", null, PrivacyType.PUBLIC);
+        Job job = Job.of("abc", "", "", "", false, null, PrivacyType.PUBLIC);
         Job savedJob = jobRepository.save(job).block();
         jobId = savedJob.getId();
         savedProfile.addJob(savedJob);
@@ -90,7 +90,7 @@ class JobControllerIT {
         for (int i = 0; i < 100; ++i) {
             Job job = Job.of(
                 faker.company().name(), "Manager", "Hanoi",
-                "Description", null, PrivacyType.PUBLIC
+                "Description",  false, null, PrivacyType.PUBLIC
             );
             Job savedJob = jobRepository.save(job).block();
             p.addJob(savedJob);
@@ -118,7 +118,7 @@ class JobControllerIT {
         ).block();
         Job job = Job.of(
             faker.company().name(), "Manager", "Hanoi",
-            "Description", null, PrivacyType.FRIEND
+            "Description", false, null, PrivacyType.FRIEND
         );
         p.addJob(job);
         profileRepository.save(p).block();
@@ -154,7 +154,7 @@ class JobControllerIT {
             .variable("userId", USER_ID)
             .variable(
                 "jobInput",
-                new JobInput("test", "", "", "", FROM_DATE, TO_DATE, "PUBLIC")
+                new JobInput("test", "", "", "", false, FROM_DATE, TO_DATE, "PUBLIC")
             )
             .httpHeaders(headers -> headers.setBearerAuth(USER_TOKEN))
             .execute()
@@ -174,7 +174,7 @@ class JobControllerIT {
                 "jobInput",
                 new JobInput(
                     "test1", "abc", "Hanoi",
-                    "Description", FROM_DATE, TO_DATE, "FRIEND"
+                    "Description", false, FROM_DATE, TO_DATE, "FRIEND"
                 )
             )
             .httpHeaders(headers -> headers.setBearerAuth(USER_TOKEN))

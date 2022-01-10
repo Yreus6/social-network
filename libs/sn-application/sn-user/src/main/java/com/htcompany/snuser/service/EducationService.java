@@ -65,17 +65,18 @@ public class EducationService {
     @Transactional
     public Mono<Education> addEducationForUser(String userId, EducationInput educationInput) {
         return profileRepository.getProfileByUser(userId)
-            .flatMap(profile -> {
-                Education education = mapper.educationInputToEducation(educationInput);
+            .flatMap(p -> profileRepository.findById(p.getId())
+                .flatMap(profile -> {
+                    Education education = mapper.educationInputToEducation(educationInput);
 
-                return educationRepository.save(education)
-                    .flatMap(savedEdu -> {
-                        profile.addEducation(savedEdu);
+                    return educationRepository.save(education)
+                        .flatMap(savedEdu -> {
+                            profile.addEducation(savedEdu);
 
-                        return profileRepository.save(profile)
-                            .thenReturn(savedEdu);
-                    });
-            });
+                            return profileRepository.save(profile)
+                                .thenReturn(savedEdu);
+                        });
+                }));
     }
 
     public Mono<Education> editEducationForUser(String userId, String educationId, EducationInput educationInput) {

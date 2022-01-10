@@ -26,7 +26,7 @@ class JobMapperTest {
     void givenJobInput_whenMapToJob_thenReturnJob() {
         JobInput jobInput = new JobInput(
             "test", "", "", "",
-            "2011-12-03T10:15:30Z", "2012-12-03T10:15:30Z", "PUBLIC"
+            false, "2011-12-03T10:15:30Z", "2012-12-03T10:15:30Z", "PUBLIC"
         );
         Job job = jobMapper.jobInputToJob(jobInput);
 

@@ -71,6 +71,10 @@ public class User {
         this.setEmail(anEmail);
     }
 
+    public void changeUsername(String aUsername) {
+        this.setUsername(aUsername);
+    }
+
     public void sendRequest(User target) {
         if (isNotSelf(target)) {
             sentRequests.add(target);
@@ -135,6 +139,10 @@ public class User {
 
     public Set<User> getFollowings() {
         return Collections.unmodifiableSet(followings);
+    }
+
+    private void setUsername(String username) {
+        this.username = username;
     }
 
     private void setEmail(String email) {

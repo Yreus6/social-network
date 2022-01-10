@@ -70,6 +70,7 @@ public class UserService {
                 oktaUser.update();
 
                 user.changeEmail(email);
+                user.changeUsername(email);
 
                 return userRepository.save(user);
             });

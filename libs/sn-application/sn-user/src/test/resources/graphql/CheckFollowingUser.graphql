@@ -1,0 +1,3 @@
+query CheckFollowingUser($userId: ID!, $otherId: ID!) {
+    checkFollowing(userId: $userId, otherId: $otherId)
+}

@@ -1,9 +1,7 @@
-import { getForbidden, getGreeting } from '../support/Auth.po';
-
 describe('Authentication and Authorization', () => {
   describe('Unauthenticated user', () => {
     it('should redirect unauthenticated user to signin page', () => {
-      cy.visit('/protected');
+      cy.visit('/profile');
       cy.location('pathname').should('equal', '/signin');
       cy.percySnapshot('Redirect to Sign In');
     });
@@ -29,26 +27,6 @@ describe('Authentication and Authorization', () => {
       cy.getBySel('socivio-landing').should('be.visible')
         .and('contain.html', '<h3>Socivio</h3>');
       cy.percySnapshot('Redirect to Landing');
-    });
-
-    it('should display error message for user has not enough authorities', () => {
-      cy.visit('/protected');
-      getForbidden().should('be.visible')
-        .and('have.text', 'You are not allowed to view this page');
-      cy.percySnapshot('Forbidden');
-    });
-  });
-
-  describe('Authenticated admin user', () => {
-    beforeEach(() => {
-      cy.loginByOktaApi(Cypress.env('admin_username'), Cypress.env('admin_password'));
-    });
-
-    it('should display greeting message for admin user', () => {
-      cy.visit('/protected');
-      getGreeting().should('be.visible')
-        .and('contain.text', 'Hello');
-      cy.percySnapshot('Greeting message');
     });
   });
 });

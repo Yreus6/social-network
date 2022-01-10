@@ -1,0 +1,3 @@
+query CheckRequestFriendUser($userId: ID!, $otherId: ID!) {
+    checkRequestFriend(userId: $userId, otherId: $otherId)
+}

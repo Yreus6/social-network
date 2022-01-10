@@ -114,12 +114,13 @@ class UserServiceTest {
     void givenOktaUser_whenChangeEmail_thenReturnUpdatedUser() {
         Mockito.when(userRepository.save(Mockito.any(User.class)))
             .thenReturn(Mono.just(
-                User.of(USER_ID, "test", "test1@example.com", "test", "", "user")
+                User.of(USER_ID, "test1@example.com", "test1@example.com", "test", "", "user")
             ));
 
         User user = userService.changeEmailForUser(USER_ID, "test1@example.com").block();
 
         assertThat(user).isNotNull();
         assertThat(user.getEmail()).isEqualTo("test1@example.com");
+        assertThat(user.getUsername()).isEqualTo("test1@example.com");
     }
 }

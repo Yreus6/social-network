@@ -58,6 +58,8 @@ class ProfileServiceTest {
         Mockito.lenient().when(userRepository.findFriendByUser(USER_ID, USER_ID2))
             .thenReturn(Mono.just(user2));
         Mockito.lenient().when(profileRepository.save(mock)).thenReturn(Mono.just(mock));
+        Mockito.lenient().when(profileRepository.findById((String) null))
+            .thenReturn(Mono.just(mock));
     }
 
     @Test

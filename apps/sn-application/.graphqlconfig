@@ -12,6 +12,12 @@
                 "./src/main/resources/graphql/shared/**",
                 "./src/main/resources/graphql/user/**"
             ]
+        },
+        "seed": {
+            "includes": [
+                "./src/main/resources/graphql/shared/**",
+                "./src/main/resources/graphql/seed/**"
+            ]
         }
     }
 }

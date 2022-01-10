@@ -5,9 +5,7 @@ import com.htcompany.sndomain.shared.DateRange;
 import com.htcompany.sndomain.shared.PrivacyType;
 import java.util.Objects;
 import org.springframework.data.neo4j.core.convert.ConvertWith;
-import org.springframework.data.neo4j.core.schema.GeneratedValue;
-import org.springframework.data.neo4j.core.schema.Id;
-import org.springframework.data.neo4j.core.schema.Node;
+import org.springframework.data.neo4j.core.schema.*;
 import org.springframework.data.neo4j.core.support.UUIDStringGenerator;
 
 @Node
@@ -25,30 +23,34 @@ public class Job {
 
     private String description;
 
+    @Property(name = "is_current_work")
+    private Boolean isCurrentWork;
+
     @ConvertWith(converter = DateRangeConverter.class)
     private DateRange dateRange;
 
     private PrivacyType mode;
+
+    public static Job of(
+        String company, String position, String city, String description,
+        Boolean isCurrentWork, DateRange dateRange, PrivacyType mode) {
+        return new Job(null, company, position, city, description, isCurrentWork, dateRange, mode);
+    }
 
     private Job() {
     }
 
     private Job(
         String id, String company, String position, String city, String description,
-        DateRange dateRange, PrivacyType mode) {
+        Boolean isCurrentWork, DateRange dateRange, PrivacyType mode) {
         this.id = id;
         this.company = company;
         this.position = position;
         this.city = city;
         this.description = description;
+        this.isCurrentWork = isCurrentWork;
         this.dateRange = dateRange;
         this.mode = mode;
-    }
-
-    public static Job of(
-        String company, String position, String city, String description,
-        DateRange dateRange, PrivacyType mode) {
-        return new Job(null, company, position, city, description, dateRange, mode);
     }
 
     public void updateWith(Job another) {
@@ -63,6 +65,9 @@ public class Job {
         }
         if (another.getDescription() != null) {
             this.setDescription(another.getDescription());
+        }
+        if (another.getIsCurrentWork() != null) {
+            this.setIsCurrentWork(another.getIsCurrentWork());
         }
         if (another.getDateRange() != null) {
             this.setDateRange(another.getDateRange());
@@ -80,44 +85,52 @@ public class Job {
         return company;
     }
 
-    private void setCompany(String company) {
-        this.company = company;
-    }
-
     public String getPosition() {
         return position;
-    }
-
-    private void setPosition(String position) {
-        this.position = position;
     }
 
     public String getCity() {
         return city;
     }
 
-    private void setCity(String city) {
-        this.city = city;
-    }
-
     public String getDescription() {
         return description;
     }
 
-    private void setDescription(String description) {
-        this.description = description;
+    public Boolean getIsCurrentWork() {
+        return isCurrentWork;
     }
 
     public DateRange getDateRange() {
         return dateRange;
     }
 
-    private void setDateRange(DateRange dateRange) {
-        this.dateRange = dateRange;
-    }
-
     public PrivacyType getMode() {
         return mode;
+    }
+
+    private void setCompany(String company) {
+        this.company = company;
+    }
+
+    private void setPosition(String position) {
+        this.position = position;
+    }
+
+    private void setCity(String city) {
+        this.city = city;
+    }
+
+    private void setDescription(String description) {
+        this.description = description;
+    }
+
+    private void setIsCurrentWork(Boolean isCurrentWork) {
+        this.isCurrentWork = isCurrentWork;
+    }
+
+    private void setDateRange(DateRange dateRange) {
+        this.dateRange = dateRange;
     }
 
     private void setMode(PrivacyType mode) {
@@ -145,6 +158,7 @@ public class Job {
             ", position='" + position + '\'' +
             ", city='" + city + '\'' +
             ", description='" + description + '\'' +
+            ", isCurrentWork='" + isCurrentWork + '\'' +
             ", dateRange=" + dateRange +
             ", mode=" + mode +
             '}';

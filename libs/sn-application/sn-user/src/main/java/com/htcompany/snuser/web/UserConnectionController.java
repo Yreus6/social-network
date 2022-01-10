@@ -44,6 +44,21 @@ public class UserConnectionController {
         return connectionService.getMutualFriendsForUsers(env);
     }
 
+    @QueryMapping
+    public Mono<Connection<User>> getFriendRequests(DataFetchingEnvironment env) {
+        return connectionService.getFriendRequestsForUser(env);
+    }
+
+    @QueryMapping
+    public Mono<Connection<User>> getSentRequests(DataFetchingEnvironment env) {
+        return connectionService.getSentRequestsForUser(env);
+    }
+
+    @QueryMapping
+    public Mono<Connection<User>> getFriendSuggestions(DataFetchingEnvironment env) {
+        return connectionService.getFriendSuggestionsForUser(env);
+    }
+
     @MutationMapping
     @SuppressWarnings("unchecked")
     public Mono<User> sendFriendRequest(@Argument String userId, @Argument String targetId) {
@@ -133,5 +148,30 @@ public class UserConnectionController {
                 () -> connectionService.unfollowUser(userId, followedId)
             );
         });
+    }
+
+    @QueryMapping
+    public Mono<Integer> countFriends(@Argument String userId) {
+        return connectionService.countFriendsForUser(userId);
+    }
+
+    @QueryMapping
+    public Mono<Integer> countMutualFriends(@Argument String userId, @Argument String otherId) {
+        return connectionService.countMutualFriendsForUsers(userId, otherId);
+    }
+
+    @QueryMapping
+    public Mono<Boolean> checkFriend(@Argument String userId, @Argument String otherId) {
+        return connectionService.isFriend(userId, otherId);
+    }
+
+    @QueryMapping
+    public Mono<Boolean> checkFollowing(@Argument String userId, @Argument String otherId) {
+        return connectionService.isFollowing(userId, otherId);
+    }
+
+    @QueryMapping
+    public Mono<Boolean> checkRequestFriend(@Argument String userId, @Argument String otherId) {
+        return connectionService.isRequestFriend(userId, otherId);
     }
 }

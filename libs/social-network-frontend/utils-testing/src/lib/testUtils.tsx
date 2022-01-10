@@ -1,26 +1,31 @@
 import { FC, ReactElement } from 'react';
 import { render as rtlRender } from '@testing-library/react';
-import { configureStore } from '@reduxjs/toolkit';
+import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import { Provider } from 'react-redux';
 import { Router } from 'react-router-dom';
-import { greetingApi } from '@sn-htc/social-network-frontend/data-access-home';
+import { api as greetingApi } from '@sn-htc/social-network-frontend/data-access-home';
 import { createMemoryHistory } from 'history';
 import { oktaAuth } from './mocks/oktaAuth';
 import { mockUser } from './mocks/mockUser';
 import { Security } from '@okta/okta-react';
 import { toRelativeUrl } from '@okta/okta-auth-js';
+import { api as userProfileApi } from '@sn-htc/social-network-frontend/data-access-user';
 
 const history = createMemoryHistory();
+
+const rootReducer = combineReducers({
+  [greetingApi.reducerPath]: greetingApi.reducer,
+  [userProfileApi.reducerPath]: userProfileApi.reducer,
+});
 
 const render = (
   ui: ReactElement,
   {
     store = configureStore({
-      reducer: {
-        [greetingApi.reducerPath]: greetingApi.reducer
-      },
+      reducer: rootReducer,
       middleware: getDefaultMiddleware =>
-        getDefaultMiddleware().concat(greetingApi.middleware),
+        getDefaultMiddleware().concat(greetingApi.middleware)
+          .concat(userProfileApi.middleware),
     }),
     ...renderOptions
   } = {}

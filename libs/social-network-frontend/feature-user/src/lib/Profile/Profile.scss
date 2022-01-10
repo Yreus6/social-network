@@ -1,0 +1,27 @@
+.profile {
+  .profile-main {
+    background-color: #FFFFFF;
+    border: 1px solid #E3E4E7;
+    box-shadow: 0 0 8px rgba(113, 123, 142, 0.3);
+    border-radius: 0 0 12px 12px;
+
+    .banner {
+      width: 100%;
+      max-height: 350px;
+      object-fit: cover;
+    }
+
+    .avatar {
+      cursor: pointer;
+      left: 2rem;
+      top: 238px;
+      height: 10rem;
+      width: 10rem;
+      object-fit: cover;
+    }
+
+    .button-group {
+      min-height: 2rem;
+    }
+  }
+}

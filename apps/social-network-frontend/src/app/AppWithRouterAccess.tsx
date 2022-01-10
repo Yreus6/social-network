@@ -29,6 +29,7 @@ const AppWithRouterAccess = () => {
         <Route path='/signin' render={() => <Login config={oktaSignInConfig} />} />
         <Route path='/signin/callback' component={LoginCallback} />
         <PrivateRoutesContainer />
+        <Route path='*' render={() => <h1>Not Found</h1>} />
       </Switch>
     </Security>
   );

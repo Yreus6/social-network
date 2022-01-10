@@ -90,59 +90,65 @@ public class ProfileService {
 
     public Mono<Profile> editAddressForUser(String userId, AddressInput addressInput) {
         return profileRepository.getProfileByUser(userId)
-            .flatMap(profile -> {
-                Address address = mapper.addressInputToAddress(addressInput);
-                profile.changeAddress(address);
+            .flatMap(p -> profileRepository.findById(p.getId())
+                .flatMap(profile -> {
+                    Address address = mapper.addressInputToAddress(addressInput);
+                    profile.changeAddress(address);
 
-                return profileRepository.save(profile);
-            });
+                    return profileRepository.save(profile);
+                }));
     }
 
     public Mono<Profile> editBirthdayForUser(String userId, BirthdayInput birthdayInput) {
         return profileRepository.getProfileByUser(userId)
-            .flatMap(profile -> {
-                Birthday birthday = mapper.birthdayInputToBirthday(birthdayInput);
-                profile.changeBirthday(birthday);
+            .flatMap(p -> profileRepository.findById(p.getId())
+                .flatMap(profile -> {
+                    Birthday birthday = mapper.birthdayInputToBirthday(birthdayInput);
+                    profile.changeBirthday(birthday);
 
-                return profileRepository.save(profile);
-            });
+                    return profileRepository.save(profile);
+                }));
     }
 
     public Mono<Profile> editPhoneForUser(String userId, PhoneInput phoneInput) {
         return profileRepository.getProfileByUser(userId)
-            .flatMap(profile -> {
-                PhoneNumber phoneNumber = mapper.phoneInputToPhone(phoneInput);
-                profile.changePhone(phoneNumber);
+            .flatMap(p -> profileRepository.findById(p.getId())
+                .flatMap(profile -> {
+                    PhoneNumber phoneNumber = mapper.phoneInputToPhone(phoneInput);
+                    profile.changePhone(phoneNumber);
 
-                return profileRepository.save(profile);
-            });
+                    return profileRepository.save(profile);
+                }));
     }
 
     public Mono<Profile> editGenderForUser(String userId, String gender) {
         return profileRepository.getProfileByUser(userId)
-            .flatMap(profile -> {
-                profile.changeGender(gender);
+            .flatMap(p -> profileRepository.findById(p.getId())
+                .flatMap(profile -> {
+                    profile.changeGender(gender);
 
-                return profileRepository.save(profile);
-            });
+                    return profileRepository.save(profile);
+                }));
     }
 
     public Mono<Profile> editBioForUser(String userId, String bio) {
         return profileRepository.getProfileByUser(userId)
-            .flatMap(profile -> {
-                profile.changeBio(bio);
+            .flatMap(p -> profileRepository.findById(p.getId())
+                .flatMap(profile -> {
+                    profile.changeBio(bio);
 
-                return profileRepository.save(profile);
-            });
+                    return profileRepository.save(profile);
+                }));
     }
 
     public Mono<Profile> editInterestsForUser(String userId, List<String> interests) {
         return profileRepository.getProfileByUser(userId)
-            .flatMap(profile -> {
-                Set<String> interestsToAdd = new HashSet<>(interests);
-                profile.addInterests(interestsToAdd);
+            .flatMap(p -> profileRepository.findById(p.getId())
+                .flatMap(profile -> {
+                    Set<String> interestsToAdd = new HashSet<>(interests);
+                    profile.addInterests(interestsToAdd);
 
-                return profileRepository.save(profile);
-            });
+                    return profileRepository.save(profile);
+                }));
     }
 }

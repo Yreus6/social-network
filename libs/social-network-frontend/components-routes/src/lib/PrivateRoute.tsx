@@ -12,18 +12,17 @@ export interface UserInfo extends UserClaims {
 }
 
 export const PrivateRoute = ({ hasAnyAuthorities = [], children, ...rest }: PrivateRouteProps) => {
-  const { oktaAuth } = useOktaAuth();
+  const { authState, oktaAuth } = useOktaAuth();
   const [authorities, setAuthorities] = useState<string[] | null>(null);
 
   useEffect(() => {
-    oktaAuth.getUser().then((user) => {
-      const userAuthorities = (user as UserInfo).groups.filter(group => group.startsWith('ROLE_'));
-      setAuthorities(userAuthorities);
-    })
-      .catch(err => {
-        console.error(err);
+    if (authState && authState.isAuthenticated) {
+      oktaAuth.getUser().then(user => {
+        const userAuthorities = (user as UserInfo).groups.filter(group => group.startsWith('ROLE_'));
+        setAuthorities(userAuthorities);
       });
-  }, [oktaAuth]);
+    }
+  }, [authState, oktaAuth]);
 
   return (
     <SecureRoute

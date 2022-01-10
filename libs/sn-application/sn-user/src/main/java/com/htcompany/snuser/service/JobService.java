@@ -65,17 +65,18 @@ public class JobService {
     @Transactional
     public Mono<Job> addJobForUser(String userId, JobInput jobInput) {
         return profileRepository.getProfileByUser(userId)
-            .flatMap(profile -> {
-                Job job = mapper.jobInputToJob(jobInput);
+            .flatMap(p -> profileRepository.findById(p.getId())
+                .flatMap(profile -> {
+                    Job job = mapper.jobInputToJob(jobInput);
 
-                return jobRepository.save(job)
-                    .flatMap(savedJob -> {
-                        profile.addJob(savedJob);
+                    return jobRepository.save(job)
+                        .flatMap(savedJob -> {
+                            profile.addJob(savedJob);
 
-                        return profileRepository.save(profile)
-                            .thenReturn(savedJob);
-                    });
-            });
+                            return profileRepository.save(profile)
+                                .thenReturn(savedJob);
+                        });
+                }));
     }
 
     public Mono<Job> editJobForUser(String userId, String jobId, JobInput jobInput) {

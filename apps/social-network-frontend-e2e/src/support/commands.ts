@@ -40,7 +40,7 @@ Cypress.Commands.add('loginByOktaApi', (username, password) => {
     const config = {
       issuer: `https://${Cypress.env('okta_domain')}/oauth2/default`,
       clientId: Cypress.env('okta_client_id'),
-      redirectUri: window.location.origin + '/signin/callback',
+      redirectUri: 'http://localhost:4200/signin/callback',
       scopes: ['openid', 'email', 'profile', 'groups'],
     };
 
@@ -59,4 +59,40 @@ Cypress.Commands.add('loginByOktaApi', (username, password) => {
         log.end();
       });
   });
+});
+
+Cypress.Commands.add('logout', () => {
+  const log = Cypress.log({
+    name: 'logout',
+    displayName: 'LOGOUT BY OKTA',
+    message: [`🔒 Logging out current user`],
+    autoEnd: false,
+  });
+
+  const config = {
+    issuer: `https://${Cypress.env('okta_domain')}/oauth2/default`,
+    clientId: Cypress.env('okta_client_id'),
+    redirectUri: 'http://localhost:4200/signin/callback',
+    scopes: ['openid', 'email', 'profile', 'groups'],
+  };
+
+  const authClient = new OktaAuth(config);
+
+  log.snapshot('before');
+
+  authClient.signOut({
+    revokeAccessToken: true,
+    revokeRefreshToken: true
+  }).then();
+
+  return cy.location('pathname').should('equal', '/signin')
+    .then(() => {
+      log.snapshot('after');
+      log.end();
+    });
+});
+
+Cypress.Commands.add('switchUser', (username, password) => {
+  cy.logout();
+  cy.loginByOktaApi(username, password);
 });

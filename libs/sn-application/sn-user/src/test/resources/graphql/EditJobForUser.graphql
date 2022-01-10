@@ -5,6 +5,7 @@ mutation EditJobForUser($userId: ID!, $jobId: ID!, $jobInput: JobInput!) {
         position
         city
         description
+        isCurrentWork
         dateRange {
             fromDate
             toDate

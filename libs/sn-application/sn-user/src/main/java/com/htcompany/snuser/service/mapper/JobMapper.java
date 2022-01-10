@@ -28,6 +28,7 @@ public class JobMapper {
             job.getPosition(),
             job.getCity(),
             job.getDescription(),
+            job.getIsCurrentWork(),
             dateRange,
             PrivacyType.valueOf(jobInput.getMode())
         );

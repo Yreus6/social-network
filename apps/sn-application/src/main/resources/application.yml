@@ -28,6 +28,7 @@ spring:
         - classpath:/graphql/shared/
         - classpath:/graphql/greeting/
         - classpath:/graphql/user/
+        - classpath:/graphql/seed/
 
   neo4j:
     uri: neo4j+s://c805f4ee.databases.neo4j.io
