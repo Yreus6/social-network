@@ -226,18 +226,19 @@ const UserProfile = (props: UserProfileProps) => {
   return (
     <div className='profile my-0'>
       <MDBRow className='me-0'>
-        <MDBCol md='2' xl='3' sm='0' />
-        <MDBCol className='m-0 p-0 pb-4' md='8' xl='6' sm='12'>
+        <MDBCol />
+        <MDBCol className='m-0 p-0 pb-4'>
           <div className='profile-main mb-3'>
             <div className='position-relative'>
               <img className='img-fluid banner' src={'https://picsum.photos/1200/1300'} alt='Banner' />
-              <img className='position-absolute avatar border border-4 border-white rounded-circle' src={'https://i.pravatar.cc/300'} alt='Avatar' />
+              <img className='position-absolute avatar border border-4 border-white rounded-circle'
+                   src={'https://i.pravatar.cc/300'} alt='Avatar' />
             </div>
             <div className='px-4 d-flex flex-column'>
               <div className='align-self-end d-flex flex-row mt-3 button-group'>
                 {props.currentUserId !== props.userId &&
-                !checkFriendLoading && !checkFollowingLoading &&
-                !checkRequestFriendLoading && !checkReceiveRequestLoading &&
+                  !checkFriendLoading && !checkFollowingLoading &&
+                  !checkRequestFriendLoading && !checkReceiveRequestLoading &&
                 <>
                   <MDBDropdown>
                     {!checkFriendData?.checkFriend && !checkRequestFriendData?.checkRequestFriend &&
@@ -352,19 +353,22 @@ const UserProfile = (props: UserProfileProps) => {
               <div>
                 <h3 data-test='display-name'>{displayName}</h3>
                 {!countFriendsLoading && countFriendsData &&
-                <span>{countFriendsData.countFriends} Friends</span>
+                  <span>{countFriendsData.countFriends} Friends</span>
                 }
-                <p style={{ textAlign: 'justify' }}>
+                <p
+                  className='mb-0'
+                  style={{ textAlign: 'justify' }}
+                >
                   {profileData?.getUserProfile?.biography}
                 </p>
               </div>
               <div className='d-flex flex-row align-items-center justify-content-end'>
                 {profileData?.getUserProfile?.birthday &&
-                <>
-                  <MDBIcon fas icon='gift' />
-                  <p className='m-0 flex-grow-1 ms-1'>
-                    {DateTime.fromISO(profileData?.getUserProfile?.birthday?.birthdate!.toString(), { zone: 'utc' }).toFormat('dd-MM-yyyy')}
-                  </p>
+                  <>
+                    <MDBIcon fas icon='gift' />
+                    <p className='m-0 flex-grow-1 ms-1'>
+                      {DateTime.fromISO(profileData?.getUserProfile?.birthday?.birthdate!.toString(), { zone: 'utc' }).toFormat('dd-MM-yyyy')}
+                    </p>
                 </>
                 }
               </div>
@@ -437,7 +441,7 @@ const UserProfile = (props: UserProfileProps) => {
             </MDBTabsPane>
           </MDBTabsContent>
         </MDBCol>
-        <MDBCol md='2' xl='3' sm='0' />
+        <MDBCol />
       </MDBRow>
       <MDBToast
         color='danger'

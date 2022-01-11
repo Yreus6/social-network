@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { MDBBtn, MDBInput, MDBSelect } from 'mdb-react-ui-kit';
-import { useForm, Controller } from 'react-hook-form';
+import { Controller, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import { useEditGenderForUserMutation } from '@sn-htc/social-network-frontend/data-access-user';
@@ -80,11 +80,11 @@ const GenderForm = (props: GenderFormProps) => {
 
   return (
     <form
-      className='d-flex flex-column'
+      className='d-flex flex-column ps-2 mt-2'
       onSubmit={showInput ? handleSubmit(onSubmit) : onSubmitForm}
     >
       <MDBSelect
-        className='mt-2 mb-3'
+        className='mb-3'
         placeholder='Choose your gender'
         data={[
           { text: 'Male', value: 1, selected: gender === 'Male' },
@@ -122,13 +122,13 @@ const GenderForm = (props: GenderFormProps) => {
       <div className='d-flex mt-2 align-self-end'>
         <MDBBtn
           onClick={props.onCancel}
-          className='me-2'
+          className='me-2 shadow-0'
           color='light'
           type='button'
         >
           Cancel
         </MDBBtn>
-        <MDBBtn type='submit' disabled={isUpdating}>Save</MDBBtn>
+        <MDBBtn className='shadow-0' type='submit' disabled={isUpdating}>Save</MDBBtn>
       </div>
     </form>
   );

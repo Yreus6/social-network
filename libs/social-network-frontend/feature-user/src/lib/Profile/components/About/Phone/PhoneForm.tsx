@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Privacy } from '@sn-htc/social-network-frontend/ui-dropdowns';
 import { MDBBtn, MDBInput } from 'mdb-react-ui-kit';
-import { useForm, Controller } from 'react-hook-form';
+import { Controller, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import { useEditPhoneForUserMutation } from '@sn-htc/social-network-frontend/data-access-user';
@@ -53,7 +53,7 @@ const PhoneForm = (props: PhoneFormProps) => {
   };
 
   return (
-    <form className='d-flex flex-column w-100' onSubmit={handleSubmit(onSubmit)}>
+    <form className='d-flex flex-column w-100 mb-2 ps-2' onSubmit={handleSubmit(onSubmit)}>
       <div className='w-100 flex-grow-1'>
         <Controller
           name='phone'
@@ -66,19 +66,20 @@ const PhoneForm = (props: PhoneFormProps) => {
                 autoComplete={name}
                 onChange={onChange}
                 onBlur={onBlur}
-                className={errors.phone ? 'mb-3 is-invalid' : 'mb-3'}
+                className={errors.phone ? 'is-invalid' : ''}
                 label='Phone Number'
               />
               {errors.phone &&
-              <div className='invalid-feedback d-block position-relative mb-2'>
-                {errors.phone?.message}
-              </div>
+                <div className='invalid-feedback d-block position-relative mb-2'>
+                  {errors.phone?.message}
+                </div>
               }
             </>
           }
         />
       </div>
-      <div className='d-flex flex-row '>
+      <hr className='mt-2 mb-2' />
+      <div className='d-flex flex-row'>
         <div className='flex-grow-1'>
           <Privacy
             privacy={privacy}

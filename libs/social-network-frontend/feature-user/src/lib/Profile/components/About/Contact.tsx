@@ -32,20 +32,18 @@ const Contact = (props: ContactProps) => {
 
   return (
     <>
-      <MDBContainer>
-        <h5>Contact Info</h5>
-      </MDBContainer>
-      <MDBContainer className='mb-3'>
+      <MDBContainer className='ps-2 pb-1 pe-2'>
+        <h6 className='mb-3 about-content-header'>Living Location</h6>
         {props.currentUserId === props.userId && !props.profile.address &&
-        <AddAddress
-          userId={props.userId}
-          updateProfile={updateProfile}
-          showToast={() => setShowErrorToast(true)}
-        />
+          <AddAddress
+            userId={props.userId}
+            updateProfile={updateProfile}
+            showToast={() => setShowErrorToast(true)}
+          />
         }
         {props.currentUserId !== props.userId && !props.profile.address &&
-        <div className='d-flex align-items-center'>
-          <MDBIcon className='me-3' fas icon='home' />
+          <div className='d-flex align-items-center'>
+            <MDBIcon className='me-3' fas icon='home' />
           <div className='d-flex flex-column justify-content-center flex-grow-1'>
             <p className='m-0'>No address to show</p>
           </div>
@@ -53,26 +51,27 @@ const Contact = (props: ContactProps) => {
         }
 
         {props.profile.address &&
-        <EditAddress
-          currentUserId={props.currentUserId}
-          userId={props.userId}
-          address={props.profile.address}
-          updateProfile={updateProfile}
-          showToast={() => setShowErrorToast(true)}
-        />
+          <EditAddress
+            currentUserId={props.currentUserId}
+            userId={props.userId}
+            address={props.profile.address}
+            updateProfile={updateProfile}
+            showToast={() => setShowErrorToast(true)}
+          />
         }
       </MDBContainer>
-      <MDBContainer className='mb-3'>
+      <MDBContainer className='ps-2 pb-2 pe-2'>
+        <h6 className='mb-3 about-content-header'>Phone number</h6>
         {props.currentUserId === props.userId && !props.profile.phoneNumber &&
-        <AddPhone
-          userId={props.userId}
-          updateProfile={updateProfile}
-          showToast={() => setShowErrorToast(true)}
-        />
+          <AddPhone
+            userId={props.userId}
+            updateProfile={updateProfile}
+            showToast={() => setShowErrorToast(true)}
+          />
         }
         {props.currentUserId !== props.userId && !props.profile.phoneNumber &&
-        <div className='d-flex align-items-center'>
-          <MDBIcon className='me-3' fas icon='phone-alt' />
+          <div className='d-flex align-items-center'>
+            <MDBIcon className='me-3' fas icon='phone-alt' />
           <div className='d-flex flex-column flex-grow-1'>
             <p className='m-0'>No phone number to show</p>
           </div>

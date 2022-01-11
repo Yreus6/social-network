@@ -1,12 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import {
-  MDBBtn,
-  MDBCheckbox,
-  MDBContainer,
-  MDBIcon,
-  MDBInput,
-  MDBDatepicker, MDBToast
-} from 'mdb-react-ui-kit';
+import { MDBContainer, MDBIcon, MDBToast } from 'mdb-react-ui-kit';
 import { useGetEducationsForUserQuery, useGetJobsForUserQuery } from '@sn-htc/social-network-frontend/data-access-user';
 import AddWork from './Work/AddWork';
 import EditWork from './Work/EditWork';
@@ -45,18 +38,18 @@ const WorkAndEducation = (props: WorkAndEducationProps) => {
 
   return (
     <>
-      <MDBContainer className='mb-3'>
-        <h5>Work</h5>
+      <MDBContainer className='ps-2 pb-2 pe-2'>
+        <h6 className='mb-3 about-content-header'>Work</h6>
         {props.currentUserId === props.userId &&
-        <AddWork
-          userId={props.userId}
-          updateWork={updateWork}
-          showToast={() => setShowErrorToast(true)}
-        />
+          <AddWork
+            userId={props.userId}
+            updateWork={updateWork}
+            showToast={() => setShowErrorToast(true)}
+          />
         }
         {props.currentUserId !== props.userId && !isJobsLoading && jobsData?.getJobs?.length === 0 &&
-        <div className='d-flex align-items-center mt-3'>
-          <MDBIcon className='me-3' fas icon='briefcase' />
+          <div className='d-flex align-items-center mt-3'>
+            <MDBIcon className='me-3' fas icon='briefcase' />
           <div className='d-flex flex-column justify-content-center flex-grow-1'>
             <p className='m-0'>No workplace to show</p>
           </div>
@@ -75,18 +68,18 @@ const WorkAndEducation = (props: WorkAndEducationProps) => {
         )}
       </MDBContainer>
 
-      <MDBContainer className='mb-3'>
-        <h5>Education</h5>
+      <MDBContainer className='ps-2 pb-2 pe-2'>
+        <h6 className='mt-1 mb-3 about-content-header'>Education</h6>
         {props.currentUserId === props.userId &&
-        <AddEducation
-          userId={props.userId}
-          updateEdu={updateEdu}
-          showToast={() => setShowErrorToast(true)}
-        />
+          <AddEducation
+            userId={props.userId}
+            updateEdu={updateEdu}
+            showToast={() => setShowErrorToast(true)}
+          />
         }
         {props.currentUserId !== props.userId && !isEdusLoading && edusData?.getEducations?.length === 0 &&
-        <div className='d-flex align-items-center mt-3'>
-          <MDBIcon className='me-3' fas icon="graduation-cap" />
+          <div className='d-flex align-items-center mt-3'>
+            <MDBIcon className='me-3' fas icon='graduation-cap' />
           <div className='d-flex flex-column justify-content-center flex-grow-1'>
             <p className='m-0'>No school to show</p>
           </div>

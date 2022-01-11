@@ -1,6 +1,6 @@
 import React from 'react';
 import { MDBBtn, MDBInput } from 'mdb-react-ui-kit';
-import { useForm, Controller } from 'react-hook-form';
+import { Controller, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import { useEditBioForUserMutation } from '@sn-htc/social-network-frontend/data-access-user';
@@ -42,7 +42,7 @@ const BioForm = (props: BioFormProps) => {
   };
 
   return (
-    <form className='d-flex flex-column w-100' onSubmit={handleSubmit(onSubmit)}>
+    <form className='d-flex flex-column w-100 ps-2' onSubmit={handleSubmit(onSubmit)}>
       <Controller
         name='biography'
         control={control}
@@ -58,26 +58,28 @@ const BioForm = (props: BioFormProps) => {
               label='Biography'
               textarea
               rows={4}
+              size='lg'
             />
             {errors.biography &&
-            <div className='invalid-feedback d-block position-relative mb-2'>
-              {errors.biography?.message}
-            </div>
+              <div className='invalid-feedback d-block position-relative mb-2'>
+                {errors.biography?.message}
+              </div>
             }
           </>
         }
       />
+      <hr className='mt-2 mb-2' />
 
       <div className='d-flex mt-2 align-self-end'>
         <MDBBtn
           onClick={props.onCancel}
-          className='me-2'
+          className='me-2 shadow-0'
           color='light'
           type='button'
         >
           Cancel
         </MDBBtn>
-        <MDBBtn type='submit' disabled={isUpdating}>Save</MDBBtn>
+        <MDBBtn className='shadow-0' type='submit' disabled={isUpdating}>Save</MDBBtn>
       </div>
     </form>
   );

@@ -37,18 +37,20 @@ const EditEducation = (props: EditEducationProps) => {
       studyTo={DateTime.fromISO(props.education.dateRange!.toDate!.toString(), { zone: 'utc' }).toFormat('dd-MM-yyyy')}
       mode={props.education.mode!}
     /> :
-    <div className='d-flex align-items-center mt-3'>
-      <MDBIcon className='me-3' fas icon="graduation-cap" />
-      <div className='d-flex flex-column justify-content-center flex-grow-1'>
-        <p className='m-0'>
-          {!props.education.isGraduate ?
-            <>
-              Studying at {props.education.school}
-              <span className='d-block'>
+      <div className='d-flex align-items-center ps-2 pb-0'>
+        <div style={{ width: '30px' }}>
+          <MDBIcon fas icon='graduation-cap' />
+        </div>
+        <div className='d-flex flex-column justify-content-center flex-grow-1'>
+          <p className='m-0'>
+            {!props.education.isGraduate ?
+              <>
+                Studying at {props.education.school}
+                <span className='d-block'>
                 From {DateTime.fromISO(props.education.dateRange!.fromDate!.toString(), { zone: 'utc' }).toFormat('dd-MM-yyyy')}
               </span>
-            </> :
-            <>
+              </> :
+              <>
               Studied at {props.education.school}
               <span className='d-block'>
                 From {DateTime.fromISO(props.education.dateRange!.fromDate!.toString(), { zone: 'utc' }).toFormat('dd-MM-yyyy')}
@@ -59,14 +61,19 @@ const EditEducation = (props: EditEducationProps) => {
         </p>
       </div>
       {props.currentUserId === props.userId &&
-      <MDBBtn
-        onClick={handleToggleForm}
-        color='light'
-        className='rounded-circle d-flex align-items-center justify-content-center'
-        style={{ width: '3rem', height: '3rem', backgroundColor: 'rgb(219, 224, 229,0.8)' }}
-      >
-        <MDBIcon fas icon='pen' />
-      </MDBBtn>
+        <>
+          <MDBBtn
+            onClick={handleToggleForm}
+            color='light'
+            floating
+            className='shadow-0'
+          >
+            <MDBIcon fas icon='pen' />
+          </MDBBtn>
+          <MDBBtn color='light' floating className='shadow-0 ms-1'>
+            <MDBIcon fas icon='trash' />
+          </MDBBtn>
+        </>
       }
     </div>
   );

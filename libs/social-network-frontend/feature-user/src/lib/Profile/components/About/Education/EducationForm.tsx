@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { MDBBtn, MDBCheckbox, MDBDatepicker, MDBInput } from 'mdb-react-ui-kit';
-import { useForm, Controller } from 'react-hook-form';
+import { Controller, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import { DateTime } from 'luxon';
@@ -127,8 +127,8 @@ const EducationForm = (props: EducationFormProps) => {
   };
 
   return (
-    <form className='d-flex flex-column w-100' onSubmit={handleSubmit(onSubmit)}>
-      <div className='flex-grow-1 mb-3'>
+    <form className='d-flex flex-column w-100 ps-2' onSubmit={handleSubmit(onSubmit)}>
+      <div className='flex-grow-1 mb-0'>
         <Controller
           name='school'
           control={control}
@@ -140,8 +140,9 @@ const EducationForm = (props: EducationFormProps) => {
                 autoComplete={name}
                 onChange={onChange}
                 onBlur={onBlur}
-                className={errors.school ? 'mb-3 is-invalid' : 'mb-3'}
+                className={errors.school ? 'mb-2 is-invalid' : 'mb-2'}
                 label='School'
+                size='lg'
               />
               {errors.school &&
               <div className='invalid-feedback d-block position-relative mb-2'>
@@ -162,10 +163,11 @@ const EducationForm = (props: EducationFormProps) => {
                 autoComplete={name}
                 onChange={onChange}
                 onBlur={onBlur}
-                className={errors.description ? 'mb-3 is-invalid' : 'mb-3'}
+                className={errors.description ? 'mb-2 is-invalid' : 'mb-2'}
                 label='Description'
                 textarea
-                rows={4}
+                rows={3}
+                size='lg'
               />
               {errors.description &&
               <div className='invalid-feedback d-block position-relative mb-2'>
@@ -176,7 +178,7 @@ const EducationForm = (props: EducationFormProps) => {
           }
         />
 
-        <label className='mb-1'>Concentrations</label>
+        <label style={{ fontWeight: 400 }}>Concentrations</label>
         <Controller
           name='concentration1'
           control={control}
@@ -188,8 +190,9 @@ const EducationForm = (props: EducationFormProps) => {
                 autoComplete={name}
                 onChange={onChange}
                 onBlur={onBlur}
-                className='mb-3'
+                className='mb-2'
                 label='Concentration'
+                size='lg'
               />
             </>
           }
@@ -205,8 +208,9 @@ const EducationForm = (props: EducationFormProps) => {
                 autoComplete={name}
                 onChange={onChange}
                 onBlur={onBlur}
-                className='mb-3'
+                className='mb-2'
                 label='Concentration'
+                size='lg'
               />
             </>
           }
@@ -222,8 +226,9 @@ const EducationForm = (props: EducationFormProps) => {
                 autoComplete={name}
                 onChange={onChange}
                 onBlur={onBlur}
-                className='mb-3'
+                className='mb-2'
                 label='Concentration'
+                size='lg'
               />
             </>
           }
@@ -240,8 +245,9 @@ const EducationForm = (props: EducationFormProps) => {
                 autoComplete={name}
                 onChange={onChange}
                 onBlur={onBlur}
-                className={errors.degree ? 'mb-3 is-invalid' : 'mb-3'}
+                className={errors.degree ? 'mb-2 is-invalid' : 'mb-2'}
                 label='Degree'
+                size='lg'
               />
               {errors.degree &&
               <div className='invalid-feedback d-block position-relative mb-2'>
@@ -260,7 +266,7 @@ const EducationForm = (props: EducationFormProps) => {
           />
           {!graduate &&
           <>
-            <div className='mb-3' />
+            <div className='mb-2' />
             <MDBDatepicker
               labelText='To'
               format='dd-mm-yyyy'
@@ -279,6 +285,7 @@ const EducationForm = (props: EducationFormProps) => {
           defaultChecked={props.graduate}
         />
       </div>
+      <hr className='mt-2 mb-2' />
       <div className='d-flex'>
         <div className='flex-grow-1'>
           <Privacy
@@ -288,13 +295,13 @@ const EducationForm = (props: EducationFormProps) => {
         </div>
         <MDBBtn
           onClick={props.onCancel}
-          className='me-2'
+          className='me-2 shadow-0'
           color='light'
           type='button'
         >
           Cancel
         </MDBBtn>
-        <MDBBtn type='submit' disabled={isAddUpdating || isEditUpdating}>Save</MDBBtn>
+        <MDBBtn className='shadow-0' type='submit' disabled={isAddUpdating || isEditUpdating}>Save</MDBBtn>
       </div>
     </form>
   );

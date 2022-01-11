@@ -1,10 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import {
-  MDBBtn, MDBCheckbox,
-  MDBDatepicker,
-  MDBInput
-} from 'mdb-react-ui-kit';
-import { useForm, Controller } from 'react-hook-form';
+import { MDBBtn, MDBCheckbox, MDBDatepicker, MDBInput } from 'mdb-react-ui-kit';
+import { Controller, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import { useAddJobForUserMutation, useEditJobForUserMutation } from '@sn-htc/social-network-frontend/data-access-user';
@@ -113,8 +109,8 @@ const WorkForm = (props: WorkFormProps) => {
   };
 
   return (
-    <form className='d-flex flex-column w-100' onSubmit={handleSubmit(onSubmit)}>
-      <div className='flex-grow-1 mb-3'>
+    <form className='d-flex flex-column w-100 mb-2 ps-2' onSubmit={handleSubmit(onSubmit)}>
+      <div className='flex-grow-1'>
         <Controller
           name='company'
           control={control}
@@ -126,8 +122,9 @@ const WorkForm = (props: WorkFormProps) => {
                 autoComplete={name}
                 onChange={onChange}
                 onBlur={onBlur}
-                className={errors.company ? 'mb-3 is-invalid' : 'mb-3'}
+                className={errors.company ? 'mb-2 is-invalid' : 'mb-2'}
                 label='Company'
+                size='lg'
               />
               {errors.company &&
               <div className='invalid-feedback d-block position-relative mb-2'>
@@ -148,8 +145,9 @@ const WorkForm = (props: WorkFormProps) => {
                 autoComplete={name}
                 onChange={onChange}
                 onBlur={onBlur}
-                className={errors.position ? 'mb-3 is-invalid' : 'mb-3'}
+                className={errors.position ? 'mb-2 is-invalid' : 'mb-2'}
                 label='Position'
+                size='lg'
               />
               {errors.position &&
               <div className='invalid-feedback d-block position-relative mb-2'>
@@ -170,8 +168,9 @@ const WorkForm = (props: WorkFormProps) => {
                 autoComplete={name}
                 onChange={onChange}
                 onBlur={onBlur}
-                className={errors.city ? 'mb-3 is-invalid' : 'mb-3'}
+                className={errors.city ? 'mb-2 is-invalid' : 'mb-2'}
                 label='City'
+                size='lg'
               />
               {errors.city &&
               <div className='invalid-feedback d-block position-relative mb-2'>
@@ -192,10 +191,11 @@ const WorkForm = (props: WorkFormProps) => {
                 autoComplete={name}
                 onChange={onChange}
                 onBlur={onBlur}
-                className={errors.description ? 'mb-3 is-invalid' : 'mb-3'}
+                className={errors.description ? 'mb-2 is-invalid' : 'mb-2'}
                 label='Description'
                 textarea
-                rows={4}
+                rows={3}
+                size='lg'
               />
               {errors.description &&
               <div className='invalid-feedback d-block position-relative mb-2'>
@@ -215,7 +215,7 @@ const WorkForm = (props: WorkFormProps) => {
           />
           {!currentWork &&
           <>
-            <div className='mb-3' />
+            <div className='mb-2' />
             <MDBDatepicker
               labelText='To'
               format='dd-mm-yyyy'
@@ -234,6 +234,7 @@ const WorkForm = (props: WorkFormProps) => {
           defaultChecked={props.currentWork}
         />
       </div>
+      <hr className='mt-2 mb-2' />
       <div className='d-flex'>
         <div className='flex-grow-1'>
           <Privacy
@@ -242,14 +243,14 @@ const WorkForm = (props: WorkFormProps) => {
           />
         </div>
         <MDBBtn
-          className='me-2'
+          className='me-2 shadow-0'
           onClick={props.onCancel}
           color='light'
           type='button'
         >
           Cancel
         </MDBBtn>
-        <MDBBtn type='submit' disabled={isAddUpdating || isEditUpdating}>Save</MDBBtn>
+        <MDBBtn className='shadow-0' type='submit' disabled={isAddUpdating || isEditUpdating}>Save</MDBBtn>
       </div>
     </form>
   );

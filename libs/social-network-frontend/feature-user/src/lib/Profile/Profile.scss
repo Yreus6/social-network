@@ -1,8 +1,9 @@
 .profile {
   .profile-main {
-    background-color: #FFFFFF;
-    border: 1px solid #E3E4E7;
-    box-shadow: 0 0 8px rgba(113, 123, 142, 0.3);
+    width: 940px;
+    background-color: #ffffff;
+    border: 1px solid #e3e4e7;
+    border-top: 0;
     border-radius: 0 0 12px 12px;
 
     .banner {
@@ -22,6 +23,10 @@
 
     .button-group {
       min-height: 2rem;
+    }
+
+    @media (max-width: 940px) {
+      width: 100vw;
     }
   }
 }

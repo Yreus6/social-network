@@ -44,7 +44,7 @@ const BirthdayForm = (props: BirthdayFormProps) => {
   };
 
   return (
-    <form className='d-flex flex-column' onSubmit={onSubmit}>
+    <form className='ps-2 d-flex flex-column mb-2 pt-1' onSubmit={onSubmit}>
       <div className='w-50'>
         <MDBDatepicker
           labelText='Birthday'
@@ -53,7 +53,8 @@ const BirthdayForm = (props: BirthdayFormProps) => {
           setValue={setBirthday}
         />
       </div>
-      <div className='d-flex mt-2 flex-row'>
+      <hr className='mt-2 mb-2' />
+      <div className='d-flex flex-row'>
         <div className='flex-grow-1'>
           <Privacy
             privacy={privacy}
@@ -62,13 +63,13 @@ const BirthdayForm = (props: BirthdayFormProps) => {
         </div>
         <MDBBtn
           onClick={props.onCancel}
-          className='me-2'
+          className='me-2 shadow-0'
           color='light'
           type='button'
         >
           Cancel
         </MDBBtn>
-        <MDBBtn type='submit' disabled={isUpdating}>Save</MDBBtn>
+        <MDBBtn className='shadow-0' type='submit' disabled={isUpdating}>Save</MDBBtn>
       </div>
     </form>
   );

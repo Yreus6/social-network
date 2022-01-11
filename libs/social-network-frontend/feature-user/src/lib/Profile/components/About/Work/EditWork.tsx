@@ -37,18 +37,20 @@ const EditWork = (props: EditWorkProps) => {
       workTo={DateTime.fromISO(props.job.dateRange!.fromDate!.toString(), { zone: 'utc' }).toFormat('dd-MM-yyyy')}
       mode={props.job.mode!}
     /> :
-    <div className='d-flex align-items-center mt-3'>
-      <MDBIcon className='me-3' fas icon='briefcase' />
-      <div className='d-flex flex-column justify-content-center flex-grow-1'>
-        <p className='m-0'>
-          {props.job.isCurrentWork ?
-          <>
-            Working at {props.job.company}
-            <span className='d-block'>
+      <div className='d-flex align-items-center ps-2 pb-1'>
+        <div style={{ width: '30px' }}>
+          <MDBIcon fas icon='briefcase' />
+        </div>
+        <div className='d-flex flex-column justify-content-center flex-grow-1'>
+          <p className='m-0'>
+            {props.job.isCurrentWork ?
+              <>
+                Working at {props.job.company}
+                <span className='d-block'>
               From {DateTime.fromISO(props.job.dateRange!.fromDate!.toString(), { zone: 'utc' }).toFormat('dd-MM-yyyy')}
             </span>
-          </> :
-          <>
+              </> :
+              <>
             Worked at {props.job.company}
             <span className='d-block'>
               From {DateTime.fromISO(props.job.dateRange!.fromDate!.toString(), { zone: 'utc' }).toFormat('dd-MM-yyyy')}
@@ -59,14 +61,19 @@ const EditWork = (props: EditWorkProps) => {
         </p>
       </div>
       {props.currentUserId === props.userId &&
-      <MDBBtn
-        onClick={handleToggleForm}
-        color='light'
-        className='rounded-circle d-flex align-items-center justify-content-center'
-        style={{ width: '3rem', height: '3rem', backgroundColor: 'rgb(219, 224, 229,0.8)' }}
-      >
-        <MDBIcon fas icon='pen' />
-      </MDBBtn>
+        <>
+          <MDBBtn
+            onClick={handleToggleForm}
+            color='light'
+            floating
+            className='shadow-0'
+          >
+            <MDBIcon fas icon='pen' />
+          </MDBBtn>
+          <MDBBtn color='light' floating className='shadow-0 ms-1'>
+            <MDBIcon fas icon='trash' />
+          </MDBBtn>
+        </>
       }
     </div>
   );

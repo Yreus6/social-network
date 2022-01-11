@@ -32,14 +32,14 @@ const About = (props: AboutProps) => {
     setTabActive(value);
   };
   return (
-    <MDBCard className='tab-profile pt-3 pe-5 pb-4 ps-4'>
-      <h5>About</h5>
+    <MDBCard className='tab-profile pt-4 pe-4 pb-4 ps-4'>
       <MDBRow>
         <MDBCol
           size='4'
           className='border-end about-nav'
           style={{ borderColor: 'rgba(82, 85, 90, .6)' }}
         >
+          <h5 className='mb-1 about-header'>About</h5>
           <MDBTabs className='flex-column'>
             <MDBTabsItem>
               <MDBTabsLink

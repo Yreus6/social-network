@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Privacy } from '@sn-htc/social-network-frontend/ui-dropdowns';
 import { MDBBtn, MDBInput } from 'mdb-react-ui-kit';
-import { useForm, Controller } from 'react-hook-form';
+import { Controller, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import { useEditAddressForUserMutation } from '@sn-htc/social-network-frontend/data-access-user';
@@ -63,8 +63,8 @@ const AddressForm = (props: AddressFormProps) => {
   };
 
   return (
-    <form className='d-flex flex-column w-100' onSubmit={handleSubmit(onSubmit)}>
-      <div className='flex-grow-1 '>
+    <form className='ps-2 d-flex flex-column w-100 mb-2' onSubmit={handleSubmit(onSubmit)}>
+      <div className='flex-grow-1'>
         <Controller
           name='city'
           control={control}
@@ -76,8 +76,9 @@ const AddressForm = (props: AddressFormProps) => {
                 autoComplete={name}
                 onChange={onChange}
                 onBlur={onBlur}
-                className={errors.city ? 'mb-3 is-invalid' : 'mb-3'}
+                className={errors.city ? 'mb-2 is-invalid' : 'mb-2'}
                 label='City'
+                size='lg'
               />
               {errors.city &&
               <div className='invalid-feedback d-block position-relative mb-2'>
@@ -98,8 +99,9 @@ const AddressForm = (props: AddressFormProps) => {
                 autoComplete={name}
                 onChange={onChange}
                 onBlur={onBlur}
-                className={errors.region ? 'mb-3 is-invalid' : 'mb-3'}
+                className={errors.region ? 'mb-2 is-invalid' : 'mb-2'}
                 label='Region'
+                size='lg'
               />
               {errors.region &&
               <div className='invalid-feedback d-block position-relative mb-2'>
@@ -120,18 +122,20 @@ const AddressForm = (props: AddressFormProps) => {
                 autoComplete={name}
                 onChange={onChange}
                 onBlur={onBlur}
-                className={errors.country ? 'mb-3 is-invalid' : 'mb-3'}
+                className={errors.country ? 'is-invalid' : ''}
                 label='Country'
+                size='lg'
               />
               {errors.country &&
-              <div className='invalid-feedback d-block position-relative mb-2'>
-                {errors.country?.message}
-              </div>
+                <div className='invalid-feedback d-block position-relative mb-2'>
+                  {errors.country?.message}
+                </div>
               }
             </>
           }
         />
       </div>
+      <hr className='mt-2 mb-2' />
       <div className='d-flex flex-row'>
         <div className='flex-grow-1'>
           <Privacy
@@ -141,13 +145,13 @@ const AddressForm = (props: AddressFormProps) => {
         </div>
         <MDBBtn
           onClick={props.onCancel}
-          className='me-2'
+          className='me-2 shadow-0'
           color='light'
           type='button'
         >
           Cancel
         </MDBBtn>
-        <MDBBtn type='submit' disabled={isUpdating}>Save</MDBBtn>
+        <MDBBtn className='shadow-0' type='submit' disabled={isUpdating}>Save</MDBBtn>
       </div>
     </form>
   );

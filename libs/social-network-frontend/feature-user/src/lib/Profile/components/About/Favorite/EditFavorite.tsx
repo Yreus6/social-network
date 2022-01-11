@@ -26,27 +26,38 @@ const EditFavorite = (props: EditFavoriteProps) => {
 
   return (
     toggleEdit ?
-    <FavoriteForm
-      type='edit'
-      userId={props.userId}
-      onCancel={handleToggleForm}
-      updateProfile={props.updateProfile}
-      showToast={props.showToast}
-      favorite={props.favorite}
-      favorites={props.favorites}
-    /> :
-    <div className='d-flex flex-row align-items-center mb-3'>
-      <MDBIcon fas icon='circle' />
-      <p className='m-0 ms-3 flex-grow-1'>{props.favorite}</p>
-      <MDBBtn
-        color='light'
-        onClick={handleToggleForm}
-        className='rounded-circle d-flex align-items-center justify-content-center'
-        style={{ width: '3rem', height: '3rem', backgroundColor: 'rgb(219, 224, 229,0.8)' }}
-      >
-        <MDBIcon fas icon='pen' />
-      </MDBBtn>
-    </div>
+      <FavoriteForm
+        type='edit'
+        userId={props.userId}
+        onCancel={handleToggleForm}
+        updateProfile={props.updateProfile}
+        showToast={props.showToast}
+        favorite={props.favorite}
+        favorites={props.favorites}
+      /> :
+      <div className='d-flex flex-row align-items-center ps-2 pb-0'>
+        <div style={{ width: '30px' }}>
+          <MDBIcon fas icon='circle' />
+        </div>
+        <div className='d-flex flex-column justify-content-center flex-grow-1'>
+          <p className='m-0'>{props.favorite}</p>
+        </div>
+        {props.currentUserId === props.userId &&
+          <>
+            <MDBBtn
+              color='light'
+              onClick={handleToggleForm}
+              floating
+              className='shadow-0'
+            >
+              <MDBIcon fas icon='pen' />
+            </MDBBtn>
+            <MDBBtn color='light' floating className='shadow-0 ms-1'>
+              <MDBIcon fas icon='trash' />
+            </MDBBtn>
+          </>
+        }
+      </div>
   );
 };
 

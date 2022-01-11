@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import './Sidenav.scss';
 import logo from './assets/logo.png';
 import socivioLogo from './assets/socivioLogo.png';
@@ -10,32 +10,15 @@ interface SidenavProps {
 }
 
 export const Sidenav = (props: SidenavProps) => {
-  const [slimMode, setSlimMode] = useState<boolean | undefined>(true);
-  let mouseoutSideNav = true;
-
   return (
     <MDBSideNav
+      mode='push'
       isOpen={true}
       backdrop={false}
-      slim={slimMode}
       slimCollapsed={true}
       constant={true}
       className='sidenav'
       closeOnEsc={false}
-      onMouseOver={() => {
-        mouseoutSideNav = false;
-        setTimeout(() => {
-          setSlimMode(false);
-        }, 200);
-      }}
-      onMouseOut={() => {
-        mouseoutSideNav = true;
-        setTimeout(() => {
-          if (mouseoutSideNav) {
-            setSlimMode(true);
-          }
-        }, 200);
-      }}
     >
       <a className='sidenav-header'>
         <img src={logo} className='logo' alt='logo' />

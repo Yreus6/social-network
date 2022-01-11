@@ -37,23 +37,30 @@ const EditAddress = (props: EditAddressProps) => {
       country={props.address.country!}
       mode={props.address.mode!}
     /> :
-    <div className='d-flex align-items-center'>
-      <MDBIcon className='me-3' fas icon='home' />
-      <div className='d-flex flex-column justify-content-center flex-grow-1'>
-        <p className='m-0'>
-          {`${props.address.city}, ${props.address.region}, ${props.address.country}`}
-        </p>
-        <span>Address</span>
-      </div>
-      {props.currentUserId === props.userId &&
-      <MDBBtn
-        onClick={handleToggleForm}
-        color='light'
-        className='rounded-circle d-flex align-items-center justify-content-center'
-        style={{ width: '3rem', height: '3rem', backgroundColor: 'rgb(219, 224, 229,0.8)' }}
-      >
-        <MDBIcon fas icon='pen' />
-      </MDBBtn>
+      <div className='d-flex align-items-center ps-2 pb-1'>
+        <div style={{ width: '30px' }}>
+          <MDBIcon fas icon='home' />
+        </div>
+        <div className='d-flex flex-column justify-content-center flex-grow-1'>
+          <p className='m-0'>
+            {`${props.address.city}, ${props.address.region}, ${props.address.country}`}
+          </p>
+          <span>Address</span>
+        </div>
+        {props.currentUserId === props.userId &&
+          <>
+            <MDBBtn
+              onClick={handleToggleForm}
+              color='light'
+              floating
+              className='shadow-0'
+            >
+              <MDBIcon fas icon='pen' />
+            </MDBBtn>
+            <MDBBtn color='light' floating className='shadow-0 ms-1'>
+              <MDBIcon fas icon='trash' />
+            </MDBBtn>
+          </>
       }
     </div>
   );

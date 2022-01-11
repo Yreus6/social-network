@@ -27,34 +27,40 @@ const EditBirthday = (props: EditBirthdayProps) => {
 
   return (
     toggleEdit ?
-    <BirthdayForm
-      type='edit'
-      userId={props.userId}
-      onCancel={handleToggleForm}
-      updateProfile={props.updateProfile}
-      showToast={props.showToast}
-      birthday={DateTime.fromISO(props.birthday.birthdate!.toString(), { zone: 'utc' }).toFormat('dd-MM-yyyy')}
-      mode={props.birthday.mode!}
-    /> :
-    <div className='d-flex flex-row align-items-center'>
-      <MDBIcon size='lg' fas icon='birthday-cake' />
-      <div className='d-flex flex-column ms-3 flex-grow-1'>
-        <p className='m-0'>
-          {DateTime.fromISO(props.birthday.birthdate!.toString(), { zone: 'utc' }).toFormat('LLLL dd')}
-        </p>
-        <span>
+      <BirthdayForm
+        type='edit'
+        userId={props.userId}
+        onCancel={handleToggleForm}
+        updateProfile={props.updateProfile}
+        showToast={props.showToast}
+        birthday={DateTime.fromISO(props.birthday.birthdate!.toString(), { zone: 'utc' }).toFormat('dd-MM-yyyy')}
+        mode={props.birthday.mode!}
+      /> :
+      <div className='d-flex flex-row align-items-center ps-2 pb-1'>
+        <div style={{
+          width: '30px'
+        }}>
+          <MDBIcon fas icon='birthday-cake' />
+        </div>
+        <div className='d-flex flex-column ms-3 flex-grow-1' style={{ lineHeight: '20px' }}>
+          <p className='m-0'>
+            {DateTime.fromISO(props.birthday.birthdate!.toString(), { zone: 'utc' }).toFormat('LLLL dd')}
+          </p>
+          <span>
           {DateTime.fromISO(props.birthday.birthdate!.toString(), { zone: 'utc' }).toFormat('yyyy')}
         </span>
-      </div>
-      {props.currentUserId === props.userId &&
-      <MDBBtn
-        color='light'
-        onClick={handleToggleForm}
-        className='rounded-circle d-flex align-items-center justify-content-center'
-        style={{ width: '3rem', height: '3rem', backgroundColor: 'rgb(219, 224, 229,0.8)' }}
-      >
-        <MDBIcon fas icon='pen' />
-      </MDBBtn>
+        </div>
+        {props.currentUserId === props.userId &&
+          <>
+            <MDBBtn
+              color='light'
+              onClick={handleToggleForm}
+              floating
+              className='shadow-0'
+            >
+              <MDBIcon fas icon='pen' />
+            </MDBBtn>
+          </>
       }
     </div>
   );

@@ -30,14 +30,16 @@ const AddPhone = (props: AddPhoneProps) => {
       updateProfile={props.updateProfile}
       showToast={props.showToast}
     /> :
-    <h5
+    <p
       onClick={handleToggleForm}
-      className='d-flex align-items-center mb-4 add-info-profile link-primary '
+      className='d-flex align-items-center mb-2 add-info-profile link-primary ps-2'
       color='light'
     >
-      <MDBIcon className='me-3' fas icon='plus' />
-      <span>Add your phone</span>
-    </h5>
+      <div style={{ width: '30px' }}>
+        <MDBIcon fas icon='plus' />
+      </div>
+      <span>Add a phone number</span>
+    </p>
   );
 };
 
