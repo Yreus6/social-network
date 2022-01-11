@@ -87,7 +87,7 @@ class JobControllerIT {
         jobRepository.deleteAll().block();
         Profile p = profileRepository.getProfileByUser(USER_ID).block();
 
-        for (int i = 0; i < 40; ++i) {
+        for (int i = 0; i < 10; ++i) {
             Job job = Job.of(
                 faker.company().name(), "Manager", "Hanoi",
                 "Description", false, null, PrivacyType.PUBLIC
@@ -102,7 +102,7 @@ class JobControllerIT {
             .httpHeaders(headers -> headers.setBearerAuth(USER_TOKEN))
             .execute()
             .path("getJobs[*].id").entityList(String.class)
-            .hasSize(40);
+            .hasSize(10);
     }
 
     @Test

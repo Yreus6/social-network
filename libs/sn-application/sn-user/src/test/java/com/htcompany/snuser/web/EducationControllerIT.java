@@ -92,7 +92,7 @@ class EducationControllerIT {
         educationRepository.deleteAll().block();
         Profile p = profileRepository.getProfileByUser(USER_ID).block();
 
-        for (int i = 0; i < 40; ++i) {
+        for (int i = 0; i < 10; ++i) {
             Education education = Education.of(
                 faker.pokemon().name(), true, "", "", Collections.emptySet(),
                 null, PrivacyType.PUBLIC
@@ -107,7 +107,7 @@ class EducationControllerIT {
             .httpHeaders(headers -> headers.setBearerAuth(USER_TOKEN))
             .execute()
             .path("getEducations[*].id").entityList(String.class)
-            .hasSize(40);
+            .hasSize(10);
     }
 
     @Test

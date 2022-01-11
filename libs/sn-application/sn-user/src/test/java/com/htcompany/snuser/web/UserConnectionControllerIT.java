@@ -59,7 +59,7 @@ class UserConnectionControllerIT {
     @Test
     void givenUser_whenGetFriends_thenReturnSuccess() {
         User user1 = userRepository.findById(USER_ID1).block();
-        for (int i = 0; i < 40; ++i) {
+        for (int i = 0; i < 12; ++i) {
             User user = User.of(
                 UUID.randomUUID().toString(), faker.name().username(), faker.internet().emailAddress(),
                 faker.name().firstName(), "", faker.name().lastName()
@@ -72,13 +72,13 @@ class UserConnectionControllerIT {
 
         this.graphQlTester.queryName("GetFriendsForUser")
             .variable("userId", USER_ID1)
-            .variable("first", 20)
+            .variable("first", 2)
             .httpHeaders(headers -> headers.setBearerAuth(USER_TOKEN))
             .execute()
             .path("getFriends.totalCount").entity(Integer.class)
-            .isEqualTo(40)
+            .isEqualTo(12)
             .path("getFriends.edges[*].node").entityList(User.class)
-            .hasSize(20)
+            .hasSize(2)
             .path("getFriends.pageInfo.hasNextPage").entity(Boolean.class)
             .isEqualTo(true);
     }
@@ -86,7 +86,7 @@ class UserConnectionControllerIT {
     @Test
     void givenUser_whenCountFriends_thenReturnSuccess() {
         User user1 = userRepository.findById(USER_ID1).block();
-        for (int i = 0; i < 40; ++i) {
+        for (int i = 0; i < 12; ++i) {
             User user = User.of(
                 UUID.randomUUID().toString(), faker.name().username(), faker.internet().emailAddress(),
                 faker.name().firstName(), "", faker.name().lastName()
@@ -102,13 +102,13 @@ class UserConnectionControllerIT {
             .httpHeaders(headers -> headers.setBearerAuth(USER_TOKEN))
             .execute()
             .path("countFriends").entity(Integer.class)
-            .isEqualTo(40);
+            .isEqualTo(12);
     }
 
     @Test
     void givenUser_whenGetFollowings_thenReturnSuccess() {
         User user1 = userRepository.findById(USER_ID1).block();
-        for (int i = 0; i < 40; ++i) {
+        for (int i = 0; i < 12; ++i) {
             User user = User.of(
                 UUID.randomUUID().toString(), faker.name().username(), faker.internet().emailAddress(),
                 faker.name().firstName(), "", faker.name().lastName()
@@ -120,13 +120,13 @@ class UserConnectionControllerIT {
 
         this.graphQlTester.queryName("GetFollowingsForUser")
             .variable("userId", USER_ID1)
-            .variable("first", 20)
+            .variable("first", 2)
             .httpHeaders(headers -> headers.setBearerAuth(USER_TOKEN))
             .execute()
             .path("getFollowings.totalCount").entity(Integer.class)
-            .isEqualTo(40)
+            .isEqualTo(12)
             .path("getFollowings.edges[*].node").entityList(User.class)
-            .hasSize(20)
+            .hasSize(2)
             .path("getFollowings.pageInfo.hasNextPage").entity(Boolean.class)
             .isEqualTo(true);
     }
@@ -134,7 +134,7 @@ class UserConnectionControllerIT {
     @Test
     void givenUser_whenGetFollowers_thenReturnSuccess() {
         User user1 = userRepository.findById(USER_ID1).block();
-        for (int i = 0; i < 40; ++i) {
+        for (int i = 0; i < 12; ++i) {
             User user = User.of(
                 UUID.randomUUID().toString(), faker.name().username(), faker.internet().emailAddress(),
                 faker.name().firstName(), "", faker.name().lastName()
@@ -145,13 +145,13 @@ class UserConnectionControllerIT {
 
         this.graphQlTester.queryName("GetFollowersForUser")
             .variable("userId", USER_ID1)
-            .variable("first", 20)
+            .variable("first", 2)
             .httpHeaders(headers -> headers.setBearerAuth(USER_TOKEN))
             .execute()
             .path("getFollowers.totalCount").entity(Integer.class)
-            .isEqualTo(40)
+            .isEqualTo(12)
             .path("getFollowers.edges[*].node").entityList(User.class)
-            .hasSize(20)
+            .hasSize(2)
             .path("getFollowers.pageInfo.hasNextPage").entity(Boolean.class)
             .isEqualTo(true);
     }
@@ -161,7 +161,7 @@ class UserConnectionControllerIT {
         User user1 = userRepository.findById(USER_ID1).block();
         User user2 = userRepository.findById(USER_ID2).block();
         int k = 0;
-        for (int i = 0; i < 40; ++i) {
+        for (int i = 0; i < 12; ++i) {
             User user = User.of(
                 UUID.randomUUID().toString(), faker.name().username(), faker.internet().emailAddress(),
                 faker.name().firstName(), "", faker.name().lastName()
@@ -181,13 +181,13 @@ class UserConnectionControllerIT {
         this.graphQlTester.queryName("GetMutualFriendsForUsers")
             .variable("userId", USER_ID1)
             .variable("otherId", USER_ID2)
-            .variable("first", 5)
+            .variable("first", 2)
             .httpHeaders(headers -> headers.setBearerAuth(USER_TOKEN))
             .execute()
             .path("getMutualFriends.totalCount").entity(Integer.class)
-            .isEqualTo(10)
+            .isEqualTo(3)
             .path("getMutualFriends.edges[*].node").entityList(User.class)
-            .hasSize(5)
+            .hasSize(2)
             .path("getMutualFriends.pageInfo.hasNextPage").entity(Boolean.class)
             .isEqualTo(true);
     }
@@ -197,7 +197,7 @@ class UserConnectionControllerIT {
         User user1 = userRepository.findById(USER_ID1).block();
         User user2 = userRepository.findById(USER_ID2).block();
         int k = 0;
-        for (int i = 0; i < 40; ++i) {
+        for (int i = 0; i < 12; ++i) {
             User user = User.of(
                 UUID.randomUUID().toString(), faker.name().username(), faker.internet().emailAddress(),
                 faker.name().firstName(), "", faker.name().lastName()
@@ -220,13 +220,13 @@ class UserConnectionControllerIT {
             .httpHeaders(headers -> headers.setBearerAuth(USER_TOKEN))
             .execute()
             .path("countMutualFriends").entity(Integer.class)
-            .isEqualTo(10);
+            .isEqualTo(3);
     }
 
     @Test
     void givenUser_whenGetFriendRequests_thenReturnSuccess() {
         User user1 = userRepository.findById(USER_ID1).block();
-        for (int i = 0; i < 40; ++i) {
+        for (int i = 0; i < 12; ++i) {
             User user = User.of(
                 UUID.randomUUID().toString(), faker.name().username(), faker.internet().emailAddress(),
                 faker.name().firstName(), "", faker.name().lastName()
@@ -237,13 +237,13 @@ class UserConnectionControllerIT {
 
         this.graphQlTester.queryName("GetFriendRequestsForUser")
             .variable("userId", USER_ID1)
-            .variable("first", 20)
+            .variable("first", 2)
             .httpHeaders(headers -> headers.setBearerAuth(USER_TOKEN))
             .execute()
             .path("getFriendRequests.totalCount").entity(Integer.class)
-            .isEqualTo(40)
+            .isEqualTo(12)
             .path("getFriendRequests.edges[*].node").entityList(User.class)
-            .hasSize(20)
+            .hasSize(2)
             .path("getFriendRequests.pageInfo.hasNextPage").entity(Boolean.class)
             .isEqualTo(true);
     }
@@ -251,7 +251,7 @@ class UserConnectionControllerIT {
     @Test
     void givenUser_whenGetSentRequests_thenReturnSuccess() {
         User user1 = userRepository.findById(USER_ID1).block();
-        for (int i = 0; i < 40; ++i) {
+        for (int i = 0; i < 12; ++i) {
             User user = User.of(
                 UUID.randomUUID().toString(), faker.name().username(), faker.internet().emailAddress(),
                 faker.name().firstName(), "", faker.name().lastName()
@@ -263,13 +263,13 @@ class UserConnectionControllerIT {
 
         this.graphQlTester.queryName("GetSentRequestsForUser")
             .variable("userId", USER_ID1)
-            .variable("first", 20)
+            .variable("first", 2)
             .httpHeaders(headers -> headers.setBearerAuth(USER_TOKEN))
             .execute()
             .path("getSentRequests.totalCount").entity(Integer.class)
-            .isEqualTo(40)
+            .isEqualTo(12)
             .path("getSentRequests.edges[*].node").entityList(User.class)
-            .hasSize(20)
+            .hasSize(2)
             .path("getSentRequests.pageInfo.hasNextPage").entity(Boolean.class)
             .isEqualTo(true);
     }
@@ -278,7 +278,7 @@ class UserConnectionControllerIT {
     void givenUser_whenGetFriendSuggestions_thenReturnSuccess() {
         User user1 = userRepository.findById(USER_ID1).block();
         User user2 = userRepository.findById(USER_ID2).block();
-        for (int i = 0; i < 40; ++i) {
+        for (int i = 0; i < 12; ++i) {
             User user = User.of(
                 UUID.randomUUID().toString(), faker.name().username(), faker.internet().emailAddress(),
                 faker.name().firstName(), "", faker.name().lastName()
@@ -294,13 +294,13 @@ class UserConnectionControllerIT {
 
         this.graphQlTester.queryName("GetFriendSuggestionsForUser")
             .variable("userId", USER_ID2)
-            .variable("first", 20)
+            .variable("first", 2)
             .httpHeaders(headers -> headers.setBearerAuth(USER_TOKEN))
             .execute()
             .path("getFriendSuggestions.totalCount").entity(Integer.class)
-            .isEqualTo(40)
+            .isEqualTo(12)
             .path("getFriendSuggestions.edges[*].node").entityList(User.class)
-            .hasSize(20)
+            .hasSize(2)
             .path("getFriendSuggestions.pageInfo.hasNextPage").entity(Boolean.class)
             .isEqualTo(true);
     }
