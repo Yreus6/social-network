@@ -87,10 +87,10 @@ class JobControllerIT {
         jobRepository.deleteAll().block();
         Profile p = profileRepository.getProfileByUser(USER_ID).block();
 
-        for (int i = 0; i < 100; ++i) {
+        for (int i = 0; i < 40; ++i) {
             Job job = Job.of(
                 faker.company().name(), "Manager", "Hanoi",
-                "Description",  false, null, PrivacyType.PUBLIC
+                "Description", false, null, PrivacyType.PUBLIC
             );
             Job savedJob = jobRepository.save(job).block();
             p.addJob(savedJob);
@@ -102,7 +102,7 @@ class JobControllerIT {
             .httpHeaders(headers -> headers.setBearerAuth(USER_TOKEN))
             .execute()
             .path("getJobs[*].id").entityList(String.class)
-            .hasSize(100);
+            .hasSize(40);
     }
 
     @Test

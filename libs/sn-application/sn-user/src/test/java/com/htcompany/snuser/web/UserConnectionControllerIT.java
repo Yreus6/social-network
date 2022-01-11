@@ -59,7 +59,7 @@ class UserConnectionControllerIT {
     @Test
     void givenUser_whenGetFriends_thenReturnSuccess() {
         User user1 = userRepository.findById(USER_ID1).block();
-        for (int i = 0; i < 100; ++i) {
+        for (int i = 0; i < 40; ++i) {
             User user = User.of(
                 UUID.randomUUID().toString(), faker.name().username(), faker.internet().emailAddress(),
                 faker.name().firstName(), "", faker.name().lastName()
@@ -76,7 +76,7 @@ class UserConnectionControllerIT {
             .httpHeaders(headers -> headers.setBearerAuth(USER_TOKEN))
             .execute()
             .path("getFriends.totalCount").entity(Integer.class)
-            .isEqualTo(100)
+            .isEqualTo(40)
             .path("getFriends.edges[*].node").entityList(User.class)
             .hasSize(20)
             .path("getFriends.pageInfo.hasNextPage").entity(Boolean.class)
@@ -86,7 +86,7 @@ class UserConnectionControllerIT {
     @Test
     void givenUser_whenCountFriends_thenReturnSuccess() {
         User user1 = userRepository.findById(USER_ID1).block();
-        for (int i = 0; i < 100; ++i) {
+        for (int i = 0; i < 40; ++i) {
             User user = User.of(
                 UUID.randomUUID().toString(), faker.name().username(), faker.internet().emailAddress(),
                 faker.name().firstName(), "", faker.name().lastName()
@@ -102,13 +102,13 @@ class UserConnectionControllerIT {
             .httpHeaders(headers -> headers.setBearerAuth(USER_TOKEN))
             .execute()
             .path("countFriends").entity(Integer.class)
-            .isEqualTo(100);
+            .isEqualTo(40);
     }
 
     @Test
     void givenUser_whenGetFollowings_thenReturnSuccess() {
         User user1 = userRepository.findById(USER_ID1).block();
-        for (int i = 0; i < 100; ++i) {
+        for (int i = 0; i < 40; ++i) {
             User user = User.of(
                 UUID.randomUUID().toString(), faker.name().username(), faker.internet().emailAddress(),
                 faker.name().firstName(), "", faker.name().lastName()
@@ -124,7 +124,7 @@ class UserConnectionControllerIT {
             .httpHeaders(headers -> headers.setBearerAuth(USER_TOKEN))
             .execute()
             .path("getFollowings.totalCount").entity(Integer.class)
-            .isEqualTo(100)
+            .isEqualTo(40)
             .path("getFollowings.edges[*].node").entityList(User.class)
             .hasSize(20)
             .path("getFollowings.pageInfo.hasNextPage").entity(Boolean.class)
@@ -134,7 +134,7 @@ class UserConnectionControllerIT {
     @Test
     void givenUser_whenGetFollowers_thenReturnSuccess() {
         User user1 = userRepository.findById(USER_ID1).block();
-        for (int i = 0; i < 100; ++i) {
+        for (int i = 0; i < 40; ++i) {
             User user = User.of(
                 UUID.randomUUID().toString(), faker.name().username(), faker.internet().emailAddress(),
                 faker.name().firstName(), "", faker.name().lastName()
@@ -149,7 +149,7 @@ class UserConnectionControllerIT {
             .httpHeaders(headers -> headers.setBearerAuth(USER_TOKEN))
             .execute()
             .path("getFollowers.totalCount").entity(Integer.class)
-            .isEqualTo(100)
+            .isEqualTo(40)
             .path("getFollowers.edges[*].node").entityList(User.class)
             .hasSize(20)
             .path("getFollowers.pageInfo.hasNextPage").entity(Boolean.class)
@@ -161,7 +161,7 @@ class UserConnectionControllerIT {
         User user1 = userRepository.findById(USER_ID1).block();
         User user2 = userRepository.findById(USER_ID2).block();
         int k = 0;
-        for (int i = 0; i < 100; ++i) {
+        for (int i = 0; i < 40; ++i) {
             User user = User.of(
                 UUID.randomUUID().toString(), faker.name().username(), faker.internet().emailAddress(),
                 faker.name().firstName(), "", faker.name().lastName()
@@ -181,13 +181,13 @@ class UserConnectionControllerIT {
         this.graphQlTester.queryName("GetMutualFriendsForUsers")
             .variable("userId", USER_ID1)
             .variable("otherId", USER_ID2)
-            .variable("first", 20)
+            .variable("first", 5)
             .httpHeaders(headers -> headers.setBearerAuth(USER_TOKEN))
             .execute()
             .path("getMutualFriends.totalCount").entity(Integer.class)
-            .isEqualTo(25)
+            .isEqualTo(10)
             .path("getMutualFriends.edges[*].node").entityList(User.class)
-            .hasSize(20)
+            .hasSize(5)
             .path("getMutualFriends.pageInfo.hasNextPage").entity(Boolean.class)
             .isEqualTo(true);
     }
@@ -197,7 +197,7 @@ class UserConnectionControllerIT {
         User user1 = userRepository.findById(USER_ID1).block();
         User user2 = userRepository.findById(USER_ID2).block();
         int k = 0;
-        for (int i = 0; i < 100; ++i) {
+        for (int i = 0; i < 40; ++i) {
             User user = User.of(
                 UUID.randomUUID().toString(), faker.name().username(), faker.internet().emailAddress(),
                 faker.name().firstName(), "", faker.name().lastName()
@@ -220,13 +220,13 @@ class UserConnectionControllerIT {
             .httpHeaders(headers -> headers.setBearerAuth(USER_TOKEN))
             .execute()
             .path("countMutualFriends").entity(Integer.class)
-            .isEqualTo(25);
+            .isEqualTo(10);
     }
 
     @Test
     void givenUser_whenGetFriendRequests_thenReturnSuccess() {
         User user1 = userRepository.findById(USER_ID1).block();
-        for (int i = 0; i < 100; ++i) {
+        for (int i = 0; i < 40; ++i) {
             User user = User.of(
                 UUID.randomUUID().toString(), faker.name().username(), faker.internet().emailAddress(),
                 faker.name().firstName(), "", faker.name().lastName()
@@ -241,7 +241,7 @@ class UserConnectionControllerIT {
             .httpHeaders(headers -> headers.setBearerAuth(USER_TOKEN))
             .execute()
             .path("getFriendRequests.totalCount").entity(Integer.class)
-            .isEqualTo(100)
+            .isEqualTo(40)
             .path("getFriendRequests.edges[*].node").entityList(User.class)
             .hasSize(20)
             .path("getFriendRequests.pageInfo.hasNextPage").entity(Boolean.class)
@@ -251,7 +251,7 @@ class UserConnectionControllerIT {
     @Test
     void givenUser_whenGetSentRequests_thenReturnSuccess() {
         User user1 = userRepository.findById(USER_ID1).block();
-        for (int i = 0; i < 100; ++i) {
+        for (int i = 0; i < 40; ++i) {
             User user = User.of(
                 UUID.randomUUID().toString(), faker.name().username(), faker.internet().emailAddress(),
                 faker.name().firstName(), "", faker.name().lastName()
@@ -267,7 +267,7 @@ class UserConnectionControllerIT {
             .httpHeaders(headers -> headers.setBearerAuth(USER_TOKEN))
             .execute()
             .path("getSentRequests.totalCount").entity(Integer.class)
-            .isEqualTo(100)
+            .isEqualTo(40)
             .path("getSentRequests.edges[*].node").entityList(User.class)
             .hasSize(20)
             .path("getSentRequests.pageInfo.hasNextPage").entity(Boolean.class)
@@ -278,7 +278,7 @@ class UserConnectionControllerIT {
     void givenUser_whenGetFriendSuggestions_thenReturnSuccess() {
         User user1 = userRepository.findById(USER_ID1).block();
         User user2 = userRepository.findById(USER_ID2).block();
-        for (int i = 0; i < 100; ++i) {
+        for (int i = 0; i < 40; ++i) {
             User user = User.of(
                 UUID.randomUUID().toString(), faker.name().username(), faker.internet().emailAddress(),
                 faker.name().firstName(), "", faker.name().lastName()
@@ -298,7 +298,7 @@ class UserConnectionControllerIT {
             .httpHeaders(headers -> headers.setBearerAuth(USER_TOKEN))
             .execute()
             .path("getFriendSuggestions.totalCount").entity(Integer.class)
-            .isEqualTo(100)
+            .isEqualTo(40)
             .path("getFriendSuggestions.edges[*].node").entityList(User.class)
             .hasSize(20)
             .path("getFriendSuggestions.pageInfo.hasNextPage").entity(Boolean.class)
