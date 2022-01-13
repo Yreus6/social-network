@@ -42,12 +42,14 @@ const Contact = (props: ContactProps) => {
           />
         }
         {props.currentUserId !== props.userId && !props.profile.address &&
-          <div className='d-flex align-items-center'>
-            <MDBIcon className='me-3' fas icon='home' />
-          <div className='d-flex flex-column justify-content-center flex-grow-1'>
-            <p className='m-0'>No address to show</p>
+          <div className='d-flex align-items-center ps-2 pb-1'>
+            <div style={{ width: '30px' }}>
+              <MDBIcon fas icon='home' />
+            </div>
+            <div className='d-flex flex-column justify-content-center flex-grow-1'>
+              <p className='m-0'>No address to show</p>
+            </div>
           </div>
-        </div>
         }
 
         {props.profile.address &&
@@ -61,7 +63,7 @@ const Contact = (props: ContactProps) => {
         }
       </MDBContainer>
       <MDBContainer className='ps-2 pb-2 pe-2'>
-        <h6 className='mb-3 about-content-header'>Phone number</h6>
+        <h6 className='mb-3 about-content-header'>Phone Number</h6>
         {props.currentUserId === props.userId && !props.profile.phoneNumber &&
           <AddPhone
             userId={props.userId}
@@ -70,12 +72,14 @@ const Contact = (props: ContactProps) => {
           />
         }
         {props.currentUserId !== props.userId && !props.profile.phoneNumber &&
-          <div className='d-flex align-items-center'>
-            <MDBIcon className='me-3' fas icon='phone-alt' />
-          <div className='d-flex flex-column flex-grow-1'>
-            <p className='m-0'>No phone number to show</p>
+          <div className='d-flex align-items-center ps-2 pb-1'>
+            <div style={{ width: '30px' }}>
+              <MDBIcon fas icon='phone-alt' />
+            </div>
+            <div className='d-flex flex-column flex-grow-1'>
+              <p className='m-0'>No phone number to show</p>
+            </div>
           </div>
-        </div>
         }
 
         {props.profile.phoneNumber &&

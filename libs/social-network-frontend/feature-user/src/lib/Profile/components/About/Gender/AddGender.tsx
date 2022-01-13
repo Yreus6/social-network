@@ -30,14 +30,16 @@ const AddGender = (props: AddGenderProps) => {
       updateProfile={props.updateProfile}
       showToast={props.showToast}
     /> :
-    <h5
+    <p
       onClick={handleToggleForm}
-      className='d-flex align-items-center mb-4 add-info-profile link-primary'
+      className='d-flex align-items-center mb-2 add-info-profile link-primary ps-2'
       color='light'
     >
-      <MDBIcon className='me-3' fas icon='plus' />
+      <span style={{ width: '30px' }}>
+        <MDBIcon fas icon='plus' />
+      </span>
       <span>Add your gender</span>
-    </h5>
+    </p>
   );
 };
 

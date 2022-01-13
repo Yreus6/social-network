@@ -37,13 +37,23 @@ import { DateTime } from 'luxon';
 interface UserProfileProps {
   currentUserId: string;
   userId: string;
+  refetch?: boolean;
 }
 
 const UserProfile = (props: UserProfileProps) => {
-  const { data: profileData, isLoading: profileLoading, error: profileError } = useGetProfileForUserQuery({
+  const {
+    data: profileData,
+    isLoading: profileLoading,
+    error: profileError,
+    refetch: profileRefetch
+  } = useGetProfileForUserQuery({
     userId: props.userId
   });
-  const { data: countFriendsData, isLoading: countFriendsLoading, refetch: countFriendsRefetch } = useCountFriendsForUserQuery({
+  const {
+    data: countFriendsData,
+    isLoading: countFriendsLoading,
+    refetch: countFriendsRefetch
+  } = useCountFriendsForUserQuery({
     userId: props.userId
   });
   const { data: checkFriendData, isLoading: checkFriendLoading, refetch: checkFriendRefetch } = useCheckFriendUserQuery({
@@ -196,6 +206,22 @@ const UserProfile = (props: UserProfileProps) => {
       });
     }
   }, [showErrorToast]);
+
+  useEffect(() => {
+    if (props.refetch) {
+      profileRefetch();
+      countFriendsRefetch();
+      checkFriendRefetch();
+      checkFollowingRefetch();
+      checkRequestFriendRefetch();
+      checkReceiveRequestRefetch();
+      setRefetchFriends(true);
+    }
+
+    return () => {
+      setRefetchFriends(false);
+    };
+  }, [props.refetch]);
 
   if (profileError) {
     return (
@@ -409,29 +435,39 @@ const UserProfile = (props: UserProfileProps) => {
             </div>
           </div>
           <MDBTabsContent>
-            <MDBTabsPane show={basicActive === 'posts'}>Tab 1 content</MDBTabsPane>
-            <MDBTabsPane show={basicActive === 'about'}>
+            <MDBTabsPane
+              show={basicActive === 'posts'}
+            >
+              Tab 1 content
+            </MDBTabsPane>
+            <MDBTabsPane
+              show={basicActive === 'about'}
+            >
               {profileData?.getUserProfile &&
-              <About
-                currentUserId={props.currentUserId}
-                userId={props.userId}
-                profile={{
-                  ...profileData.getUserProfile,
-                  interests: profileData.getUserProfile.interests.map(i => i ?? ''),
-                  educations: [],
-                  jobs: [],
-                  user: {
-                    ...profileData.getUserProfile.user,
-                    id: props.userId
-                  }
-                }}
-              />
+                <About
+                  currentUserId={props.currentUserId}
+                  userId={props.userId}
+                  profile={{
+                    ...profileData.getUserProfile,
+                    interests: profileData.getUserProfile.interests.map(i => i ?? ''),
+                    educations: [],
+                    jobs: [],
+                    user: {
+                      ...profileData.getUserProfile.user,
+                      id: props.userId
+                    }
+                  }}
+                />
               }
             </MDBTabsPane>
-            <MDBTabsPane show={basicActive === 'photos'}>
+            <MDBTabsPane
+              show={basicActive === 'photos'}
+            >
               Photos
             </MDBTabsPane>
-            <MDBTabsPane show={basicActive === 'friends'}>
+            <MDBTabsPane
+              show={basicActive === 'friends'}
+            >
               <Friends
                 currentUserId={props.currentUserId}
                 userId={props.userId}

@@ -72,6 +72,7 @@ public class Profile {
     }
 
     public void addInterests(Set<String> newInterests) {
+        interests.clear();
         interests.addAll(newInterests);
     }
 

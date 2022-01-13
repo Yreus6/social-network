@@ -1,7 +1,5 @@
 package com.htcompany.snapplication;
 
-import com.htcompany.snuser.repository.ProfileRepository;
-import com.htcompany.snuser.repository.UserRepository;
 import com.htcompany.snuser.service.ProfileService;
 import com.htcompany.snuser.service.UserService;
 import org.springframework.data.neo4j.core.ReactiveNeo4jClient;

@@ -623,34 +623,6 @@
         }
       }
     },
-    "social-network-frontend-ui-sidenav": {
-      "root": "libs/social-network-frontend/ui-sidenav",
-      "sourceRoot": "libs/social-network-frontend/ui-sidenav/src",
-      "projectType": "library",
-      "tags": [],
-      "targets": {
-        "lint": {
-          "executor": "@nrwl/linter:eslint",
-          "outputs": ["{options.outputFile}"],
-          "options": {
-            "lintFilePatterns": [
-              "libs/social-network-frontend/ui-sidenav/**/*.{ts,tsx,js,jsx}"
-            ]
-          }
-        },
-        "test": {
-          "executor": "@nrwl/jest:jest",
-          "outputs": [
-            "coverage/libs/social-network-frontend/ui-sidenav",
-            "build/test-results/jest"
-          ],
-          "options": {
-            "jestConfig": "libs/social-network-frontend/ui-sidenav/jest.config.js",
-            "passWithNoTests": true
-          }
-        }
-      }
-    },
     "social-network-frontend-utils-testing": {
       "root": "libs/social-network-frontend/utils-testing",
       "sourceRoot": "libs/social-network-frontend/utils-testing/src",

@@ -1,6 +1,6 @@
 import React from 'react';
 import { MDBBtn, MDBInput } from 'mdb-react-ui-kit';
-import { useForm, Controller } from 'react-hook-form';
+import { Controller, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import { useEditInterestsForUserMutation } from '@sn-htc/social-network-frontend/data-access-user';
@@ -46,7 +46,7 @@ const FavoriteForm = (props: FavoriteFormProps) => {
   };
 
   return (
-    <form className='d-flex flex-column w-100' onSubmit={handleSubmit(onSubmit)}>
+    <form className='d-flex flex-column w-100 my-3' onSubmit={handleSubmit(onSubmit)}>
       <div className='flex-grow-1 '>
         <div className='w-100'>
           <Controller

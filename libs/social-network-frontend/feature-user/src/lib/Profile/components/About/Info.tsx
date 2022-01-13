@@ -48,9 +48,9 @@ const Info = (props: InfoProps) => {
         {props.currentUserId !== props.userId && !props.profile.biography &&
           <div className='d-flex flex-column'>
             <p className='mb-0' style={{ textAlign: 'justify' }}>
-            No biography to show
-          </p>
-        </div>
+              No biography to show
+            </p>
+          </div>
         }
 
         {props.profile.biography &&
@@ -73,14 +73,16 @@ const Info = (props: InfoProps) => {
           />
         }
         {props.currentUserId !== props.userId && !props.profile.birthday &&
-          <div className='d-flex flex-row align-items-center'>
-            <MDBIcon size='lg' fas icon='birthday-cake' />
-          <div className='d-flex flex-column ms-3 flex-grow-1'>
-            <p className='m-0'>
-              No birthday to show
-            </p>
+          <div className='d-flex flex-row align-items-center ps-2 pb-1'>
+            <div style={{ width: '30px' }}>
+              <MDBIcon fas icon='birthday-cake' />
+            </div>
+            <div className='d-flex flex-column ms-3 flex-grow-1' style={{ lineHeight: '20px' }}>
+              <p className='m-0'>
+                No birthday to show
+              </p>
+            </div>
           </div>
-        </div>
         }
 
         {props.profile.birthday &&
@@ -103,12 +105,14 @@ const Info = (props: InfoProps) => {
           />
         }
         {props.currentUserId !== props.userId && !props.profile.gender &&
-          <div className='d-flex flex-row align-items-center'>
-            <MDBIcon fas icon='user' size='lg' />
-          <div className='d-flex flex-column ms-3 flex-grow-1'>
-            <p className='m-0'>No gender to show</p>
+          <div className='d-flex flex-row align-items-center ps-2 pb-1'>
+            <div style={{ width: '30px' }}>
+              <MDBIcon fas icon='user' />
+            </div>
+            <div className='d-flex flex-column ms-3 flex-grow-1'>
+              <p className='m-0'>No gender to show</p>
+            </div>
           </div>
-        </div>
         }
 
         {props.profile.gender &&
@@ -121,8 +125,8 @@ const Info = (props: InfoProps) => {
           />
         }
       </MDBContainer>
-      <div className='mb-3'>
-        <h5>Favorites</h5>
+      <MDBContainer className='ps-2 pb-2 pe-2'>
+        <h6 className='mb-2 about-content-header'>Favorites</h6>
         {props.currentUserId === props.userId &&
           <AddFavorite
             userId={props.userId}
@@ -132,10 +136,12 @@ const Info = (props: InfoProps) => {
           />
         }
         {props.currentUserId !== props.userId && props.profile.interests.length === 0 &&
-        <div className='d-flex flex-row align-items-center mb-3'>
-          <MDBIcon fas icon='circle' />
-          <p className='m-0 ms-3 flex-grow-1'>No favorite to show</p>
-        </div>
+          <div className='d-flex flex-row align-items-center ps-2 pb-0'>
+            <div style={{ width: '30px' }}>
+              <MDBIcon fas icon='circle' />
+            </div>
+            <p className='m-0 ms-3 flex-grow-1'>No favorite to show</p>
+          </div>
         }
 
         {props.profile.interests.length > 0 && props.profile.interests.map((i, index) =>
@@ -147,9 +153,10 @@ const Info = (props: InfoProps) => {
           updateProfile={updateProfile}
           showToast={() => setShowErrorToast(true)}
           favorites={props.profile.interests.map(i => i ?? '')}
+          pos={index}
         />
         )}
-      </div>
+      </MDBContainer>
       <MDBToast
         color='danger'
         show={showErrorToast}

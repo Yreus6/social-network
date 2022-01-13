@@ -3,13 +3,13 @@ import './Settings.scss';
 import '../Page.scss';
 import {
   MDBCol,
+  MDBIcon,
   MDBRow,
   MDBTabs,
   MDBTabsContent,
   MDBTabsItem,
   MDBTabsLink,
   MDBTabsPane,
-  MDBIcon,
   MDBToast
 } from 'mdb-react-ui-kit';
 import NameForm from './components/NameForm/NameForm';
@@ -59,10 +59,10 @@ export const Settings = (props: SettingsProps) => {
 
   return (
     <div className='setting'>
-      <MDBRow className='m-0' style={{ height: '3.75rem' }}/>
+      <MDBRow className='m-0' style={{ height: '3.75rem' }} />
       <MDBRow className='m-0'>
-        <MDBCol md='2' xl='3' sm='0' />
-        <MDBCol md='8' xl='6' sm='12'>
+        <MDBCol md='1' xl='2' sm='0' />
+        <MDBCol md='10' xl='8' sm='12'>
           <MDBRow className='setting-card d-flex flex-row mt-4 ms-auto me-auto pe-2 ps-2 pt-4 pb-4'>
             <MDBCol className='setting-nav' sm='4'>
               <h3 className='setting-title'>Settings</h3>
@@ -141,7 +141,7 @@ export const Settings = (props: SettingsProps) => {
             </MDBCol>
           </MDBRow>
         </MDBCol>
-        <MDBCol md='2' xl='3' sm='0' />
+        <MDBCol md='1' xl='2' sm='0' />
       </MDBRow>
       <MDBToast
         color='danger'

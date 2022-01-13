@@ -20,7 +20,7 @@ export const SentCard = (props: SentCardProps) => {
   };
 
   return (
-    <MDBCol className='sent-request' lg='2' md='3' sm='4' data-test={`sent-request-${props.userId}`}>
+    <MDBCol className='sent-request' xl='2' lg='3' md='4' sm='6' data-test={`sent-request-${props.userId}`}>
       <div className='sent-request-main'>
         <div className='image-wrapper hover-overlay' onClick={props.onClickUser}>
           <img className='picture-profile' src={'https://picsum.photos/200'} alt='Avatar' />

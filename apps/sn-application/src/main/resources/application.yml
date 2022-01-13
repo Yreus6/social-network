@@ -26,7 +26,6 @@ spring:
     schema:
       locations:
         - classpath:/graphql/shared/
-        - classpath:/graphql/greeting/
         - classpath:/graphql/user/
         - classpath:/graphql/seed/
 

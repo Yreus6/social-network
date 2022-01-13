@@ -109,7 +109,7 @@ const WorkForm = (props: WorkFormProps) => {
   };
 
   return (
-    <form className='d-flex flex-column w-100 mb-2 ps-2' onSubmit={handleSubmit(onSubmit)}>
+    <form className='d-flex flex-column w-100 mb-2 ps-2 my-3' onSubmit={handleSubmit(onSubmit)}>
       <div className='flex-grow-1'>
         <Controller
           name='company'

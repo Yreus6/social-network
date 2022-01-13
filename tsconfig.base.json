@@ -59,9 +59,6 @@
       "@sn-htc/social-network-frontend/ui-inputs": [
         "libs/social-network-frontend/ui-inputs/src/index.ts"
       ],
-      "@sn-htc/social-network-frontend/ui-sidenav": [
-        "libs/social-network-frontend/ui-sidenav/src/index.ts"
-      ],
       "@sn-htc/social-network-frontend/utils-testing": [
         "libs/social-network-frontend/utils-testing/src/index.ts"
       ]

@@ -24,6 +24,7 @@ export const Login = ({ config }) => {
       <OktaSignInWidget
         config={config}
         onSuccess={onSuccess}
-        onError={onError} />
+        onError={onError}
+      />
     </div>;
 };

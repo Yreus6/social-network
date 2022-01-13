@@ -1,12 +1,6 @@
 {
     "name": "Socivio Schema",
     "projects": {
-        "greeting": {
-            "includes": [
-                "./src/main/resources/graphql/shared/**",
-                "./src/main/resources/graphql/greeting/**"
-            ]
-        },
         "user": {
             "includes": [
                 "./src/main/resources/graphql/shared/**",

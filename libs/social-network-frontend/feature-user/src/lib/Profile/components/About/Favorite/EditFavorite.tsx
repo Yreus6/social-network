@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import FavoriteForm from './FavoriteForm';
 import { MDBBtn, MDBIcon } from 'mdb-react-ui-kit';
+import { useEditInterestsForUserMutation } from '@sn-htc/social-network-frontend/data-access-user';
 
 interface EditFavoriteProps {
   currentUserId: string;
@@ -9,13 +10,33 @@ interface EditFavoriteProps {
   showToast?: () => void;
   favorite: string;
   favorites: Array<string>;
+  pos: number;
 }
 
 const EditFavorite = (props: EditFavoriteProps) => {
+  const [editInterests, { isLoading: isUpdating }] = useEditInterestsForUserMutation();
   const [toggleEdit, setToggleEdit] = useState<boolean>(false);
 
   const handleToggleForm = () => {
     setToggleEdit(prev => !prev);
+  };
+
+  const removeInterest = async () => {
+    try {
+      const newInterests: Array<string> = [];
+      props.favorites.forEach((f, index) => {
+        if (index !== props.pos) {
+          newInterests.push(f);
+        }
+      });
+      await editInterests({
+        userId: props.userId,
+        interests: newInterests
+      }).unwrap();
+      props.updateProfile && props.updateProfile();
+    } catch {
+      props.showToast && props.showToast();
+    }
   };
 
   useEffect(() => {
@@ -52,7 +73,13 @@ const EditFavorite = (props: EditFavoriteProps) => {
             >
               <MDBIcon fas icon='pen' />
             </MDBBtn>
-            <MDBBtn color='light' floating className='shadow-0 ms-1'>
+            <MDBBtn
+              onClick={removeInterest}
+              color='light'
+              floating
+              className='shadow-0 ms-1'
+              disabled={isUpdating}
+            >
               <MDBIcon fas icon='trash' />
             </MDBBtn>
           </>

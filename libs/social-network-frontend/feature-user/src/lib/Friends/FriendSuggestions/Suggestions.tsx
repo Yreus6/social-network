@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { MDBRow, MDBSpinner } from 'mdb-react-ui-kit';
-import Friends from '../Friends';
 import UserSuggestCard from './UserSuggestCard';
 import { useGetFriendSuggestionsForUserQuery, User, UserEdge } from '@sn-htc/social-network-frontend/data-access-user';
 import produce from 'immer';
@@ -8,12 +7,13 @@ import InfiniteScroll from 'react-infinite-scroll-component';
 
 interface SuggestionsProps {
   user: User;
+  refetch?: boolean;
 }
 
-export const Suggestions = (props: SuggestionsProps) => {
+const Suggestions = (props: SuggestionsProps) => {
   const size = 12;
   const [cursor, setCursor] = useState<string | null>(null);
-  const { data: suggestionsData, isLoading, isFetching } = useGetFriendSuggestionsForUserQuery({
+  const { data: suggestionsData, isLoading, isFetching, refetch } = useGetFriendSuggestionsForUserQuery({
     userId: props.user.id,
     first: size,
     after: cursor
@@ -29,7 +29,7 @@ export const Suggestions = (props: SuggestionsProps) => {
   };
 
   useEffect(() => {
-    if (suggestionsData?.getFriendSuggestions) {
+    if (suggestionsData?.getFriendSuggestions && !isFetching) {
       setSuggestions(
         produce(draft => {
           suggestionsData.getFriendSuggestions!.edges.forEach((userEdge) => {
@@ -40,7 +40,14 @@ export const Suggestions = (props: SuggestionsProps) => {
         })
       );
     }
-  }, [suggestionsData?.getFriendSuggestions]);
+  }, [suggestionsData?.getFriendSuggestions, isFetching]);
+
+  useEffect(() => {
+    if (props.refetch) {
+      setSuggestions([]);
+      refetch();
+    }
+  }, [props.refetch]);
 
   if (isLoading) {
     return (
@@ -56,16 +63,15 @@ export const Suggestions = (props: SuggestionsProps) => {
     <MDBSpinner
       tag='div'
       role='status'
-      style={{ display: isFetching ? 'block' : 'none' }}
+      style={{ display: isFetching && suggestionsData?.getFriendSuggestions?.pageInfo.hasNextPage ? 'block' : 'none' }}
       className='mx-auto'
     />
   );
 
   return (
-    <Friends>
-      <div className='card-friend pb-2 ps-3 pe-3 d-flex flex-column'>
-        <h5 className='mt-4 ms-2 mb-3'>People you may know</h5>
-        {suggestionsData?.getFriendSuggestions ?
+    <div className='card-friend pb-2 ps-3 pe-3 d-flex flex-column'>
+      <h5 className='mt-4 ms-2 mb-3'>People you may know</h5>
+      {suggestionsData?.getFriendSuggestions ?
         <InfiniteScroll
           style={{ overflow: 'hidden' }}
           next={() => fetchMoreData(suggestionsData.getFriendSuggestions!.pageInfo.endCursor!)}
@@ -75,10 +81,10 @@ export const Suggestions = (props: SuggestionsProps) => {
         >
           <MDBRow>
             {suggestions.length === 0 &&
-            <div
-              className='d-flex justify-content-center align-items-center'
-              style={{ minHeight: '200px' }}
-            >It's empty here</div>
+              <div
+                className='d-flex justify-content-center align-items-center'
+                style={{ minHeight: '200px' }}
+              >It's empty here</div>
             }
 
             {suggestions.map((userEdge, index) => (
@@ -92,8 +98,9 @@ export const Suggestions = (props: SuggestionsProps) => {
             ))}
           </MDBRow>
         </InfiniteScroll> : <div />
-        }
-      </div>
-    </Friends>
+      }
+    </div>
   );
 };
+
+export default Suggestions;

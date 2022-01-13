@@ -45,7 +45,9 @@ const EditAddress = (props: EditAddressProps) => {
           <p className='m-0'>
             {`${props.address.city}, ${props.address.region}, ${props.address.country}`}
           </p>
-          <span>Address</span>
+          <span style={{ lineHeight: '12px', fontSize: '12px' }}>
+          Address
+        </span>
         </div>
         {props.currentUserId === props.userId &&
           <>
@@ -57,12 +59,9 @@ const EditAddress = (props: EditAddressProps) => {
             >
               <MDBIcon fas icon='pen' />
             </MDBBtn>
-            <MDBBtn color='light' floating className='shadow-0 ms-1'>
-              <MDBIcon fas icon='trash' />
-            </MDBBtn>
           </>
-      }
-    </div>
+        }
+      </div>
   );
 };
 

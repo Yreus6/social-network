@@ -48,12 +48,14 @@ const WorkAndEducation = (props: WorkAndEducationProps) => {
           />
         }
         {props.currentUserId !== props.userId && !isJobsLoading && jobsData?.getJobs?.length === 0 &&
-          <div className='d-flex align-items-center mt-3'>
-            <MDBIcon className='me-3' fas icon='briefcase' />
-          <div className='d-flex flex-column justify-content-center flex-grow-1'>
-            <p className='m-0'>No workplace to show</p>
+          <div className='d-flex align-items-center ps-2 pb-1'>
+            <div style={{ width: '30px' }}>
+              <MDBIcon fas icon='briefcase' />
+            </div>
+            <div className='d-flex flex-column justify-content-center flex-grow-1'>
+              <p className='m-0'>No workplace to show</p>
+            </div>
           </div>
-        </div>
         }
 
         {!isJobsLoading && jobsData?.getJobs && jobsData.getJobs.map((job, index) =>
@@ -78,12 +80,14 @@ const WorkAndEducation = (props: WorkAndEducationProps) => {
           />
         }
         {props.currentUserId !== props.userId && !isEdusLoading && edusData?.getEducations?.length === 0 &&
-          <div className='d-flex align-items-center mt-3'>
-            <MDBIcon className='me-3' fas icon='graduation-cap' />
-          <div className='d-flex flex-column justify-content-center flex-grow-1'>
-            <p className='m-0'>No school to show</p>
+          <div className='d-flex align-items-center ps-2 pb-0'>
+            <div style={{ width: '30px' }}>
+              <MDBIcon fas icon='graduation-cap' />
+            </div>
+            <div className='d-flex flex-column justify-content-center flex-grow-1'>
+              <p className='m-0'>No school to show</p>
+            </div>
           </div>
-        </div>
         }
 
         {!isEdusLoading && edusData?.getEducations && edusData.getEducations.map((edu, index) =>

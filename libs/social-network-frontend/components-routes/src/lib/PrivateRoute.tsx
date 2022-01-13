@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { RouteProps } from 'react-router-dom';
 import { UserClaims } from '@okta/okta-auth-js';
 import { SecureRoute, useOktaAuth } from '@okta/okta-react';
+import { MDBSpinner } from 'mdb-react-ui-kit';
 
 interface PrivateRouteProps extends RouteProps {
   hasAnyAuthorities?: string[];
@@ -12,28 +13,32 @@ export interface UserInfo extends UserClaims {
 }
 
 export const PrivateRoute = ({ hasAnyAuthorities = [], children, ...rest }: PrivateRouteProps) => {
-  const { authState, oktaAuth } = useOktaAuth();
+  const { authState } = useOktaAuth();
   const [authorities, setAuthorities] = useState<string[] | null>(null);
 
   useEffect(() => {
-    if (authState && authState.isAuthenticated) {
-      oktaAuth.getUser().then(user => {
-        const userAuthorities = (user as UserInfo).groups.filter(group => group.startsWith('ROLE_'));
-        setAuthorities(userAuthorities);
-      });
+    if (authState && authState.isAuthenticated && authState.idToken) {
+      const userAuthorities = (authState.idToken.claims as UserInfo).groups.filter(group => group.startsWith('ROLE_'));
+      setAuthorities(userAuthorities);
     }
 
     return () => {
       setAuthorities(null);
     };
-  }, [authState, oktaAuth]);
+  }, [authState]);
 
   return (
     <SecureRoute
       {...rest}
       render={() => {
         if (!authorities) {
-          return <div />;
+          return (
+            <div className='d-flex justify-content-center align-items-center vh-100'>
+              <MDBSpinner role='status'>
+                <span className='visually-hidden'>Loading...</span>
+              </MDBSpinner>
+            </div>
+          );
         } else {
           return hasAnyAuthority(authorities, hasAnyAuthorities) ? children :
             <div data-test='text-forbidden'>You are not allowed to view this page</div>;

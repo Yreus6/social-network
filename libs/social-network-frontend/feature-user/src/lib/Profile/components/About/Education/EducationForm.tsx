@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { MDBBtn, MDBCheckbox, MDBDatepicker, MDBInput } from 'mdb-react-ui-kit';
 import { Controller, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -55,17 +55,10 @@ const EducationForm = (props: EducationFormProps) => {
     resolver: yupResolver(schema),
   });
 
-  useEffect(() => {
-    if (props.graduate) {
-      setStudyTo(DateTime.now().toFormat('dd-MM-yyyy'));
-    }
-  }, []);
-
   const handleCheck = (e: React.SyntheticEvent) => {
     const element = e.target as HTMLInputElement;
     if (element.checked) {
       setGraduate(true);
-      setStudyTo(DateTime.now().toFormat('dd-MM-yyyy'));
     } else {
       setGraduate(false);
     }
@@ -127,7 +120,7 @@ const EducationForm = (props: EducationFormProps) => {
   };
 
   return (
-    <form className='d-flex flex-column w-100 ps-2' onSubmit={handleSubmit(onSubmit)}>
+    <form className='d-flex flex-column w-100 ps-2 my-3' onSubmit={handleSubmit(onSubmit)}>
       <div className='flex-grow-1 mb-0'>
         <Controller
           name='school'
@@ -264,17 +257,13 @@ const EducationForm = (props: EducationFormProps) => {
             value={studyFrom}
             setValue={setStudyFrom}
           />
-          {!graduate &&
-          <>
-            <div className='mb-2' />
-            <MDBDatepicker
-              labelText='To'
-              format='dd-mm-yyyy'
-              value={studyTo}
-              setValue={setStudyTo}
-            />
-          </>
-          }
+          <div className='mb-2' />
+          <MDBDatepicker
+            labelText='To'
+            format='dd-mm-yyyy'
+            value={studyTo}
+            setValue={setStudyTo}
+          />
         </div>
         <MDBCheckbox
           name='isGraduate'

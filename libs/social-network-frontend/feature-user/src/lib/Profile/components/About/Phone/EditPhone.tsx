@@ -55,12 +55,9 @@ const EditPhone = (props: EditPhoneProps) => {
             >
               <MDBIcon fas icon='pen' />
             </MDBBtn>
-            <MDBBtn color='light' floating className='shadow-0 ms-1'>
-              <MDBIcon fas icon='trash' />
-            </MDBBtn>
           </>
-      }
-    </div>
+        }
+      </div>
   );
 };
 

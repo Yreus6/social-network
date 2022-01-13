@@ -22,7 +22,7 @@ export const SuggestCard = (props: SuggestCardProps) => {
   };
 
   return (
-    <MDBCol className='friend-suggest' lg='2' md='3' sm='4'>
+    <MDBCol className='friend-suggest' xl='2' lg='3' md='4' sm='6'>
       <div className='friend-suggest-main'>
         <div className='image-wrapper hover-overlay' onClick={props.onClickUser}>
           <img className='picture-profile' src={'https://picsum.photos/200'} alt='Avatar' />

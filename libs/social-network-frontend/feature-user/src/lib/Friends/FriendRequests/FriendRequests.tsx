@@ -3,17 +3,17 @@ import { MDBRow, MDBSpinner } from 'mdb-react-ui-kit';
 import { useGetFriendRequestsForUserQuery, User, UserEdge } from '@sn-htc/social-network-frontend/data-access-user';
 import UserRequestCard from './UserRequestCard';
 import InfiniteScroll from 'react-infinite-scroll-component';
-import Friends from '../Friends';
 import produce from 'immer';
 
 interface FriendRequestsProps {
   user: User;
+  refetch?: boolean;
 }
 
-export const FriendRequests = (props: FriendRequestsProps) => {
+const FriendRequests = (props: FriendRequestsProps) => {
   const size = 12;
   const [cursor, setCursor] = useState<string | null>(null);
-  const { data: requestsData, isLoading, isFetching } = useGetFriendRequestsForUserQuery({
+  const { data: requestsData, isLoading, isFetching, refetch } = useGetFriendRequestsForUserQuery({
     userId: props.user.id,
     first: size,
     after: cursor
@@ -25,7 +25,7 @@ export const FriendRequests = (props: FriendRequestsProps) => {
   };
 
   useEffect(() => {
-    if (requestsData?.getFriendRequests) {
+    if (requestsData?.getFriendRequests && !isFetching) {
       setRequests(
         produce(draft => {
           requestsData.getFriendRequests!.edges.forEach((userEdge) => {
@@ -36,7 +36,14 @@ export const FriendRequests = (props: FriendRequestsProps) => {
         })
       );
     }
-  }, [requestsData?.getFriendRequests]);
+  }, [requestsData?.getFriendRequests, isFetching]);
+
+  useEffect(() => {
+    if (props.refetch) {
+      setRequests([]);
+      refetch();
+    }
+  }, [props.refetch]);
 
   if (isLoading) {
     return (
@@ -52,16 +59,15 @@ export const FriendRequests = (props: FriendRequestsProps) => {
     <MDBSpinner
       tag='div'
       role='status'
-      style={{ display: isFetching ? 'block' : 'none' }}
+      style={{ display: isFetching && requestsData?.getFriendRequests?.pageInfo.hasNextPage ? 'block' : 'none' }}
       className='mx-auto'
     />
   );
 
   return (
-    <Friends>
-      <div className='card-friend pb-2 ps-3 pe-3 d-flex flex-column'>
-        <h5 className='mt-4 ms-2 mb-3'>Friend Requests</h5>
-        {requestsData?.getFriendRequests ?
+    <div className='card-friend pb-2 ps-3 pe-3 d-flex flex-column'>
+      <h5 className='mt-4 ms-2 mb-3'>Friend Requests</h5>
+      {requestsData?.getFriendRequests ?
         <InfiniteScroll
           style={{ overflow: 'hidden' }}
           next={() => fetchMoreData(requestsData.getFriendRequests!.pageInfo.endCursor!)}
@@ -71,10 +77,10 @@ export const FriendRequests = (props: FriendRequestsProps) => {
         >
           <MDBRow>
             {requests.length === 0 &&
-            <div
-              className='d-flex justify-content-center align-items-center'
-              style={{ minHeight: '200px' }}
-            >It's empty here</div>
+              <div
+                className='d-flex justify-content-center align-items-center'
+                style={{ minHeight: '200px' }}
+              >It's empty here</div>
             }
 
             {requests.map((userEdge, index) => (
@@ -87,8 +93,9 @@ export const FriendRequests = (props: FriendRequestsProps) => {
             ))}
           </MDBRow>
         </InfiniteScroll> : <div />
-        }
-      </div>
-    </Friends>
+      }
+    </div>
   );
 };
+
+export default FriendRequests;

@@ -1,9 +1,8 @@
 import '@testing-library/jest-dom';
-import { oktaAuth, screen, wrapper } from '@sn-htc/social-network-frontend/utils-testing';
+import { screen, wrapper } from '@sn-htc/social-network-frontend/utils-testing';
 import { hasAnyAuthority, PrivateRoute } from './PrivateRoute';
 import { AUTHORITIES } from '@sn-htc/social-network-frontend/config-constants';
 import { Route } from 'react-router-dom';
-import { waitFor } from '@testing-library/react';
 
 const TestComponent = () => {
   return (
@@ -56,7 +55,6 @@ describe('Private Route', () => {
         { isAuthenticated: false }
       );
 
-      await waitFor(() => expect(oktaAuth.getUser).toBeCalled());
       expect(screen.queryByText(/Test/)).toBeNull();
       expect(testLocation.pathname).toEqual('/signin');
     });

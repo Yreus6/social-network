@@ -37,9 +37,7 @@ const EditBirthday = (props: EditBirthdayProps) => {
         mode={props.birthday.mode!}
       /> :
       <div className='d-flex flex-row align-items-center ps-2 pb-1'>
-        <div style={{
-          width: '30px'
-        }}>
+        <div style={{ width: '30px' }}>
           <MDBIcon fas icon='birthday-cake' />
         </div>
         <div className='d-flex flex-column ms-3 flex-grow-1' style={{ lineHeight: '20px' }}>
@@ -61,8 +59,8 @@ const EditBirthday = (props: EditBirthdayProps) => {
               <MDBIcon fas icon='pen' />
             </MDBBtn>
           </>
-      }
-    </div>
+        }
+      </div>
   );
 };
 

@@ -2,7 +2,7 @@ import React from 'react';
 import { Route, Switch } from 'react-router-dom';
 import { PrivateRoute } from '@sn-htc/social-network-frontend/components-routes';
 import { AUTHORITIES } from '@sn-htc/social-network-frontend/config-constants';
-import { Settings, Profile, Page, FriendRequests, Suggestions, SentRequests } from '@sn-htc/social-network-frontend/feature-user';
+import { Friends, Page, Profile, Settings } from '@sn-htc/social-network-frontend/feature-user';
 import { useGetUserFromOktaQuery } from '@sn-htc/social-network-frontend/data-access-user';
 import { MDBSpinner } from 'mdb-react-ui-kit';
 import { useOktaAuth } from '@okta/okta-react';
@@ -45,19 +45,9 @@ const PrivateRoutesContainer = () => {
           {data?.getCurrentUser ? <Profile user={data.getCurrentUser} /> : <div />}
         </Page>
       </PrivateRoute>
-      <PrivateRoute exact path='/friends/requests' hasAnyAuthorities={[AUTHORITIES.USER]}>
+      <PrivateRoute exact path='/friends' hasAnyAuthorities={[AUTHORITIES.USER]}>
         <Page>
-          {data?.getCurrentUser ? <FriendRequests user={data.getCurrentUser} /> : <div />}
-        </Page>
-      </PrivateRoute>
-      <PrivateRoute exact path='/friends/sents' hasAnyAuthorities={[AUTHORITIES.USER]}>
-        <Page>
-          {data?.getCurrentUser ? <SentRequests user={data.getCurrentUser} /> : <div />}
-        </Page>
-      </PrivateRoute>
-      <PrivateRoute exact path='/friends/suggestions' hasAnyAuthorities={[AUTHORITIES.USER]}>
-        <Page>
-          {data?.getCurrentUser ? <Suggestions user={data.getCurrentUser} /> : <div />}
+          {data?.getCurrentUser ? <Friends user={data.getCurrentUser} /> : <div />}
         </Page>
       </PrivateRoute>
       <Route path='*' render={() => <h1>Not Found</h1>} />

@@ -15,13 +15,12 @@ describe('Authentication and Authorization', () => {
     it('should redirect authenticated user to home page', () => {
       cy.visit('/signin');
       cy.location('pathname').should('equal', '/');
-      cy.get('h1').should('be.visible')
-        .and('contain.text', 'Welcome');
       cy.percySnapshot('Redirect to Home');
     });
 
     it('should redirect user to landing page after logout', () => {
       cy.visit('/');
+      cy.getBySel('dropdown-btn').click();
       cy.getBySel('logout-btn').click();
       cy.get('#okta-sign-in').should('be.visible');
       cy.getBySel('socivio-landing').should('be.visible')

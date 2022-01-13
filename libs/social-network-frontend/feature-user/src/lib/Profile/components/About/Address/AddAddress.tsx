@@ -35,10 +35,10 @@ const AddAddress = (props: AddAddressProps) => {
       className='d-flex align-items-center mb-2 add-info-profile link-primary ps-2'
       color='light'
     >
-      <div style={{ width: '30px' }}>
+      <span style={{ width: '30px' }}>
         <MDBIcon fas icon='plus' />
-        <span>Add a living place</span>
-      </div>
+      </span>
+      <span>Add a living place</span>
     </p>
   );
 };

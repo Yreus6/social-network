@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { MDBRow, MDBSpinner } from 'mdb-react-ui-kit';
 import { useGetFriendsForUserQuery, UserEdge } from '@sn-htc/social-network-frontend/data-access-user';
 import UserCard from './UserCard';
@@ -83,6 +83,8 @@ const FriendList = (props: FriendListProps) => {
             currentUserId={props.currentUserId}
             userId={userEdge.node.id}
             displayName={`${userEdge.node.firstName} ${userEdge.node.lastName} ${userEdge.node.middleName ?? ''}`}
+            refetch={props.refetch}
+            reset={props.reset}
           />
         ))}
       </MDBRow>

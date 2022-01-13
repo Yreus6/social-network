@@ -17,32 +17,34 @@ import {
 } from 'mdb-react-ui-kit';
 import logo from './assets/logo.png';
 import { useHistory, useLocation } from 'react-router-dom';
+import { useOktaAuth } from '@okta/okta-react';
 
 interface CrossbarProps {
   avatar: string;
 }
 
 export const Crossbar = (props: CrossbarProps) => {
+  const { oktaAuth } = useOktaAuth();
   const history = useHistory();
   const location = useLocation();
 
   return (
     <MDBNavbar className='sticky-top' bgColor='light' expand='sm' light>
-      <MDBContainer fluid>
+      <MDBContainer fluid className='m-0 p-0'>
         <MDBNavbarBrand
           style={{ cursor: 'pointer' }}
           onClick={() => history.push('/')}
         >
-          <img src={logo} className='logo ms-2' height={40} alt='logo' />
+          <img src={logo} className='logo ms-4' height={40} alt='logo' />
         </MDBNavbarBrand>
       </MDBContainer>
-      <MDBContainer fluid>
-        <MDBNavbarNav className='d-flex justify-content-around'>
+      <MDBContainer fluid className='m-0 p-0'>
+        <MDBNavbarNav className='d-flex justify-content-around flex-row'>
           <MDBNavbarItem>
             <MDBNavbarLink
               style={{ cursor: 'pointer' }}
-              onClick={() => history.push('/friends/requests')}
-              active={location.pathname === '/friends/requests'}
+              onClick={() => history.push('/friends', { refresh: true })}
+              active={location.pathname === '/friends'}
             >
               <MDBIcon fas icon='user-friends' size='lg' />
             </MDBNavbarLink>
@@ -50,7 +52,7 @@ export const Crossbar = (props: CrossbarProps) => {
           <MDBNavbarItem>
             <MDBNavbarLink
               style={{ cursor: 'pointer' }}
-              onClick={() => history.push('/')}
+              onClick={() => history.push('/', { refresh: true })}
               active={location.pathname === '/'}
             >
               <MDBIcon fas icon='home' size='lg' />
@@ -65,10 +67,10 @@ export const Crossbar = (props: CrossbarProps) => {
           </MDBNavbarItem>
         </MDBNavbarNav>
       </MDBContainer>
-      <MDBContainer fluid className='d-flex justify-content-end me-2'>
+      <MDBContainer fluid className='d-flex justify-content-end me-2 m-0 p-0'>
         <MDBNavbarLink
           style={{ cursor: 'pointer' }}
-          onClick={() => history.push('/profile')}
+          onClick={() => history.push('/profile', { refresh: true })}
         >
           <div className='bg-image hover-overlay'>
             <img
@@ -89,12 +91,13 @@ export const Crossbar = (props: CrossbarProps) => {
           </MDBBadge>
         </div>
         <MDBDropdown
+          data-test='dropdown-btn'
           options={{
             modifiers: [
               {
                 name: 'offset',
                 options: {
-                  offset: [10, 20]
+                  offset: [-10, 24]
                 }
               }
             ]
@@ -104,14 +107,24 @@ export const Crossbar = (props: CrossbarProps) => {
             <MDBIcon fas icon='caret-down' />
           </MDBDropdownToggle>
           <MDBDropdownMenu>
-            <MDBDropdownItem>
-              <MDBDropdownLink href='#'>Action</MDBDropdownLink>
+            <MDBDropdownItem style={{ backgroundColor: 'unset' }}>
+              <MDBDropdownLink
+                tag='button'
+                type='button'
+                onClick={() => history.push('/settings')}
+              >
+                Settings
+              </MDBDropdownLink>
             </MDBDropdownItem>
             <MDBDropdownItem>
-              <MDBDropdownLink href='#'>Another action</MDBDropdownLink>
-            </MDBDropdownItem>
-            <MDBDropdownItem>
-              <MDBDropdownLink href='#'>Something else here</MDBDropdownLink>
+              <MDBDropdownLink
+                data-test='logout-btn'
+                tag='button'
+                type='button'
+                onClick={() => oktaAuth.signOut()}
+              >
+                Logout
+              </MDBDropdownLink>
             </MDBDropdownItem>
           </MDBDropdownMenu>
         </MDBDropdown>

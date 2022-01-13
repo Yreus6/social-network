@@ -83,6 +83,8 @@ const FollowingList = (props: FollowingListProps) => {
             currentUserId={props.currentUserId}
             userId={userEdge.node.id}
             displayName={`${userEdge.node.firstName} ${userEdge.node.lastName} ${userEdge.node.middleName ?? ''}`}
+            refetch={props.refetch}
+            reset={props.reset}
           />
         ))}
       </MDBRow>
