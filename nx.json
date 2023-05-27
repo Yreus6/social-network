@@ -1,7 +1,7 @@
 {
-  "npmScope": "sn-htc",
+  "npmScope": "social-network",
   "affected": {
-    "defaultBase": "master"
+    "defaultBase": "main"
   },
   "implicitDependencies": {
     "package.json": {
@@ -12,9 +12,14 @@
   },
   "tasksRunnerOptions": {
     "default": {
-      "runner": "@nrwl/workspace/tasks-runners/default",
+      "runner": "@nrwl/nx-cloud",
       "options": {
-        "cacheableOperations": ["build", "lint", "test", "e2e"]
+        "cacheableOperations": [
+          "build",
+          "lint",
+          "test",
+          "e2e"
+        ]
       }
     }
   },
@@ -35,7 +40,9 @@
     },
     "social-network-frontend-e2e": {
       "tags": [],
-      "implicitDependencies": ["social-network-frontend"]
+      "implicitDependencies": [
+        "social-network-frontend"
+      ]
     }
   },
   "plugins": [
