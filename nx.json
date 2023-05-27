@@ -31,5 +31,21 @@
       }
     ]
   },
-  "projects": {}
+  "projects": {
+    "social-network-frontend": {
+      "tags": []
+    },
+    "social-network-frontend-e2e": {
+      "tags": [],
+      "implicitDependencies": [
+        "social-network-frontend"
+      ]
+    },
+    "social-network-application": {
+      "tags": []
+    }
+  },
+  "plugins": [
+    "@nxrocks/nx-spring-boot"
+  ]
 }

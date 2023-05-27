@@ -1,7 +1,200 @@
 {
   "version": 2,
-  "projects": {},
+  "projects": {
+    "social-network-frontend": {
+      "root": "apps/social-network-frontend",
+      "sourceRoot": "apps/social-network-frontend/src",
+      "projectType": "application",
+      "targets": {
+        "build": {
+          "executor": "@nrwl/web:build",
+          "outputs": [
+            "{options.outputPath}"
+          ],
+          "options": {
+            "outputPath": "dist/apps/social-network-frontend",
+            "index": "apps/social-network-frontend/src/index.html",
+            "main": "apps/social-network-frontend/src/main.tsx",
+            "polyfills": "apps/social-network-frontend/src/polyfills.ts",
+            "tsConfig": "apps/social-network-frontend/tsconfig.app.json",
+            "assets": [
+              "apps/social-network-frontend/src/favicon.ico",
+              "apps/social-network-frontend/src/assets"
+            ],
+            "styles": [
+              "apps/social-network-frontend/src/styles.scss"
+            ],
+            "scripts": [],
+            "webpackConfig": "@nrwl/react/plugins/webpack"
+          },
+          "configurations": {
+            "production": {
+              "fileReplacements": [
+                {
+                  "replace": "apps/social-network-frontend/src/environments/environment.ts",
+                  "with": "apps/social-network-frontend/src/environments/environment.prod.ts"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "500kb",
+                  "maximumError": "1mb"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "executor": "@nrwl/web:dev-server",
+          "options": {
+            "buildTarget": "social-network-frontend:build",
+            "hmr": true
+          },
+          "configurations": {
+            "production": {
+              "buildTarget": "social-network-frontend:build:production",
+              "hmr": false
+            }
+          }
+        },
+        "lint": {
+          "executor": "@nrwl/linter:eslint",
+          "outputs": [
+            "{options.outputFile}"
+          ],
+          "options": {
+            "lintFilePatterns": [
+              "apps/social-network-frontend/**/*.{ts,tsx,js,jsx}"
+            ]
+          }
+        },
+        "test": {
+          "executor": "@nrwl/jest:jest",
+          "outputs": [
+            "coverage/apps/social-network-frontend"
+          ],
+          "options": {
+            "jestConfig": "apps/social-network-frontend/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
+    "social-network-frontend-e2e": {
+      "root": "apps/social-network-frontend-e2e",
+      "sourceRoot": "apps/social-network-frontend-e2e/src",
+      "projectType": "application",
+      "targets": {
+        "e2e": {
+          "executor": "@nrwl/cypress:cypress",
+          "options": {
+            "cypressConfig": "apps/social-network-frontend-e2e/cypress.json",
+            "devServerTarget": "social-network-frontend:serve",
+            "tsConfig": "apps/social-network-frontend-e2e/tsconfig.json"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "social-network-frontend:serve:production"
+            }
+          }
+        },
+        "lint": {
+          "executor": "@nrwl/linter:eslint",
+          "outputs": [
+            "{options.outputFile}"
+          ],
+          "options": {
+            "lintFilePatterns": [
+              "apps/social-network-frontend-e2e/**/*.{js,ts}"
+            ]
+          }
+        }
+      }
+    },
+    "social-network-application": {
+      "root": "apps/social-network-application",
+      "sourceRoot": "apps/social-network-application/src",
+      "projectType": "application",
+      "targets": {
+        "test": {
+          "executor": "@nxrocks/nx-spring-boot:test",
+          "options": {
+            "root": "apps/social-network-application"
+          }
+        },
+        "clean": {
+          "executor": "@nxrocks/nx-spring-boot:clean",
+          "options": {
+            "root": "apps/social-network-application"
+          }
+        },
+        "run": {
+          "executor": "@nxrocks/nx-spring-boot:run",
+          "options": {
+            "root": "apps/social-network-application"
+          }
+        },
+        "serve": {
+          "executor": "@nxrocks/nx-spring-boot:serve",
+          "options": {
+            "root": "apps/social-network-application"
+          }
+        },
+        "buildJar": {
+          "executor": "@nxrocks/nx-spring-boot:buildJar",
+          "options": {
+            "root": "apps/social-network-application"
+          }
+        },
+        "buildWar": {
+          "executor": "@nxrocks/nx-spring-boot:buildWar",
+          "options": {
+            "root": "apps/social-network-application"
+          }
+        },
+        "buildImage": {
+          "executor": "@nxrocks/nx-spring-boot:buildImage",
+          "options": {
+            "root": "apps/social-network-application"
+          }
+        },
+        "buildInfo": {
+          "executor": "@nxrocks/nx-spring-boot:buildInfo",
+          "options": {
+            "root": "apps/social-network-application"
+          }
+        }
+      }
+    }
+  },
   "cli": {
-    "defaultCollection": "@nrwl/workspace"
-  }
+    "defaultCollection": "@nrwl/react",
+    "packageManager": "yarn"
+  },
+  "generators": {
+    "@nrwl/react": {
+      "application": {
+        "style": "scss",
+        "linter": "eslint",
+        "babel": true
+      },
+      "component": {
+        "style": "scss",
+        "pascalCaseFiles": true
+      },
+      "library": {
+        "style": "scss",
+        "linter": "eslint"
+      }
+    }
+  },
+  "defaultProject": "social-network-frontend"
 }
