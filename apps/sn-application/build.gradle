@@ -1,25 +1,3 @@
-plugins {
-    id 'org.springframework.boot'
-    id 'io.spring.dependency-management'
-    id 'java'
-
-}
-
-group = 'com.htcompany'
-version = '0.0.1-SNAPSHOT'
-sourceCompatibility = "$javaVersion" as Object
-
-repositories {
-    mavenLocal()
-    mavenCentral()
-}
-
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web'
-
-    testImplementation 'org.springframework.boot:spring-boot-starter-test'
-}
-
-test {
-    useJUnitPlatform()
 }

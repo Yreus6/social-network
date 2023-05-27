@@ -8,5 +8,9 @@
   "video": true,
   "videosFolder": "../../dist/cypress/apps/social-network-frontend-e2e/videos",
   "screenshotsFolder": "../../dist/cypress/apps/social-network-frontend-e2e/screenshots",
-  "chromeWebSecurity": false
+  "chromeWebSecurity": false,
+  "projectId": "aesi67",
+  "e2e": {
+    "defaultCommandTimeout": 10000
+  }
 }

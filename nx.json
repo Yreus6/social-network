@@ -38,5 +38,7 @@
       "implicitDependencies": ["social-network-frontend"]
     }
   },
-  "plugins": ["@nxrocks/nx-spring-boot", "@jnxplus/nx-boot-gradle"]
+  "plugins": [
+    "@jnxplus/nx-boot-gradle"
+  ]
 }

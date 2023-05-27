@@ -46,7 +46,11 @@ jobs:
         run: yarn nx run-many --target=e2e --all --parallel
 
       - name: Sonar Scan
-        run: ./gradlew sonarqube
+        run: |
+          ./gradlew testReport
+          ./gradlew integrationTestReport
+          ./gradlew codeCoverageReport
+          ./gradlew build sonarqube
 
       - name: Cache gradle
         uses: actions/cache@v3
