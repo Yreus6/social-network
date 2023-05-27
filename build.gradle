@@ -1,0 +1,12 @@
+plugins {
+    id 'org.sonarqube' version '3.3'
+    id 'jacoco'
+}
+
+sonarqube {
+    properties {
+        property 'sonar.projectKey', 'Hieutran303_sn-htc'
+        property 'sonar.organization', 'htcompany'
+        property 'sonar.host.url', 'https://sonarcloud.io'
+    }
+}

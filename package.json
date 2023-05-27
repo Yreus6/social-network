@@ -17,6 +17,7 @@
     "tslib": "^2.0.0"
   },
   "devDependencies": {
+    "@jnxplus/nx-boot-gradle": "^0.2.0",
     "@nrwl/cli": "12.9.0",
     "@nrwl/cypress": "12.9.0",
     "@nrwl/eslint-plugin-nx": "12.9.0",
@@ -26,7 +27,6 @@
     "@nrwl/tao": "12.9.0",
     "@nrwl/web": "12.9.0",
     "@nrwl/workspace": "12.9.0",
-    "@nxrocks/nx-spring-boot": "^3.0.0",
     "@pmmmwh/react-refresh-webpack-plugin": "0.5.0-rc.2",
     "@testing-library/react": "11.2.6",
     "@testing-library/react-hooks": "7.0.1",

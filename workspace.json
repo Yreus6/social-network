@@ -1,6 +1,31 @@
 {
   "version": 2,
   "projects": {
+    "sn-application": {
+      "root": "apps/sn-application",
+      "projectType": "application",
+      "sourceRoot": "apps/sn-application/src",
+      "targets": {
+        "build": {
+          "executor": "@jnxplus/nx-boot-gradle:build",
+          "options": {
+            "packaging": "jar"
+          }
+        },
+        "serve": {
+          "executor": "@jnxplus/nx-boot-gradle:serve"
+        },
+        "lint": {
+          "executor": "@jnxplus/nx-boot-gradle:lint",
+          "options": {
+            "linter": "checkstyle"
+          }
+        },
+        "test": {
+          "executor": "@jnxplus/nx-boot-gradle:test"
+        }
+      }
+    },
     "social-network-frontend": {
       "root": "apps/social-network-frontend",
       "sourceRoot": "apps/social-network-frontend/src",
@@ -8,9 +33,7 @@
       "targets": {
         "build": {
           "executor": "@nrwl/web:build",
-          "outputs": [
-            "{options.outputPath}"
-          ],
+          "outputs": ["{options.outputPath}"],
           "options": {
             "outputPath": "dist/apps/social-network-frontend",
             "index": "apps/social-network-frontend/src/index.html",
@@ -21,9 +44,7 @@
               "apps/social-network-frontend/src/favicon.ico",
               "apps/social-network-frontend/src/assets"
             ],
-            "styles": [
-              "apps/social-network-frontend/src/styles.scss"
-            ],
+            "styles": ["apps/social-network-frontend/src/styles.scss"],
             "scripts": [],
             "webpackConfig": "@nrwl/react/plugins/webpack"
           },
@@ -67,9 +88,7 @@
         },
         "lint": {
           "executor": "@nrwl/linter:eslint",
-          "outputs": [
-            "{options.outputFile}"
-          ],
+          "outputs": ["{options.outputFile}"],
           "options": {
             "lintFilePatterns": [
               "apps/social-network-frontend/**/*.{ts,tsx,js,jsx}"
@@ -78,9 +97,7 @@
         },
         "test": {
           "executor": "@nrwl/jest:jest",
-          "outputs": [
-            "coverage/apps/social-network-frontend"
-          ],
+          "outputs": ["coverage/apps/social-network-frontend"],
           "options": {
             "jestConfig": "apps/social-network-frontend/jest.config.js",
             "passWithNoTests": true
@@ -108,68 +125,11 @@
         },
         "lint": {
           "executor": "@nrwl/linter:eslint",
-          "outputs": [
-            "{options.outputFile}"
-          ],
+          "outputs": ["{options.outputFile}"],
           "options": {
             "lintFilePatterns": [
               "apps/social-network-frontend-e2e/**/*.{js,ts}"
             ]
-          }
-        }
-      }
-    },
-    "social-network-application": {
-      "root": "apps/social-network-application",
-      "sourceRoot": "apps/social-network-application/src",
-      "projectType": "application",
-      "targets": {
-        "test": {
-          "executor": "@nxrocks/nx-spring-boot:test",
-          "options": {
-            "root": "apps/social-network-application"
-          }
-        },
-        "clean": {
-          "executor": "@nxrocks/nx-spring-boot:clean",
-          "options": {
-            "root": "apps/social-network-application"
-          }
-        },
-        "run": {
-          "executor": "@nxrocks/nx-spring-boot:run",
-          "options": {
-            "root": "apps/social-network-application"
-          }
-        },
-        "serve": {
-          "executor": "@nxrocks/nx-spring-boot:serve",
-          "options": {
-            "root": "apps/social-network-application"
-          }
-        },
-        "buildJar": {
-          "executor": "@nxrocks/nx-spring-boot:buildJar",
-          "options": {
-            "root": "apps/social-network-application"
-          }
-        },
-        "buildWar": {
-          "executor": "@nxrocks/nx-spring-boot:buildWar",
-          "options": {
-            "root": "apps/social-network-application"
-          }
-        },
-        "buildImage": {
-          "executor": "@nxrocks/nx-spring-boot:buildImage",
-          "options": {
-            "root": "apps/social-network-application"
-          }
-        },
-        "buildInfo": {
-          "executor": "@nxrocks/nx-spring-boot:buildInfo",
-          "options": {
-            "root": "apps/social-network-application"
           }
         }
       }
