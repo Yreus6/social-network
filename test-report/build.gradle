@@ -1,0 +1,8 @@
+plugins {
+    id 'socialnetwork.test-aggregation'
+}
+
+dependencies {
+    testReportData project(':apps:sn-application')
+    integrationTestReportData project(':apps:sn-application')
+}

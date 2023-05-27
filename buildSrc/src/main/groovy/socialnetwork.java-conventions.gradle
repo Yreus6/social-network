@@ -1,0 +1,99 @@
+plugins.apply('java')
+plugins.apply('jacoco')
+
+version = '0.0.1'
+group = 'com.htcompany'
+
+dependencies {
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+}
+
+// Disable the test report for the individual test task
+tasks.named('test') {
+    useJUnitPlatform()
+    exclude "**/*IT*", "**/*IntTest*"
+    testLogging {
+        events 'FAILED', 'SKIPPED'
+    }
+    jvmArgs += '-Djava.security.egd=file:/dev/./urandom -Xmx256m'
+
+    reports.html.required = false
+}
+
+tasks.register('integrationTest', Test) {
+    useJUnitPlatform()
+    description = 'Execute integration tests.'
+    group = 'verification'
+    include "**/*IT*", "**/*IntTest*"
+    testLogging {
+        events 'FAILED', 'SKIPPED'
+    }
+    jvmArgs += '-Djava.security.egd=file:/dev/./urandom -Xmx256m'
+
+    reports.html.required = false
+
+    shouldRunAfter test
+}
+check.dependsOn integrationTest
+
+// Share the test report data to be aggregated for the whole project
+configurations.create('binaryTestResultsElements') {
+    canBeResolved = false
+    canBeConsumed = true
+    attributes {
+        attribute(Category.CATEGORY_ATTRIBUTE, objects.named(Category, Category.DOCUMENTATION))
+        attribute(DocsType.DOCS_TYPE_ATTRIBUTE, objects.named(DocsType, 'test-report-data'))
+    }
+    outgoing.artifact(test.binaryResultsDirectory)
+}
+
+configurations.create('binaryIntegrationTestResultsElements') {
+    canBeResolved = false
+    canBeConsumed = true
+    attributes {
+        attribute(Category.CATEGORY_ATTRIBUTE, objects.named(Category, Category.DOCUMENTATION))
+        attribute(DocsType.DOCS_TYPE_ATTRIBUTE, objects.named(DocsType, 'integration-test-report-data'))
+    }
+    outgoing.artifact(integrationTest.binaryResultsDirectory)
+}
+
+// Do not generate reports for individual projects
+tasks.named('jacocoTestReport') {
+    enabled = false
+}
+
+// Share sources folder with other projects for aggregated JaCoCo reports
+configurations.create('transitiveSourcesElements') {
+    visible = false
+    canBeResolved = false
+    canBeConsumed = true
+    extendsFrom(configurations.implementation)
+    attributes {
+        attribute(Usage.USAGE_ATTRIBUTE, objects.named(Usage, Usage.JAVA_RUNTIME))
+        attribute(Category.CATEGORY_ATTRIBUTE, objects.named(Category, Category.DOCUMENTATION))
+        attribute(DocsType.DOCS_TYPE_ATTRIBUTE, objects.named(DocsType, 'source-folders'))
+    }
+    sourceSets.main.java.srcDirs.forEach {
+        outgoing.artifact(it)
+    }
+}
+
+// Share the coverage data to be aggregated for the whole product
+configurations.create('coverageDataElements') {
+    visible = false
+    canBeResolved = false
+    canBeConsumed = true
+    extendsFrom(configurations.implementation)
+    attributes {
+        attribute(Usage.USAGE_ATTRIBUTE, objects.named(Usage, Usage.JAVA_RUNTIME))
+        attribute(Category.CATEGORY_ATTRIBUTE, objects.named(Category, Category.DOCUMENTATION))
+        attribute(DocsType.DOCS_TYPE_ATTRIBUTE, objects.named(DocsType, 'jacoco-coverage-data'))
+    }
+    // This will cause the test task to run if the coverage data is requested by the aggregation task
+    outgoing.artifact(tasks.named('test').map { task ->
+        task.extensions.getByType(JacocoTaskExtension).destinationFile
+    })
+    outgoing.artifact(tasks.named('integrationTest').map { task ->
+        task.extensions.getByType(JacocoTaskExtension).destinationFile
+    })
+}

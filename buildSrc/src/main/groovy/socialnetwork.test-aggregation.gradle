@@ -1,0 +1,30 @@
+// A resolvable configuration to collect test reports data
+configurations.create('testReportData') {
+    canBeResolved = true
+    canBeConsumed = false
+    attributes {
+        attribute(Category.CATEGORY_ATTRIBUTE, objects.named(Category, Category.DOCUMENTATION))
+        attribute(DocsType.DOCS_TYPE_ATTRIBUTE, objects.named(DocsType, 'test-report-data'))
+    }
+}
+
+configurations.create('integrationTestReportData') {
+    canBeResolved = true
+    canBeConsumed = false
+    attributes {
+        attribute(Category.CATEGORY_ATTRIBUTE, objects.named(Category, Category.DOCUMENTATION))
+        attribute(DocsType.DOCS_TYPE_ATTRIBUTE, objects.named(DocsType, 'integration-test-report-data'))
+    }
+}
+
+tasks.register('testReport', TestReport) {
+    destinationDir = layout.buildDirectory.dir('test-results/tests').get().asFile
+    // Use test results from testReportData configuration
+    testResultDirs.from(configurations.testReportData)
+}
+
+tasks.register('integrationTestReport', TestReport) {
+    destinationDir = layout.buildDirectory.dir('test-results/integrationTests').get().asFile
+    // Use test results from testReportData configuration
+    testResultDirs.from(configurations.integrationTestReportData)
+}

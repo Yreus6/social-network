@@ -1,0 +1,7 @@
+plugins {
+    id 'socialnetwork.jacoco-aggregation'
+}
+
+dependencies {
+    implementation project(':apps:sn-application')
+}
