@@ -110,6 +110,15 @@
       "sourceRoot": "apps/social-network-frontend-e2e/src",
       "projectType": "application",
       "targets": {
+        "e2e-ci": {
+          "builder": "@nrwl/workspace:run-commands",
+          "options": {
+            "commands": [
+              "start-server-and-test \"nx serve sn-application\" http://localhost:8080/management/health \"nx e2e social-network-frontend-e2e --record --key 88b29306-7ca0-4a9f-ba87-5e19505686f0 --headless\""
+            ],
+            "parallel": false
+          }
+        },
         "e2e": {
           "executor": "@nrwl/cypress:cypress",
           "options": {

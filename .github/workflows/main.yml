@@ -80,7 +80,7 @@ jobs:
         run: yarn nx run-many --target=test --all --coverage --coverageReporters=json --parallel
 
       - name: Run e2e Tests
-        run: yarn nx run-many --target=e2e --all --parallel
+        run: yarn nx run-many --target=e2e-ci --all --parallel
 
       - name: Sonar Scan
         env:
