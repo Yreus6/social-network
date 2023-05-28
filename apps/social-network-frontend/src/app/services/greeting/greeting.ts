@@ -1,6 +1,6 @@
 import { createApi } from '@reduxjs/toolkit/query/react';
 import { environment } from '../../../environments/environment';
-import axiosBaseQuery from '../axios-query';
+import axiosBaseQuery from '../axios-base-query';
 
 export interface GenericResponse {
   content: string;

@@ -1,6 +1,6 @@
 import '@testing-library/jest-dom';
 
-import { render, screen, waitFor } from '../utils/test-utils';
+import { render, screen, waitFor } from '../utils-testing/test-utils';
 import App from './App';
 import server from '../mocks/server';
 import { rest } from 'msw';
