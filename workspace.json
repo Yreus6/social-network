@@ -22,7 +22,7 @@
           }
         },
         "test": {
-          "executor": "@jnxplus/nx-boot-gradle:test"
+          "executor": "./tools/executors/gradle-test:test"
         }
       }
     },

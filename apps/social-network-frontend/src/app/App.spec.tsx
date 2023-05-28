@@ -22,7 +22,7 @@ describe('App', () => {
 
   it('should display error title', async () => {
     server.use(
-      rest.get(`${environment.apiBaseUrl}`, (req, res, ctx) => {
+      rest.get(`${environment.apiBaseUrl}/greeting`, (req, res, ctx) => {
         return res(ctx.status(500));
       })
     );
