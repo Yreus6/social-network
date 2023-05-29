@@ -11,10 +11,10 @@ const render = (
   {
     store = configureStore({
       reducer: {
-        [greetingApi.reducerPath]: greetingApi.reducer
+        [greetingApi.reducerPath]: greetingApi.reducer,
       },
-      middleware: getDefaultMiddleware => getDefaultMiddleware()
-        .concat(greetingApi.middleware)
+      middleware: getDefaultMiddleware =>
+        getDefaultMiddleware().concat(greetingApi.middleware),
     }),
     ...renderOptions
   } = {}
@@ -22,9 +22,7 @@ const render = (
   const Wrapper: FC = ({ children }) => {
     return (
       <Provider store={store}>
-        <BrowserRouter>
-          {children}
-        </BrowserRouter>
+        <BrowserRouter>{children}</BrowserRouter>
       </Provider>
     );
   };
