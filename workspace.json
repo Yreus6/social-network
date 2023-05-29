@@ -22,7 +22,7 @@
           }
         },
         "test": {
-          "executor": "@jnxplus/nx-boot-gradle:test"
+          "executor": "./tools/executors/gradle-test:test"
         }
       }
     },
@@ -110,6 +110,15 @@
       "sourceRoot": "apps/social-network-frontend-e2e/src",
       "projectType": "application",
       "targets": {
+        "e2e-ci": {
+          "builder": "@nrwl/workspace:run-commands",
+          "options": {
+            "commands": [
+              "start-server-and-test \"nx serve sn-application\" http://localhost:8080/management/health \"nx e2e social-network-frontend-e2e --record --key 607c202c-3265-4403-a917-0d9d670c6fe9 --headless\""
+            ],
+            "parallel": false
+          }
+        },
         "e2e": {
           "executor": "@nrwl/cypress:cypress",
           "options": {

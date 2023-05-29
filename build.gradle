@@ -17,6 +17,10 @@ subprojects {
 
     if (it.name != 'code-coverage-report' && it.name != 'test-report') {
         apply plugin: 'socialnetwork.java-conventions'
+
+        group = 'com.htcompany'
+        version = '0.0.1-SNAPSHOT'
+        sourceCompatibility = '11'
     }
 }
 
