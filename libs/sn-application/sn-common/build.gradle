@@ -1,0 +1,7 @@
+dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter'
+    api 'org.springframework.boot:spring-boot-starter-webflux'
+    api 'com.okta.spring:okta-spring-boot-starter:2.1.2'
+
+    api 'org.zalando:problem-spring-webflux:0.27.0'
+}

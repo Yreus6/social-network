@@ -1,6 +1,6 @@
 import { createApi } from '@reduxjs/toolkit/query/react';
-import { environment } from '../../../environments/environment';
-import axiosBaseQuery from '../axios-base-query';
+import { environment } from '@env-frontend/environment';
+import { axiosBaseQuery } from '@sn-htc/shared/data-access';
 
 export interface GenericResponse {
   content: string;
