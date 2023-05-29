@@ -15,9 +15,9 @@ spec:
       app: {{ template "socivio-ui.name" . }}
       release: {{ .Release.Name }}
   strategy:
-    blueGreen:
-      activeService: {{ template "socivio-ui.fullname" . }}
-      previewService: {{ template "socivio-ui.fullname" . }}-preview
+    canary:
+      maxSurge: 1
+      maxUnavailable: 1
   template:
     metadata:
       labels:

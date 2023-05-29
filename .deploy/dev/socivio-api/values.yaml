@@ -10,7 +10,7 @@ image:
   # Overrides the image tag whose default is the chart appVersion.
   tag: 0.0.1
 
-imagePullSecrets: [ ]
+imagePullSecrets: []
 nameOverride: ""
 fullnameOverride: ""
 
@@ -18,20 +18,20 @@ serviceAccount:
   # Specifies whether a service account should be created
   create: true
   # Annotations to add to the service account
-  annotations: { }
+  annotations: {}
   # The name of the service account to use.
   # If not set and create is true, a name is generated using the fullname template
   name: ""
 
-podAnnotations: { }
+podAnnotations: {}
 
-podSecurityContext: { }
+podSecurityContext: {}
 # fsGroup: 2000
 
-securityContext: { }
+securityContext: {}
   # capabilities:
-  #   drop:
-  #   - ALL
+#   drop:
+#   - ALL
 # readOnlyRootFilesystem: true
 # runAsNonRoot: true
 # runAsUser: 1000
@@ -48,11 +48,11 @@ ingress:
     nginx.ingress.kubernetes.io/rewrite-target: "/"
     # kubernetes.io/tls-acme: "true"
   hosts:
-    - host: xoybmoux.amd-6.germany-1.symbiosis.host
+    - host: ragnarok.dev4fun.online
       paths:
         - path: /socivio-api
           pathType: Prefix
-  tls: [ ]
+  tls: []
   #  - secretName: chart-example-tls
   #    hosts:
   #      - chart-example.local
@@ -76,10 +76,10 @@ autoscaling:
   targetCPUUtilizationPercentage: 80
   # targetMemoryUtilizationPercentage: 80
 
-nodeSelector: { }
+nodeSelector: {}
 
-tolerations: [ ]
+tolerations: []
 
-affinity: { }
+affinity: {}
 
-env: { }
+env: {}

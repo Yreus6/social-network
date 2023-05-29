@@ -1,0 +1,63 @@
+name: Setup workflow
+description: Setup
+
+runs:
+  using: 'composite'
+  steps:
+    - name: Install java
+      uses: actions/setup-java@v3
+      with:
+        java-version: '11'
+        distribution: 'temurin'
+        cache: 'gradle'
+
+    - name: Install node
+      uses: actions/setup-node@v3
+      with:
+        node-version: '14'
+        cache: 'yarn'
+
+    - name: Install Cypress Dependencies
+      run: |
+        sudo apt-get update
+        sudo apt-get install libgtk2.0-0 libgtk-3-0 libgbm-dev libnotify-dev libgconf-2-4 libnss3 libxss1 libasound2 libxtst6 xauth xvfb
+      shell: bash
+
+    - name: Grant access to Gradle
+      run: chmod +x ./gradlew
+      shell: bash
+
+    - name: Install Project Dependencies
+      run: yarn install --frozen-lockfile
+      shell: bash
+
+    - name: Cache gradle
+      uses: actions/cache@v3
+      with:
+        path: |
+          ~/.gradle/caches
+          ~/.gradle/wrapper
+        key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+        restore-keys: |
+          ${{ runner.os }}-gradle-
+
+    - name: Get yarn cache directory path
+      id: yarn-cache-dir-path
+      run: echo "dir=$(yarn cache dir)" >> $GITHUB_OUTPUT
+      shell: bash
+
+    - name: Cache node modules
+      uses: actions/cache@v3
+      id: yarn-cache
+      with:
+        path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
+        key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+        restore-keys: |
+          ${{ runner.os }}-yarn-
+
+    - name: Cache SonarCloud packages
+      uses: actions/cache@v3
+      with:
+        path: ~/.sonar/cache
+        key: ${{ runner.os }}-sonar
+        restore-keys: ${{ runner.os }}-sonar
