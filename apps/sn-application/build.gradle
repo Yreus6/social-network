@@ -4,7 +4,12 @@ configurations {
 
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
-    implementation 'org.springframework.boot:spring-boot-starter-webflux'
+
+    implementation project(':libs:sn-application:sn-common')
 
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
+
+    testImplementation 'org.springframework.security:spring-security-test'
+
+    testImplementation testFixtures(project(':libs:sn-application:sn-common'))
 }

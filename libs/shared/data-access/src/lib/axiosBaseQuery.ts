@@ -6,13 +6,25 @@ export interface AxiosBaseQueryError {
   data: undefined;
 }
 
+export interface AxiosBaseQueryArgs {
+  baseUrl: string;
+  prepareHeaders?: () => Record<string, string>
+}
+
 export const axiosBaseQuery =
-  ({ baseUrl }: { baseUrl: string } = { baseUrl: '' }): BaseQueryFn<
+  ({ baseUrl, prepareHeaders }: AxiosBaseQueryArgs = { baseUrl: '' }): BaseQueryFn<
     AxiosRequestConfig,
     unknown,
     AxiosBaseQueryError> =>
     async ({ url, method, data, headers }) => {
       try {
+        if (prepareHeaders) {
+          headers = {
+            ...headers,
+            ...prepareHeaders()
+          };
+        }
+
         const result = await axios({ url: baseUrl + url, method, data, headers });
         return { data: result.data };
       } catch (axiosError) {

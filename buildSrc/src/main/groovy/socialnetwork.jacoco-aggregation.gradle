@@ -14,6 +14,18 @@ def sourcesPath = configurations.create('sourcesPath') {
     }
 }
 
+def classesPath = configurations.create('classesPath') {
+    visible = false
+    canBeResolved = true
+    canBeConsumed = false
+    extendsFrom(configurations.implementation)
+    attributes {
+        attribute(Usage.USAGE_ATTRIBUTE, objects.named(Usage, Usage.JAVA_RUNTIME))
+        attribute(Category.CATEGORY_ATTRIBUTE, objects.named(Category, Category.DOCUMENTATION))
+        attribute(DocsType.DOCS_TYPE_ATTRIBUTE, objects.named(DocsType, 'class-folders'))
+    }
+}
+
 // A resolvable configuration to collect JaCoCo coverage data
 def coverageDataPath = configurations.create('coverageDataPath') {
     visible = false
@@ -29,7 +41,7 @@ def coverageDataPath = configurations.create('coverageDataPath') {
 
 // Task to gather code coverage from multiple subprojects
 def codeCoverageReport = tasks.register('codeCoverageReport', JacocoReport) {
-    additionalClassDirs(configurations.compileClasspath)
+    additionalClassDirs(classesPath.incoming.artifactView { lenient(true) }.files)
     additionalSourceDirs(sourcesPath.incoming.artifactView { lenient(true) }.files)
     executionData(coverageDataPath.incoming.artifactView { lenient(true) }.files.filter { it.exists() })
 

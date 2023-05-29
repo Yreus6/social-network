@@ -41,7 +41,7 @@ $disabled-primary-button-text-color: #fff;
 $disabled-primary-button-bg-color: rgba(49, 101, 206, 0.4);
 $disabled-primary-border-color: #3096c9;
 
-// Social Auth Button Colors
+// Social Login Button Colors
 $facebook-icon-bg-color: #304879; // fb brand color - #3B5998
 $facebook-label-bg-color: #406094;
 $facebook-border-color: #375685;
@@ -163,7 +163,7 @@ $modal-bg-color: #f9f9f9;
 
 #root {
   //background-color: linear-gradient(64.46deg, #FFFFFF 0.54%, #D7E7FF 77.23%);
-  background-image: url('http://localhost:3000/sign-in-background.png');
+  background-image: url('https://res.cloudinary.com/htcompany-cloud/image/upload/v1634139984/social-network/background/sign-in_htc_eojalx.png');
   background-size: cover;
   height: 100vh;
   overflow: hidden;

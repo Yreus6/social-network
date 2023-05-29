@@ -15,6 +15,16 @@ management:
 spring:
   application:
     name: Social Network Application
+  main:
+    allow-bean-definition-overriding: true
 
 server:
   port: 8080
+
+okta:
+  oauth2:
+    issuer: https://login.htcompany.xyz/oauth2/default
+
+logging:
+  level:
+    com.htcompany: DEBUG

@@ -1,20 +1,10 @@
-import { useGetGreetingTextQuery } from './services/greeting/greeting';
+import React from 'react';
+import AppWithRouterAccess from './AppWithRouterAccess';
 
 const App = () => {
-  const { data, error, isLoading } = useGetGreetingTextQuery();
-
-  if (error) {
-    return <h1>Error!</h1>;
-  }
-
   return (
-    <div>
-      {isLoading ?
-        <h1>Loading...</h1> :
-        data && <h1>{data.content}</h1>
-      }
-    </div>
+    <AppWithRouterAccess />
   );
-}
+};
 
 export default App;

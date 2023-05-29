@@ -11,8 +11,11 @@ const oktaSignInConfig = {
   clientId: environment.oktaClientId,
   redirectUri: window.location.origin + '/login/callback',
   features: {
-    registration: true, // REQUIRED
+    registration: true,
   },
+  authParams: {
+    scopes: ['openid', 'email', 'profile']
+  }
 };
 
 export { oktaAuthConfig, oktaSignInConfig };

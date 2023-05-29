@@ -1,13 +1,12 @@
 import { getGreeting } from '../support/App.po';
 
 describe('social-network-frontend', () => {
-  beforeEach(() => cy.visit('/'));
+  beforeEach(() => {
+    cy.loginByOktaApi(Cypress.env('auth_username'), Cypress.env('auth_password'));
+    cy.visit('/protected');
+  });
 
-  it('should display hello world title', () => {
-    // Custom command example, see `../support/commands.ts` file
-    cy.login('my-email@something.com', 'myPassword');
-
-    // Function helper example, see `../support/App.po.ts` file
-    getGreeting().contains('Hello World');
+  it(`should display title "Hello ${Cypress.env('auth_username')}"`, () => {
+    getGreeting().should('have.text', `Hello ${Cypress.env('auth_username')}!`);
   });
 });

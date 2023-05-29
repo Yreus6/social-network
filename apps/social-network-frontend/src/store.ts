@@ -1,6 +1,6 @@
 import { configureStore } from '@reduxjs/toolkit';
 
-import { greetingApi } from './app/services/greeting/greeting';
+import { greetingApi } from '@sn-htc/social-network-frontend/data-access-home';
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
 import { setupListeners } from '@reduxjs/toolkit/query';
 

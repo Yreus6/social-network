@@ -1,7 +1,7 @@
 import React, { MutableRefObject, useEffect, useRef } from 'react';
 import OktaSignIn from '@okta/okta-signin-widget';
 import '@okta/okta-signin-widget/dist/css/okta-sign-in.min.css';
-import './OktaSignInWidget.module.scss';
+// import './OktaSignInWidget.module.scss';
 
 const OktaSignInWidget = ({ config, onSuccess, onError }) => {
   const widgetRef = useRef() as MutableRefObject<HTMLDivElement>;
@@ -15,15 +15,21 @@ const OktaSignInWidget = ({ config, onSuccess, onError }) => {
 
     widget
       .showSignInToGetTokens({
-        el: widgetRef.current,
+        el: widgetRef.current
       })
       .then(onSuccess)
       .catch(onError);
 
+    widget.on('afterError', function (context, error) {
+      console.log(error.message);
+    });
+
     return () => widget.remove();
   }, [config, onSuccess, onError]);
 
-  return <div ref={widgetRef} />;
+  return (
+    <div ref={widgetRef} />
+  );
 };
 
 export default OktaSignInWidget;

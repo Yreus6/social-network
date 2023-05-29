@@ -4,4 +4,5 @@ plugins {
 
 dependencies {
     implementation project(':apps:sn-application')
+    implementation project(':libs:sn-application:sn-common')
 }

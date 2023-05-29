@@ -33,20 +33,35 @@
     ]
   },
   "projects": {
+    "shared-data-access": {
+      "tags": []
+    },
     "sn-application": {
+      "tags": [],
+      "implicitDependencies": ["sn-application-common"]
+    },
+    "sn-application-common": {
       "tags": []
     },
     "social-network-frontend": {
       "tags": []
     },
+    "social-network-frontend-data-access-home": {
+      "tags": []
+    },
     "social-network-frontend-e2e": {
       "tags": [],
-      "implicitDependencies": [
-        "social-network-frontend"
-      ]
+      "implicitDependencies": ["social-network-frontend"]
+    },
+    "social-network-frontend-feature-auth": {
+      "tags": []
+    },
+    "social-network-frontend-feature-home": {
+      "tags": []
+    },
+    "social-network-frontend-util-testing": {
+      "tags": []
     }
   },
-  "plugins": [
-    "@jnxplus/nx-boot-gradle"
-  ]
+  "plugins": ["@jnxplus/nx-boot-gradle"]
 }

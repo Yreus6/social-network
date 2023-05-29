@@ -5,4 +5,6 @@ plugins {
 dependencies {
     testReportData project(':apps:sn-application')
     integrationTestReportData project(':apps:sn-application')
+    testReportData project(':libs:sn-application:sn-common')
+    integrationTestReportData project(':libs:sn-application:sn-common')
 }

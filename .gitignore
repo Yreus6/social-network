@@ -41,3 +41,13 @@ Thumbs.db
 # Gradle
 .gradle
 build
+
+.yarn/*
+!.yarn/patches
+!.yarn/releases
+!.yarn/plugins
+!.yarn/sdks
+!.yarn/versions
+.pnp.*
+
+**/*.env

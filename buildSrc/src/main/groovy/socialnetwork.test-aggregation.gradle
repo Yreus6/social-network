@@ -17,14 +17,14 @@ configurations.create('integrationTestReportData') {
     }
 }
 
-tasks.register('testReport', TestReport) {
-    destinationDir = layout.buildDirectory.dir('test-results/tests').get().asFile
-    // Use test results from testReportData configuration
-    testResultDirs.from(configurations.testReportData)
+tasks.register('testReport', Copy) {
+    from configurations.testReportData
+    into layout.buildDirectory.dir('test-results/tests').get().asFile
+    include '*.xml'
 }
 
-tasks.register('integrationTestReport', TestReport) {
-    destinationDir = layout.buildDirectory.dir('test-results/integrationTests').get().asFile
-    // Use test results from testReportData configuration
-    testResultDirs.from(configurations.integrationTestReportData)
+tasks.register('integrationTestReport', Copy) {
+    from configurations.integrationTestReportData
+    into layout.buildDirectory.dir('test-results/integrationTests').get().asFile
+    include '*.xml'
 }

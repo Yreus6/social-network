@@ -4,7 +4,7 @@ import { configureStore } from '@reduxjs/toolkit';
 import { Provider } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
 
-import { greetingApi } from '../app/services/greeting/greeting';
+import { greetingApi } from '@sn-htc/social-network-frontend/data-access-home';
 
 const render = (
   ui: ReactElement,
