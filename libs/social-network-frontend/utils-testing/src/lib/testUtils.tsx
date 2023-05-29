@@ -2,7 +2,7 @@ import { FC, ReactElement } from 'react';
 import { render as rtlRender } from '@testing-library/react';
 import { configureStore } from '@reduxjs/toolkit';
 import { Provider } from 'react-redux';
-import { BrowserRouter } from 'react-router-dom';
+import { MemoryRouter } from 'react-router-dom';
 
 import { greetingApi } from '@sn-htc/social-network-frontend/data-access-home';
 
@@ -22,7 +22,9 @@ const render = (
   const Wrapper: FC = ({ children }) => {
     return (
       <Provider store={store}>
-        <BrowserRouter>{children}</BrowserRouter>
+        <MemoryRouter>
+          {children}
+        </MemoryRouter>
       </Provider>
     );
   };
