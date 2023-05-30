@@ -5,12 +5,13 @@ import { AUTHORITIES, oktaAuthConfig } from '@sn-htc/social-network-frontend/con
 import { Security } from '@okta/okta-react';
 import { Route } from 'react-router-dom';
 import { OktaAuth, toRelativeUrl } from '@okta/okta-auth-js';
+import { waitFor } from '@testing-library/react';
 
 const oktaAuth = new OktaAuth({
   ...oktaAuthConfig,
   pkce: false,
   transformAuthState: async (oktaAuth, authState) => {
-    authState.isAuthenticated = true;
+    authState.isAuthenticated = oktaAuth.authStateManager.getAuthState()!.isAuthenticated;
 
     return authState;
   }
@@ -29,6 +30,9 @@ describe('Private Route', () => {
 
   describe('Authenticated', () => {
     const wrapper = (Elem: JSX.Element) => {
+      oktaAuth.authStateManager.getAuthState = jest.fn(() => ({
+        isAuthenticated: true
+      }));
       oktaAuth.getUser = jest.fn(() => new Promise(resolve => {
         setTimeout(() => {
           resolve(mockUser);
@@ -102,7 +106,8 @@ describe('Private Route', () => {
         </>
       );
 
-      expect(screen.queryByText(/Test/)).toBe(null);
+      await waitFor(() => expect(oktaAuth.getUser).toBeCalled());
+      expect(screen.queryByText(/Test/)).toBeNull();
       expect(testLocation.pathname).toEqual('/login');
     });
   });
