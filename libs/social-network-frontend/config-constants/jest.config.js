@@ -1,11 +1,10 @@
 module.exports = {
-  displayName: 'social-network-frontend-feature-home',
+  displayName: 'social-network-frontend-config-constants',
   preset: '../../../jest.preset.js',
   transform: {
     '^.+\\.[tj]sx?$': 'babel-jest',
   },
   moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx'],
   coverageDirectory:
-    '../../../coverage/libs/social-network-frontend/feature-home',
-  setupFilesAfterEnv: ['../utils-testing/src/lib/setupTests.ts']
+    '../../../coverage/libs/social-network-frontend/config-constants',
 };

@@ -5,4 +5,5 @@ export const mockUser = {
   preferred_username: 'test user',
   updated_at: 1634140575,
   email_verified: true,
+  groups: ['ROLE_USER']
 };

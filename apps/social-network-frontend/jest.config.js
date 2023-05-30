@@ -12,5 +12,5 @@ module.exports = {
     'src/app/**/*.tsx',
     '!src/**/*.svg'
   ],
-  "setupFilesAfterEnv": ['./src/setupTests.ts']
+  setupFilesAfterEnv: ['../../libs/social-network-frontend/utils-testing/src/lib/setupTests.ts']
 };

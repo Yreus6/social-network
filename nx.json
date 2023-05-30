@@ -46,6 +46,15 @@
     "social-network-frontend": {
       "tags": []
     },
+    "social-network-frontend-components-routes": {
+      "tags": []
+    },
+    "social-network-frontend-config-constants": {
+      "tags": []
+    },
+    "social-network-frontend-config-store": {
+      "tags": []
+    },
     "social-network-frontend-data-access-home": {
       "tags": []
     },
@@ -59,7 +68,7 @@
     "social-network-frontend-feature-home": {
       "tags": []
     },
-    "social-network-frontend-util-testing": {
+    "social-network-frontend-utils-testing": {
       "tags": []
     }
   },

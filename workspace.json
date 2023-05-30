@@ -146,6 +146,80 @@
         }
       }
     },
+    "social-network-frontend-components-routes": {
+      "root": "libs/social-network-frontend/components-routes",
+      "sourceRoot": "libs/social-network-frontend/components-routes/src",
+      "projectType": "library",
+      "targets": {
+        "lint": {
+          "executor": "@nrwl/linter:eslint",
+          "outputs": ["{options.outputFile}"],
+          "options": {
+            "lintFilePatterns": [
+              "libs/social-network-frontend/components-routes/**/*.{ts,tsx,js,jsx}"
+            ]
+          }
+        },
+        "test": {
+          "executor": "@nrwl/jest:jest",
+          "outputs": [
+            "coverage/libs/social-network-frontend/components-routes"
+          ],
+          "options": {
+            "jestConfig": "libs/social-network-frontend/components-routes/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
+    "social-network-frontend-config-constants": {
+      "root": "libs/social-network-frontend/config-constants",
+      "sourceRoot": "libs/social-network-frontend/config-constants/src",
+      "projectType": "library",
+      "targets": {
+        "lint": {
+          "executor": "@nrwl/linter:eslint",
+          "outputs": ["{options.outputFile}"],
+          "options": {
+            "lintFilePatterns": [
+              "libs/social-network-frontend/config-constants/**/*.{ts,tsx,js,jsx}"
+            ]
+          }
+        },
+        "test": {
+          "executor": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/social-network-frontend/config-constants"],
+          "options": {
+            "jestConfig": "libs/social-network-frontend/config-constants/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
+    "social-network-frontend-config-store": {
+      "root": "libs/social-network-frontend/config-store",
+      "sourceRoot": "libs/social-network-frontend/config-store/src",
+      "projectType": "library",
+      "targets": {
+        "lint": {
+          "executor": "@nrwl/linter:eslint",
+          "outputs": ["{options.outputFile}"],
+          "options": {
+            "lintFilePatterns": [
+              "libs/social-network-frontend/config-store/**/*.{ts,tsx,js,jsx}"
+            ]
+          }
+        },
+        "test": {
+          "executor": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/social-network-frontend/config-store"],
+          "options": {
+            "jestConfig": "libs/social-network-frontend/config-store/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
     "social-network-frontend-data-access-home": {
       "root": "libs/social-network-frontend/data-access-home",
       "sourceRoot": "libs/social-network-frontend/data-access-home/src",
@@ -256,9 +330,9 @@
         }
       }
     },
-    "social-network-frontend-util-testing": {
-      "root": "libs/social-network-frontend/util-testing",
-      "sourceRoot": "libs/social-network-frontend/util-testing/src",
+    "social-network-frontend-utils-testing": {
+      "root": "libs/social-network-frontend/utils-testing",
+      "sourceRoot": "libs/social-network-frontend/utils-testing/src",
       "projectType": "library",
       "targets": {
         "lint": {
@@ -266,15 +340,15 @@
           "outputs": ["{options.outputFile}"],
           "options": {
             "lintFilePatterns": [
-              "libs/social-network-frontend/util-testing/**/*.{ts,tsx,js,jsx}"
+              "libs/social-network-frontend/utils-testing/**/*.{ts,tsx,js,jsx}"
             ]
           }
         },
         "test": {
           "executor": "@nrwl/jest:jest",
-          "outputs": ["coverage/libs/social-network-frontend/util-testing"],
+          "outputs": ["coverage/libs/social-network-frontend/utils-testing"],
           "options": {
-            "jestConfig": "libs/social-network-frontend/util-testing/jest.config.js",
+            "jestConfig": "libs/social-network-frontend/utils-testing/jest.config.js",
             "passWithNoTests": true
           }
         }
