@@ -1,17 +1,16 @@
 import React from 'react';
 import { Route, useHistory, Switch } from 'react-router-dom';
-import { Security, SecureRoute, LoginCallback } from '@okta/okta-react';
+import { Security, LoginCallback } from '@okta/okta-react';
 import { OktaAuth, toRelativeUrl } from '@okta/okta-auth-js';
-import { Home } from '@sn-htc/social-network-frontend/feature-home';
-import { Login } from '@sn-htc/social-network-frontend-feature-auth';
-import Protected from './Protected';
-import { oktaAuth, oktaSignInConfig } from '@sn-htc/social-network-frontend-feature-auth';
+import { oktaAuth, Login } from '@sn-htc/social-network-frontend/feature-auth';
+import { oktaSignInConfig } from '@sn-htc/social-network-frontend/config-constants';
+import PrivateRoutesContainer from './PrivateRoutesContainer';
 
 const AppWithRouterAccess = () => {
   const history = useHistory();
 
   const customAuthHandler = () => {
-    history.push('/login');
+    history.push('/signin');
   };
 
   const restoreOriginalUri = async (_oktaAuth: OktaAuth, originalUri: string) => {
@@ -25,10 +24,9 @@ const AppWithRouterAccess = () => {
       restoreOriginalUri={restoreOriginalUri}
     >
       <Switch>
-        <Route path='/' exact={true} component={Home} />
-        <SecureRoute path='/protected' component={Protected} />
-        <Route path='/login' render={() => <Login config={oktaSignInConfig} />} />
-        <Route path='/login/callback' component={LoginCallback} />
+        <Route path='/signin' render={() => <Login config={oktaSignInConfig} />} />
+        <Route path='/signin/callback' component={LoginCallback} />
+        <PrivateRoutesContainer />
       </Switch>
     </Security>
   );

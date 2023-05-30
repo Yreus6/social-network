@@ -16,7 +16,9 @@ export const oktaSignInConfig = {
   clientId: environment.oktaClientId,
   redirectUri: window.location.origin + '/login/callback',
   features: {
+    router: true,
     registration: true,
+    showPasswordToggleOnSignInPage: true,
   },
   authParams: {
     scopes: ['openid', 'email', 'profile', 'groups']

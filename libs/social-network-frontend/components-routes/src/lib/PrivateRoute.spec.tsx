@@ -43,7 +43,7 @@ describe('Private Route', () => {
         <Security
           oktaAuth={oktaAuth}
           restoreOriginalUri={restoreOriginalUri}
-          onAuthRequired={() => history.push('/login')}
+          onAuthRequired={() => history.push('/signin')}
         >
           {Elem}
         </Security>
@@ -81,7 +81,7 @@ describe('Private Route', () => {
         <Security
           oktaAuth={oktaAuth}
           restoreOriginalUri={restoreOriginalUri}
-          onAuthRequired={() => history.push('/login')}
+          onAuthRequired={() => history.push('/signin')}
         >
           {Elem}
         </Security>
@@ -108,7 +108,7 @@ describe('Private Route', () => {
 
       await waitFor(() => expect(oktaAuth.getUser).toBeCalled());
       expect(screen.queryByText(/Test/)).toBeNull();
-      expect(testLocation.pathname).toEqual('/login');
+      expect(testLocation.pathname).toEqual('/signin');
     });
   });
 });
