@@ -73,15 +73,16 @@ jobs:
       - name: Build and push Socivio API image
         uses: docker/build-push-action@v4
         with:
-          context: ./apps/sn-application
+          context: .
           file: ./apps/sn-application/Dockerfile
           push: true
           tags: wizard2020abc/social-network-backend:0.0.1
+          build-args: JARFILE=./apps/sn-application/build/libs/*.jar
 
       - name: Build and push Socivio UI image
         uses: docker/build-push-action@v4
         with:
-          context: ./apps/social-network-frontend
+          context: .
           file: ./apps/social-network-frontend/Dockerfile
           push: true
           tags: wizard2020abc/social-network-frontend:0.0.1
