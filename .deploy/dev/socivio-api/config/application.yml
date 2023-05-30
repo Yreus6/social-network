@@ -1,13 +1,10 @@
 management:
-  endpoints:
-    web:
-      base-path: /management
+  server:
+    port: 8081
+
   endpoint:
-    health:
-      show-details: when_authorized
-      roles: 'ROLE_ADMIN'
-      probes:
-        enabled: true
+    probes:
+      enabled: true
   health:
     livenessstate:
       enabled: true
@@ -20,3 +17,6 @@ spring:
 
 server:
   port: 8080
+  error:
+    whitelabel:
+      enabled: false

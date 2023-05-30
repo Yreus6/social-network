@@ -17,23 +17,3 @@ spec:
   selector:
     app: {{ template "socivio-ui.name" . }}
     release: {{ .Release.Name }}
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: {{ include "socivio-ui.fullname" . }}-preview
-  labels:
-    app: {{ template "socivio-ui.name" . }}
-    chart: {{ template "socivio-ui.chart" . }}
-    release: {{ .Release.Name }}
-    heritage: {{ .Release.Service }}
-spec:
-  type: {{ .Values.service.type }}
-  ports:
-    - port: {{ .Values.service.port }}
-      targetPort: http
-      protocol: TCP
-      name: http
-  selector:
-    app: {{ template "socivio-ui.name" . }}
-    release: {{ .Release.Name }}

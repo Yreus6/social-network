@@ -114,7 +114,7 @@
           "builder": "@nrwl/workspace:run-commands",
           "options": {
             "commands": [
-              "start-server-and-test \"nx serve sn-application\" http://localhost:8080/management/health \"nx e2e social-network-frontend-e2e --record --key 607c202c-3265-4403-a917-0d9d670c6fe9 --headless\""
+              "start-server-and-test \"nx serve sn-application\" http://localhost:8081/actuator/health \"nx e2e social-network-frontend-e2e --record --key 607c202c-3265-4403-a917-0d9d670c6fe9 --headless\""
             ],
             "parallel": false
           }

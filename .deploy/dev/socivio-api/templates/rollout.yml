@@ -30,18 +30,31 @@ spec:
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
             - name: http
-              containerPort: 80
+              containerPort: 8080
               protocol: TCP
           livenessProbe:
             httpGet:
-              path: /
-              port: http
+              path: /actuator/health/liveness
+              port: 8081
+              initialDelaySeconds: 60
           readinessProbe:
             httpGet:
-              path: /
-              port: http
+              path: /actuator/health/readiness
+              port: 8081
+              initialDelaySeconds: 60
+          volumeMounts:
+            - name: application-config
+              readOnly: true
+              mountPath: /usr/share/social-network/config
+          envFrom:
+            - secretRef:
+                name: {{ include "socivio-api.fullname" . }}-env
           resources:
 {{ toYaml .Values.resources | indent 12 }}
+      volumes:
+        - name: application-config
+          configMap:
+            name: {{ template "socivio-api.fullname" . }}-config
     {{- with .Values.nodeSelector }}
       nodeSelector:
 {{ toYaml . | indent 8 }}

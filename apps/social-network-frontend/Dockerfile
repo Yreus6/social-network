@@ -2,7 +2,7 @@ FROM nginx:1.21.3
 
 WORKDIR /app/
 
-COPY ./apps/social-network-frontend/nginx.conf /etc/nginx/sites-available/default
+COPY ./apps/social-network-frontend/nginx.conf /etc/nginx/conf.d/default.conf
 
 COPY ./dist/apps/social-network-frontend/ /app/build/
 RUN cp -R build/* /usr/share/nginx/html

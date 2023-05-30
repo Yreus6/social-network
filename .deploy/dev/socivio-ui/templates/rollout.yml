@@ -40,6 +40,9 @@ spec:
             httpGet:
               path: /
               port: http
+          envFrom:
+            - secretRef:
+                name: {{ include "socivio-ui.fullname" . }}-env
           resources:
 {{ toYaml .Values.resources | indent 12 }}
     {{- with .Values.nodeSelector }}

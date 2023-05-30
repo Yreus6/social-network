@@ -62,7 +62,7 @@ jobs:
       - name: Build prod
         run: |
           yarn nx build sn-application
-          yarn nx build social-network-frontend --prod
+          yarn nx build social-network-frontend --prod --base-href=socivio-ui/
 
       - name: Login to docker
         uses: docker/login-action@v2
@@ -73,15 +73,16 @@ jobs:
       - name: Build and push Socivio API image
         uses: docker/build-push-action@v4
         with:
-          context: ./apps/sn-application
+          context: .
           file: ./apps/sn-application/Dockerfile
           push: true
           tags: wizard2020abc/social-network-backend:0.0.1
+          build-args: JAR_FILE=./apps/sn-application/build/libs/*.jar
 
       - name: Build and push Socivio UI image
         uses: docker/build-push-action@v4
         with:
-          context: ./apps/social-network-frontend
+          context: .
           file: ./apps/social-network-frontend/Dockerfile
           push: true
           tags: wizard2020abc/social-network-frontend:0.0.1
@@ -101,22 +102,22 @@ jobs:
         with:
           args: config set-context --current --namespace=argocd
 
-      - name: Install argocd CLI
-        uses: clowdhaus/argo-cd-action/@main
+      - name: Install ArgoCD CLI
+        run: |
+          curl -sSL -o argocd-linux-amd64 https://github.com/argoproj/argo-cd/releases/latest/download/argocd-linux-amd64
+          sudo install -m 555 argocd-linux-amd64 /usr/local/bin/argocd
+          rm argocd-linux-amd64
+
+      - name: Deploy Socivio
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          version: 2.7.3
-          command: version
-
-      - name: Deploy Socivio API
-        uses: clowdhaus/argo-cd-action/@main
-        with:
-          version: 2.7.3
-          command: app create socivio-api --upsert --sync-policy auto --self-heal --repo https://github.com/Wizard2069/social-network.git --path ./deploy/dev/socivio-api --dest-server https://kubernetes.default.svc --dest-namespace dev
-
-      - name: Deploy Socivio UI
-        uses: clowdhaus/argo-cd-action/@main
-        with:
-          version: 2.7.3
-          command: app create socivio-ui --upsert --sync-policy auto --self-heal --repo https://github.com/Wizard2069/social-network.git --path ./deploy/dev/socivio-ui --dest-server https://kubernetes.default.svc --dest-namespace dev
+          REPO_URL: https://github.com/Wizard2069/social-network.git
+          SERVER: ${{ secrets.ARGOCD_SERVER }}
+          USERNAME: ${{ secrets.ARGOCD_USERNAME }}
+          PASSWORD: ${{ secrets.ARGOCD_PASSWORD }}
+        run: |
+          argocd login $SERVER --grpc-web-root-path argocd --username $USERNAME --password $PASSWORD
+          argocd app create socivio-api --upsert --repo $REPO_URL --path ./.deploy/dev/socivio-api --dest-server https://kubernetes.default.svc --dest-namespace dev
+          argocd app create socivio-ui --upsert --repo $REPO_URL --path ./.deploy/dev/socivio-ui --dest-server https://kubernetes.default.svc --dest-namespace dev
+          argocd app set socivio-api -p image.tag=0.0.1
+          argocd app set socivio-ui -p image.tag=0.0.1
+          argocd app sync socivio-api socivio-ui
