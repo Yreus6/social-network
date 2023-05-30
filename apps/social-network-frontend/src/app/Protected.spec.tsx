@@ -15,9 +15,9 @@ describe('Protected Route', () => {
     server.use(
       rest.get(`${environment.apiBaseUrl}/greeting`, (req, res, ctx) => {
         return res(
-          ctx.status(401),
+          ctx.status(403),
           ctx.json({
-            detail: 'Not authorized'
+            detail: 'Forbidden'
           })
         );
       })
@@ -25,6 +25,6 @@ describe('Protected Route', () => {
 
     render(<Protected />);
 
-    expect(await screen.findByText(/Not authorized/)).toBeInTheDocument();
+    expect(await screen.findByText(/Forbidden/)).toBeInTheDocument();
   });
 });
