@@ -21,7 +21,8 @@
             "passWithNoTests": true
           }
         }
-      }
+      },
+      "tags": []
     },
     "sn-application": {
       "root": "apps/sn-application",
@@ -46,7 +47,9 @@
         "test": {
           "executor": "./tools/executors/gradle-test:test"
         }
-      }
+      },
+      "tags": [],
+      "implicitDependencies": ["sn-application-common"]
     },
     "sn-application-common": {
       "root": "libs/sn-application/sn-common",
@@ -65,7 +68,8 @@
         "test": {
           "executor": "@jnxplus/nx-boot-gradle:test"
         }
-      }
+      },
+      "tags": []
     },
     "social-network-frontend": {
       "root": "apps/social-network-frontend",
@@ -144,7 +148,8 @@
             "passWithNoTests": true
           }
         }
-      }
+      },
+      "tags": []
     },
     "social-network-frontend-components-routes": {
       "root": "libs/social-network-frontend/components-routes",
@@ -170,7 +175,8 @@
             "passWithNoTests": true
           }
         }
-      }
+      },
+      "tags": []
     },
     "social-network-frontend-config-constants": {
       "root": "libs/social-network-frontend/config-constants",
@@ -194,7 +200,8 @@
             "passWithNoTests": true
           }
         }
-      }
+      },
+      "tags": []
     },
     "social-network-frontend-config-store": {
       "root": "libs/social-network-frontend/config-store",
@@ -218,7 +225,8 @@
             "passWithNoTests": true
           }
         }
-      }
+      },
+      "tags": []
     },
     "social-network-frontend-data-access-home": {
       "root": "libs/social-network-frontend/data-access-home",
@@ -242,7 +250,8 @@
             "passWithNoTests": true
           }
         }
-      }
+      },
+      "tags": []
     },
     "social-network-frontend-e2e": {
       "root": "apps/social-network-frontend-e2e",
@@ -280,7 +289,9 @@
             ]
           }
         }
-      }
+      },
+      "tags": [],
+      "implicitDependencies": ["social-network-frontend"]
     },
     "social-network-frontend-feature-auth": {
       "root": "libs/social-network-frontend/feature-auth",
@@ -304,7 +315,8 @@
             "passWithNoTests": true
           }
         }
-      }
+      },
+      "tags": []
     },
     "social-network-frontend-feature-home": {
       "root": "libs/social-network-frontend/feature-home",
@@ -328,7 +340,8 @@
             "passWithNoTests": true
           }
         }
-      }
+      },
+      "tags": []
     },
     "social-network-frontend-utils-testing": {
       "root": "libs/social-network-frontend/utils-testing",
@@ -352,29 +365,8 @@
             "passWithNoTests": true
           }
         }
-      }
-    }
-  },
-  "cli": {
-    "defaultCollection": "@nrwl/react",
-    "packageManager": "yarn"
-  },
-  "generators": {
-    "@nrwl/react": {
-      "application": {
-        "style": "scss",
-        "linter": "eslint",
-        "babel": true
       },
-      "component": {
-        "style": "scss",
-        "pascalCaseFiles": true
-      },
-      "library": {
-        "style": "scss",
-        "linter": "eslint"
-      }
+      "tags": []
     }
-  },
-  "defaultProject": "social-network-frontend"
+  }
 }
