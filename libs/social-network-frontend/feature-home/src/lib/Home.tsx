@@ -1,29 +1,32 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import { useHistory } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
 import { useOktaAuth } from '@okta/okta-react';
+import { UserInfo } from '@sn-htc/social-network-frontend/components-routes';
 
 export const Home = () => {
-  const history = useHistory();
-  const { oktaAuth, authState } = useOktaAuth();
+  const { oktaAuth } = useOktaAuth();
+  const [userInfo, setUserInfo] = useState<UserInfo | null>(null);
 
-  if (!authState) {
-    return null;
+  useEffect(() => {
+    oktaAuth.getUser().then((user) => {
+      setUserInfo(user as UserInfo);
+    })
+      .catch(err => {
+        console.error(err);
+      });
+  }, [oktaAuth]);
+
+  if (!userInfo) {
+    return (
+      <div>Loading user information...</div>
+    );
   }
-
-  const login = async () => history.push('/login');
-
-  const logout = async () => oktaAuth.signOut();
-
-  const button = authState.isAuthenticated ?
-    <button onClick={logout}>Logout</button> :
-    <button onClick={login}>Login</button>;
 
   return (
     <div>
-      <Link to='/'>Home</Link><br/>
-      <Link to='/protected'>Protected</Link><br/>
-      {button}
+      <div>
+        <h1>Welcome {userInfo.name}</h1>
+        <button onClick={() => oktaAuth.signOut()}>Logout</button>
+      </div>
     </div>
   );
 };
