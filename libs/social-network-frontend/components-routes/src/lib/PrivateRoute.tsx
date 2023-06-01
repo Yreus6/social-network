@@ -33,7 +33,7 @@ export const PrivateRoute = ({ hasAnyAuthorities = [], children, ...rest }: Priv
           return <div />;
         } else {
           return hasAnyAuthority(authorities, hasAnyAuthorities) ? children :
-            <div>You are not allowed to view this page</div>;
+            <div data-test='text-forbidden'>You are not allowed to view this page</div>;
         }
       }}
     />
