@@ -8,7 +8,7 @@ export const Login = ({ config }) => {
 
   const onSuccess = (tokens) => {
     oktaAuth.handleLoginRedirect(tokens);
-  }
+  };
 
   const onError = (err) => {
     console.log('error logging in', err);
@@ -19,9 +19,9 @@ export const Login = ({ config }) => {
   }
 
   return authState.isAuthenticated ?
-    <Redirect to={{ pathname: '/' }}/> :
+    <Redirect to={{ pathname: '/' }} /> :
     <OktaSignInWidget
       config={config}
       onSuccess={onSuccess}
-      onError={onError}/>;
+      onError={onError} />;
 };

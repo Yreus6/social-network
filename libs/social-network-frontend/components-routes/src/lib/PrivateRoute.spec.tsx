@@ -1,21 +1,11 @@
 import '@testing-library/jest-dom';
-import { mockUser, render, screen, history } from '@sn-htc/social-network-frontend/utils-testing';
+import { mockUser, render, screen, history, oktaAuth } from '@sn-htc/social-network-frontend/utils-testing';
 import { hasAnyAuthority, PrivateRoute } from './PrivateRoute';
-import { AUTHORITIES, oktaAuthConfig } from '@sn-htc/social-network-frontend/config-constants';
+import { AUTHORITIES } from '@sn-htc/social-network-frontend/config-constants';
 import { Security } from '@okta/okta-react';
 import { Route } from 'react-router-dom';
-import { OktaAuth, toRelativeUrl } from '@okta/okta-auth-js';
+import { toRelativeUrl } from '@okta/okta-auth-js';
 import { waitFor } from '@testing-library/react';
-
-const oktaAuth = new OktaAuth({
-  ...oktaAuthConfig,
-  pkce: false,
-  transformAuthState: async (oktaAuth, authState) => {
-    authState.isAuthenticated = oktaAuth.authStateManager.getAuthState()?.isAuthenticated;
-
-    return authState;
-  }
-});
 
 const TestComponent = () => {
   return (
