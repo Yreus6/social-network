@@ -1,0 +1,51 @@
+name: Deploy to argocd workflow
+description: Deploy to argocd
+inputs:
+  environment:
+    description: 'Deploy environment'
+    required: true
+  version:
+    description: 'Version'
+    required: true
+  kubeconfig:
+    description: 'KUBE_CONFIG'
+    required: true
+  server:
+    description: 'ArgoCD server'
+    required: true
+  username:
+    description: 'ArgoCD username'
+    required: true
+  password:
+    description: 'ArgoCD password'
+    required: true
+
+runs:
+  using: 'composite'
+  steps:
+    - name: Set k8s context
+      uses: actions-hub/kubectl@master
+      env:
+        KUBE_CONFIG: ${{ inputs.kubeconfig }}
+      with:
+        args: config set-context --current --namespace=argocd
+
+    - name: Install ArgoCD CLI
+      run: |
+        curl -sSL -o argocd-linux-amd64 https://github.com/argoproj/argo-cd/releases/latest/download/argocd-linux-amd64
+        sudo install -m 555 argocd-linux-amd64 /usr/local/bin/argocd
+        rm argocd-linux-amd64
+      shell: bash
+
+    - name: Deploy Socivio
+      env:
+        SERVER: ${{ inputs.server }}
+        USERNAME: ${{ inputs.username }}
+        PASSWORD: ${{ inputs.password }}
+      run: |
+        argocd login $SERVER --grpc-web-root-path argocd --username $USERNAME --password $PASSWORD
+        argocd appset create ./.deploy/${{ inputs.environment }}/appset.yml --upsert
+        argocd app set socivio-api -p image.tag=${{ inputs.version }}
+        argocd app set socivio-ui -p image.tag=${{ inputs.version }}
+        argocd app sync socivio-api socivio-ui
+      shell: bash

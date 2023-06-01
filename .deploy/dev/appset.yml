@@ -1,0 +1,23 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: socivio
+spec:
+  generators:
+    - git:
+        repoURL: https://github.com/Wizard2069/social-network.git
+        revision: HEAD
+        directories:
+          - path: .deploy/dev/*
+  template:
+    metadata:
+      name: 'socivio'
+    spec:
+      project: "default"
+      source:
+        repoURL: https://github.com/Wizard2069/social-network.git
+        targetRevision: HEAD
+        path: ./
+      destination:
+        server: https://kubernetes.default.svc
+        namespace: dev
