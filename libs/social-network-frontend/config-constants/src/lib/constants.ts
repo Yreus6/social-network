@@ -8,13 +8,13 @@ export const AUTHORITIES = {
 export const oktaAuthConfig = {
   issuer: `https://${environment.oktaDomain}/oauth2/default`,
   clientId: environment.oktaClientId,
-  redirectUri: window.location.origin + '/login/callback',
+  redirectUri: window.location.origin + '/signin/callback',
 };
 
 export const oktaSignInConfig = {
   baseUrl: `https://${environment.oktaDomain}`,
   clientId: environment.oktaClientId,
-  redirectUri: window.location.origin + '/login/callback',
+  redirectUri: window.location.origin + '/signin/callback',
   features: {
     router: true,
     registration: true,

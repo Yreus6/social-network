@@ -30,12 +30,11 @@ Cypress.Commands.add('loginByOktaApi', (username, password) => {
       password
     }
   }).then(({ body }) => {
-    const user = body._embedded.user;
     const config = {
       issuer: `https://${Cypress.env('okta_domain')}/oauth2/default`,
       clientId: Cypress.env('okta_client_id'),
-      redirectUri: window.location.origin + '/login/callback',
-      scope: ['openid', 'email', 'profile'],
+      redirectUri: window.location.origin + '/signin/callback',
+      scopes: ['openid', 'email', 'profile', 'groups'],
     };
 
     const authClient = new OktaAuth(config);
