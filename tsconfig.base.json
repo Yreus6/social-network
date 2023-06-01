@@ -16,13 +16,15 @@
     "noImplicitAny": false,
     "baseUrl": ".",
     "paths": {
-      "@env-frontend/*": ["apps/social-network-frontend/src/environments/*"],
       "@sn-htc/shared/data-access": ["libs/shared/data-access/src/index.ts"],
       "@sn-htc/social-network-frontend/components-routes": [
         "libs/social-network-frontend/components-routes/src/index.ts"
       ],
       "@sn-htc/social-network-frontend/config-constants": [
         "libs/social-network-frontend/config-constants/src/index.ts"
+      ],
+      "@sn-htc/social-network-frontend/config-env": [
+        "libs/social-network-frontend/config-env/src/index.ts"
       ],
       "@sn-htc/social-network-frontend/config-store": [
         "libs/social-network-frontend/config-store/src/index.ts"

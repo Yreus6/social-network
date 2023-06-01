@@ -1,7 +1,7 @@
 import { setupServer } from 'msw/node';
 import { ResponseComposition, rest, RestContext, RestRequest } from 'msw';
 import { mockUser } from './mockUser';
-import { environment } from '@env-frontend/environment';
+import { environment } from '@sn-htc/social-network-frontend/config-env';
 
 const handlers = [
   rest.get(

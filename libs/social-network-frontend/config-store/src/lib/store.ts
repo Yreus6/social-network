@@ -2,7 +2,7 @@ import { AnyAction, configureStore, ThunkAction } from '@reduxjs/toolkit';
 import { greetingApi } from '@sn-htc/social-network-frontend/data-access-home';
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
 import { setupListeners } from '@reduxjs/toolkit/query';
-import { environment } from '@env-frontend/environment';
+import { environment } from '@sn-htc/social-network-frontend/config-env';
 
 export const store = configureStore({
   reducer: {

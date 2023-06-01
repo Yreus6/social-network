@@ -97,8 +97,8 @@
             "production": {
               "fileReplacements": [
                 {
-                  "replace": "apps/social-network-frontend/src/environments/environment.ts",
-                  "with": "apps/social-network-frontend/src/environments/environment.prod.ts"
+                  "replace": "libs/social-network-frontend/config-env/src/lib/environment.ts",
+                  "with": "libs/social-network-frontend/config-env/src/lib/environment.prod.ts"
                 }
               ],
               "optimization": true,
@@ -202,6 +202,31 @@
         }
       },
       "tags": []
+    },
+    "social-network-frontend-config-env": {
+      "root": "libs/social-network-frontend/config-env",
+      "sourceRoot": "libs/social-network-frontend/config-env/src",
+      "projectType": "library",
+      "tags": [],
+      "targets": {
+        "lint": {
+          "executor": "@nrwl/linter:eslint",
+          "outputs": ["{options.outputFile}"],
+          "options": {
+            "lintFilePatterns": [
+              "libs/social-network-frontend/config-env/**/*.{ts,tsx,js,jsx}"
+            ]
+          }
+        },
+        "test": {
+          "executor": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/social-network-frontend/config-env"],
+          "options": {
+            "jestConfig": "libs/social-network-frontend/config-env/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
     },
     "social-network-frontend-config-store": {
       "root": "libs/social-network-frontend/config-store",

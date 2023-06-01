@@ -1,4 +1,4 @@
-import { environment } from '@env-frontend/environment';
+import { environment } from '@sn-htc/social-network-frontend/config-env';
 
 export const AUTHORITIES = {
   ADMIN: 'ROLE_ADMIN',
