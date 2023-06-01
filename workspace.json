@@ -147,6 +147,18 @@
             "jestConfig": "apps/social-network-frontend/jest.config.js",
             "passWithNoTests": true
           }
+        },
+        "docker": {
+          "executor": "@nrwl/workspace:run-commands",
+          "options": {
+            "commands": [
+              "yarn nx build social-network-frontend --prod",
+              "docker build -f ./apps/social-network-frontend/Dockerfile . -t wizard2020abc/social-network-frontend:0.0.1 -t wizard2020abc/social-network-frontend",
+              "docker push wizard2020abc/social-network-frontend:0.0.1",
+              "docker push wizard2020abc/social-network-frontend"
+            ],
+            "parallel": false
+          }
         }
       },
       "tags": []
