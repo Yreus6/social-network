@@ -35,7 +35,7 @@
     "react-redux": "^7.2.5",
     "react-router-dom": "5.2.0",
     "regenerator-runtime": "0.13.10",
-    "tslib": "^2.0.0"
+    "tslib": "^2.5.0"
   },
   "devDependencies": {
     "@jnxplus/nx-boot-gradle": "^0.2.0",
