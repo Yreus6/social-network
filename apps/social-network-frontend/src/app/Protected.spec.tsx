@@ -2,7 +2,7 @@ import '@testing-library/jest-dom';
 import { server, render, screen } from '@sn-htc/social-network-frontend/utils-testing';
 import Protected from './Protected';
 import { rest } from 'msw';
-import { environment } from '@env-frontend/environment';
+import { environment } from '@sn-htc/social-network-frontend/config-env';
 
 describe('Protected Route', () => {
   it('should display title "Hello test@example.com!"', async () => {
