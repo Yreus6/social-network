@@ -1,32 +1,41 @@
 import React, { useEffect, useState } from 'react';
 import { useOktaAuth } from '@okta/okta-react';
 import { UserInfo } from '@sn-htc/social-network-frontend/components-routes';
+import { LandingPage } from './LandingPage';
 
 export const Home = () => {
-  const { oktaAuth } = useOktaAuth();
+  const { authState, oktaAuth } = useOktaAuth();
   const [userInfo, setUserInfo] = useState<UserInfo | null>(null);
 
   useEffect(() => {
-    oktaAuth.getUser().then((user) => {
-      setUserInfo(user as UserInfo);
-    })
-      .catch(err => {
-        console.error(err);
-      });
-  }, [oktaAuth]);
+    if (!authState || !authState.isAuthenticated) {
+      setUserInfo(null);
+    } else {
+      oktaAuth.getUser().then((user) => {
+        setUserInfo(user as UserInfo);
+      })
+        .catch(err => {
+          console.error(err);
+        });
+    }
+  }, [authState, oktaAuth]);
 
-  if (!userInfo) {
-    return (
-      <div>Loading user information...</div>
-    );
+  if (!authState) {
+    return <div>Loading...</div>;
   }
 
   return (
     <div>
-      <div>
-        <h1>Welcome {userInfo.name}</h1>
-        <button onClick={() => oktaAuth.signOut()}>Logout</button>
-      </div>
+      {!authState.isAuthenticated && <LandingPage />}
+      {authState.isAuthenticated && !userInfo
+      && <div>Loading user information...</div>
+      }
+      {authState.isAuthenticated && userInfo && (
+        <div>
+          <h1>Welcome {userInfo.name}</h1>
+          <button data-test='logout-btn' onClick={() => oktaAuth.signOut()}>Logout</button>
+        </div>
+      )}
     </div>
   );
 };

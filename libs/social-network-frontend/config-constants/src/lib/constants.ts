@@ -15,12 +15,17 @@ export const oktaSignInConfig = {
   baseUrl: `https://${environment.oktaDomain}`,
   clientId: environment.oktaClientId,
   redirectUri: window.location.origin + '/signin/callback',
+  i18n: {
+    'en': {
+      'primaryauth.username.placeholder': 'Email'
+    }
+  },
   features: {
     router: true,
     registration: true,
     showPasswordToggleOnSignInPage: true,
   },
   authParams: {
-    scopes: ['openid', 'email', 'profile', 'groups']
+    scopes: ['openid', 'email', 'profile', 'groups', 'offline_access']
   }
 };
