@@ -1,0 +1,50 @@
+name: Build docker image workflow
+description: Build docker image
+inputs:
+  version:
+    description: 'Version'
+    required: true
+  username:
+    description: 'Docker username'
+    required: true
+  password:
+    description: 'Docker token'
+    required: true
+
+runs:
+  using: 'composite'
+  steps:
+    - name: Set up QEMU
+      uses: docker/setup-qemu-action@v2
+
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v2
+
+    - name: Build prod
+      run: |
+        yarn nx build sn-application
+        yarn nx build social-network-frontend --prod --base-href=socivio-ui/
+      shell: bash
+
+    - name: Login to docker
+      uses: docker/login-action@v2
+      with:
+        username: ${{ inputs.username }}
+        password: ${{ inputs.password }}
+
+    - name: Build and push Socivio API image
+      uses: docker/build-push-action@v4
+      with:
+        context: .
+        file: ./apps/sn-application/Dockerfile
+        push: true
+        tags: wizard2020abc/social-network-backend:${{ inputs.version }}
+        build-args: JAR_FILE=./apps/sn-application/build/libs/*.jar
+
+    - name: Build and push Socivio UI image
+      uses: docker/build-push-action@v4
+      with:
+        context: .
+        file: ./apps/social-network-frontend/Dockerfile
+        push: true
+        tags: wizard2020abc/social-network-frontend:${{ inputs.version }}

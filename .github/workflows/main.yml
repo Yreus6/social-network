@@ -9,6 +9,7 @@ on:
 
 jobs:
   build-and-test:
+    if: github.ref != 'refs/heads/main'
     runs-on: ubuntu-latest
     env:
       NX_CLOUD_ACCESS_TOKEN: ${{ secrets.NX_CLOUD_TOKEN }}
@@ -43,7 +44,6 @@ jobs:
   build-image:
     if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
-    needs: build-and-test
     env:
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     steps:
@@ -53,71 +53,28 @@ jobs:
       - name: Setup
         uses: ./.github/setup
 
-      - name: Set up QEMU
-        uses: docker/setup-qemu-action@v2
-
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v2
-
-      - name: Build prod
-        run: |
-          yarn nx build sn-application
-          yarn nx build social-network-frontend --prod --base-href=socivio-ui/
-
-      - name: Login to docker
-        uses: docker/login-action@v2
+      - name: Build docker image
+        uses: ./.github/build-image
         with:
+          version: 0.0.1
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
-
-      - name: Build and push Socivio API image
-        uses: docker/build-push-action@v4
-        with:
-          context: .
-          file: ./apps/sn-application/Dockerfile
-          push: true
-          tags: wizard2020abc/social-network-backend:0.0.1
-          build-args: JAR_FILE=./apps/sn-application/build/libs/*.jar
-
-      - name: Build and push Socivio UI image
-        uses: docker/build-push-action@v4
-        with:
-          context: .
-          file: ./apps/social-network-frontend/Dockerfile
-          push: true
-          tags: wizard2020abc/social-network-frontend:0.0.1
 
   deploy-dev:
     if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
-    needs: ['build-and-test', 'build-image']
+    needs: build-image
     steps:
       - name: Checkout
         uses: actions/checkout@v3
 
-      - name: Set k8s context
-        uses: actions-hub/kubectl@master
-        env:
-          KUBE_CONFIG: ${{ secrets.KUBE_CONFIG }}
+      - name: Deploy to argocd
+        uses: ./.github/deploy-argocd
         with:
-          args: config set-context --current --namespace=argocd
-
-      - name: Install ArgoCD CLI
-        run: |
-          curl -sSL -o argocd-linux-amd64 https://github.com/argoproj/argo-cd/releases/latest/download/argocd-linux-amd64
-          sudo install -m 555 argocd-linux-amd64 /usr/local/bin/argocd
-          rm argocd-linux-amd64
-
-      - name: Deploy Socivio
-        env:
-          REPO_URL: https://github.com/Wizard2069/social-network.git
-          SERVER: ${{ secrets.ARGOCD_SERVER }}
-          USERNAME: ${{ secrets.ARGOCD_USERNAME }}
-          PASSWORD: ${{ secrets.ARGOCD_PASSWORD }}
-        run: |
-          argocd login $SERVER --grpc-web-root-path argocd --username $USERNAME --password $PASSWORD
-          argocd app create socivio-api --upsert --repo $REPO_URL --path ./.deploy/dev/socivio-api --dest-server https://kubernetes.default.svc --dest-namespace dev
-          argocd app create socivio-ui --upsert --repo $REPO_URL --path ./.deploy/dev/socivio-ui --dest-server https://kubernetes.default.svc --dest-namespace dev
-          argocd app set socivio-api -p image.tag=0.0.1
-          argocd app set socivio-ui -p image.tag=0.0.1
-          argocd app sync socivio-api socivio-ui
+          repoUrl: https://github.com/Wizard2069/social-network.git
+          environment: dev
+          version: 0.0.1
+          kubeconfig: ${{ secrets.KUBE_CONFIG }}
+          server: ${{ secrets.ARGOCD_SERVER }}
+          username: ${{ secrets.ARGOCD_USERNAME }}
+          password: ${{ secrets.ARGOCD_PASSWORD }}
