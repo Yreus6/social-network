@@ -28,6 +28,11 @@ jobs:
         run: yarn nx run-many --target=test --all --coverage --coverageReporters=json --parallel
 
       - name: Run e2e Tests
+        env:
+          AUTH_USERNAME: ${{ secrets.CI_AUTH_USERNAME }}
+          AUTH_PASSWORD: ${{ secrets.CI_AUTH_PASSWORD }}
+          OKTA_DOMAIN: ${{ secrets.OKTA_DOMAIN }}
+          OKTA_CLIENTID: ${{ secrets.OKTA_CLIENTID }}
         run: yarn nx run-many --target=e2e-ci --all --parallel
 
       - name: Sonar Scan
