@@ -1,6 +1,7 @@
 package com.htcompany.sncommon.config;
 
 import com.htcompany.sncommon.security.AuthoritiesConstants;
+import java.util.List;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Import;
 import org.springframework.security.config.annotation.method.configuration.EnableReactiveMethodSecurity;
@@ -11,8 +12,6 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.reactive.CorsConfigurationSource;
 import org.springframework.web.cors.reactive.UrlBasedCorsConfigurationSource;
 import org.zalando.problem.spring.webflux.advice.security.SecurityProblemSupport;
-
-import java.util.List;
 
 @EnableWebFluxSecurity
 @EnableReactiveMethodSecurity
