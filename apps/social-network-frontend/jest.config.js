@@ -12,5 +12,11 @@ module.exports = {
     'src/app/**/*.tsx',
     '!src/**/*.svg'
   ],
-  setupFilesAfterEnv: ['../../libs/social-network-frontend/utils-testing/src/lib/setupTests.ts']
+  setupFilesAfterEnv: ['../../libs/social-network-frontend/utils-testing/src/lib/setupTests.ts'],
+  reporters: ['default', ['jest-sonar', {
+    outputDirectory: 'build/test-results/jest',
+    outputName: 'social-network-frontend.xml',
+    reportedFilePath: 'relative',
+    relativeRootDir: '<rootDir>/../',
+  }]]
 };
