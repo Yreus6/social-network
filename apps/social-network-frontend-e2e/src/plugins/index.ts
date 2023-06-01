@@ -8,5 +8,7 @@ export default (on, config) => {
   config.env.okta_domain = process.env.OKTA_DOMAIN;
   config.env.okta_client_id = process.env.OKTA_CLIENTID;
 
+  require("@cypress/code-coverage/task")(on, config);
+
   return config;
 };
