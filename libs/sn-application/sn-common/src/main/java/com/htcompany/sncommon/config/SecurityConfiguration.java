@@ -1,7 +1,6 @@
 package com.htcompany.sncommon.config;
 
 import com.htcompany.sncommon.security.AuthoritiesConstants;
-import java.util.List;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Import;
 import org.springframework.security.config.annotation.method.configuration.EnableReactiveMethodSecurity;
@@ -18,9 +17,15 @@ import org.zalando.problem.spring.webflux.advice.security.SecurityProblemSupport
 @Import({ SecurityProblemSupport.class })
 public class SecurityConfiguration {
 
+    private final ApplicationProperties applicationProperties;
+
     private final SecurityProblemSupport problemSupport;
 
-    public SecurityConfiguration(SecurityProblemSupport problemSupport) {
+    public SecurityConfiguration(
+        ApplicationProperties applicationProperties,
+        SecurityProblemSupport problemSupport
+    ) {
+        this.applicationProperties = applicationProperties;
         this.problemSupport = problemSupport;
     }
 
@@ -48,9 +53,8 @@ public class SecurityConfiguration {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.applyPermitDefaultValues();
-        configuration.setAllowedOrigins(List.of("*"));
-        configuration.setAllowedMethods(List.of("*"));
+        configuration.setAllowedOrigins(applicationProperties.getCors().getAllowedOrigins());
+        configuration.setAllowedMethods(applicationProperties.getCors().getAllowedMethods());
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);
 
