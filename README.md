@@ -1,7 +1,9 @@
 # Social Network
 
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=Wizard2069_social-network&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=Wizard2069_social-network)
-![Github Actions Status](https://github.com/Wizard2069/social-network/actions/workflows/main.yml/badge.svg)
+![Github Actions Status](https://github.com/Wizard2069/social-network/actions/workflows/ci.yml/badge.svg)
+![Github Actions Status](https://github.com/Wizard2069/social-network/actions/workflows/cd.yml/badge.svg)
+[![Socivio](https://img.shields.io/endpoint?url=https://cloud.cypress.io/badge/simple/aesi67/main&style=flat&logo=cypress)](https://cloud.cypress.io/projects/aesi67/runs)
 
 This project was generated using [Nx](https://nx.dev).
 
