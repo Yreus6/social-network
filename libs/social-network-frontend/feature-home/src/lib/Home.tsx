@@ -24,6 +24,12 @@ export const Home = () => {
     return <div>Loading...</div>;
   }
 
+  const signOut = () => {
+    oktaAuth.signOut()
+      .then(() => console.log('Sign out successfully'))
+      .catch(e => console.error(e));
+  };
+
   return (
     <div>
       {!authState.isAuthenticated && <Landing />}
@@ -33,7 +39,7 @@ export const Home = () => {
       {authState.isAuthenticated && userInfo && (
         <div>
           <h1>Welcome {userInfo.name}</h1>
-          <button data-test='logout-btn' onClick={() => oktaAuth.signOut()}>Logout</button>
+          <button data-test='logout-btn' onClick={signOut}>Logout</button>
         </div>
       )}
     </div>

@@ -6,8 +6,8 @@ import { useOktaAuth } from '@okta/okta-react';
 export const Login = ({ config }) => {
   const { oktaAuth, authState } = useOktaAuth();
 
-  const onSuccess = (tokens) => {
-    oktaAuth.handleLoginRedirect(tokens);
+  const onSuccess = async (tokens) => {
+    await oktaAuth.handleLoginRedirect(tokens);
   };
 
   const onError = (err) => {

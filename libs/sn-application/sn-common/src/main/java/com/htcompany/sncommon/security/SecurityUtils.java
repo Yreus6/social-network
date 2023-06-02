@@ -14,7 +14,7 @@ import reactor.core.publisher.Mono;
 
 public class SecurityUtils {
 
-    public static final String CLAIMS_NAMESPACE = "https://login.hieutrancompany.tk";
+    public static final String CLAIMS_NAMESPACE = "https://login.dev4fun.online";
 
     private SecurityUtils() {}
 

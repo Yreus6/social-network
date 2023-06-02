@@ -7,8 +7,8 @@ import './Landing.scss';
 const Landing = () => {
   const { oktaAuth } = useOktaAuth();
 
-  const onSuccess = (tokens) => {
-    oktaAuth.handleLoginRedirect(tokens);
+  const onSuccess = async (tokens) => {
+    await oktaAuth.handleLoginRedirect(tokens);
   };
 
   const onError = (err) => {
