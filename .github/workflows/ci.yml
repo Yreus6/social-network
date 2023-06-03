@@ -28,7 +28,21 @@ jobs:
         run: yarn nx run-many --target=test --all --coverage --coverageReporters=json --parallel
 
       - name: Run e2e Tests
+        env:
+          AUTH_USERNAME: ${{ secrets.CI_AUTH_USERNAME }}
+          AUTH_PASSWORD: ${{ secrets.CI_AUTH_PASSWORD }}
+          ADMIN_USERNAME: ${{ secrets.CI_ADMIN_USERNAME }}
+          ADMIN_PASSWORD: ${{ secrets.CI_ADMIN_PASSWORD }}
+          OKTA_DOMAIN: ${{ secrets.OKTA_DOMAIN }}
+          OKTA_CLIENTID: ${{ secrets.OKTA_CLIENTID }}
+          PERCY_TOKEN: ${{ secrets.PERCY_TOKEN }}
         run: yarn nx run-many --target=e2e-ci --all --parallel
+
+      - name: Merge Jest Reports
+        run: |
+          node ./tools/coverageMerger.js
+          yarn nyc report --reporter lcov --report-dir coverage
+          node ./tools/jestSonarMerger.js
 
       - name: Sonar Scan
         run: |

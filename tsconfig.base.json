@@ -13,8 +13,35 @@
     "lib": ["es2017", "dom"],
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
+    "noImplicitAny": false,
     "baseUrl": ".",
-    "paths": {}
+    "paths": {
+      "@sn-htc/shared/data-access": ["libs/shared/data-access/src/index.ts"],
+      "@sn-htc/social-network-frontend/components-routes": [
+        "libs/social-network-frontend/components-routes/src/index.ts"
+      ],
+      "@sn-htc/social-network-frontend/config-constants": [
+        "libs/social-network-frontend/config-constants/src/index.ts"
+      ],
+      "@sn-htc/social-network-frontend/config-env": [
+        "libs/social-network-frontend/config-env/src/index.ts"
+      ],
+      "@sn-htc/social-network-frontend/config-store": [
+        "libs/social-network-frontend/config-store/src/index.ts"
+      ],
+      "@sn-htc/social-network-frontend/data-access-home": [
+        "libs/social-network-frontend/data-access-home/src/index.ts"
+      ],
+      "@sn-htc/social-network-frontend/feature-auth": [
+        "libs/social-network-frontend/feature-auth/src/index.ts"
+      ],
+      "@sn-htc/social-network-frontend/feature-home": [
+        "libs/social-network-frontend/feature-home/src/index.ts"
+      ],
+      "@sn-htc/social-network-frontend/utils-testing": [
+        "libs/social-network-frontend/utils-testing/src/index.ts"
+      ]
+    }
   },
   "exclude": ["node_modules", "tmp"]
 }

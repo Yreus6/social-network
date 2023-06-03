@@ -9,25 +9,54 @@
 // ***********************************************
 
 // eslint-disable-next-line @typescript-eslint/no-namespace
-declare namespace Cypress {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  interface Chainable<Subject> {
-    login(email: string, password: string): void;
-  }
-}
-//
-// -- This is a parent command --
-Cypress.Commands.add('login', (email, password) => {
-  console.log('Custom command example: Login', email, password);
+import { OktaAuth } from '@okta/okta-auth-js';
+
+Cypress.Commands.add('getBySel', (selector, ...args) => {
+  return cy.get(`[data-test=${selector}]`, ...args);
 });
-//
-// -- This is a child command --
-// Cypress.Commands.add("drag", { prevSubject: 'element'}, (subject, options) => { ... })
-//
-//
-// -- This is a dual command --
-// Cypress.Commands.add("dismiss", { prevSubject: 'optional'}, (subject, options) => { ... })
-//
-//
-// -- This will overwrite an existing command --
-// Cypress.Commands.overwrite("visit", (originalFn, url, options) => { ... })
+
+Cypress.Commands.add('getBySelLike', (selector, ...args) => {
+  return cy.get(`[data-test*=${selector}]`, ...args);
+});
+
+// Okta
+Cypress.Commands.add('loginByOktaApi', (username, password) => {
+  const log = Cypress.log({
+    displayName: 'OKTA LOGIN',
+    message: [`🔐 Authenticating | ${username}`],
+    autoEnd: false
+  });
+
+  log.snapshot('before');
+
+  cy.request({
+    method: 'POST',
+    url: `https://${Cypress.env('okta_domain')}/api/v1/authn`,
+    body: {
+      username,
+      password
+    }
+  }).then(({ body }) => {
+    const config = {
+      issuer: `https://${Cypress.env('okta_domain')}/oauth2/default`,
+      clientId: Cypress.env('okta_client_id'),
+      redirectUri: window.location.origin + '/signin/callback',
+      scopes: ['openid', 'email', 'profile', 'groups'],
+    };
+
+    const authClient = new OktaAuth(config);
+
+    return authClient.token
+      .getWithoutPrompt({ sessionToken: body.sessionToken })
+      .then(({ tokens }) => {
+        authClient.tokenManager.setTokens(tokens);
+
+        log.snapshot('after');
+        log.end();
+      })
+      .catch((err) => {
+        log.error(err);
+        log.end();
+      });
+  });
+});

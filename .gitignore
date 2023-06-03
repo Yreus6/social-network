@@ -27,12 +27,13 @@
 # misc
 /.sass-cache
 /connect.lock
-/coverage
+**/coverage/**/*
 /libpeerconnection.log
 npm-debug.log
 yarn-error.log
 testem.log
 /typings
+**/.nyc_output/**/*
 
 # System Files
 .DS_Store
@@ -41,3 +42,13 @@ Thumbs.db
 # Gradle
 .gradle
 build
+
+.yarn/*
+!.yarn/patches
+!.yarn/releases
+!.yarn/plugins
+!.yarn/sdks
+!.yarn/versions
+.pnp.*
+
+**/*.env

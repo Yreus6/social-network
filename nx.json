@@ -32,21 +32,27 @@
       }
     ]
   },
-  "projects": {
-    "sn-application": {
-      "tags": []
-    },
-    "social-network-frontend": {
-      "tags": []
-    },
-    "social-network-frontend-e2e": {
-      "tags": [],
-      "implicitDependencies": [
-        "social-network-frontend"
-      ]
+  "plugins": ["@jnxplus/nx-boot-gradle"],
+  "cli": {
+    "defaultCollection": "@nrwl/react",
+    "packageManager": "yarn"
+  },
+  "generators": {
+    "@nrwl/react": {
+      "application": {
+        "style": "scss",
+        "linter": "eslint",
+        "babel": true
+      },
+      "component": {
+        "style": "scss",
+        "pascalCaseFiles": true
+      },
+      "library": {
+        "style": "scss",
+        "linter": "eslint"
+      }
     }
   },
-  "plugins": [
-    "@jnxplus/nx-boot-gradle"
-  ]
+  "defaultProject": "social-network-frontend"
 }

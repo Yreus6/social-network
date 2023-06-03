@@ -1,0 +1,9 @@
+{
+  "name": "social-network-frontend-e2e",
+  "version": "1.0.0",
+  "dependencies": {
+  },
+  "nyc": {
+    "report-dir": "../../coverage/apps/social-network-frontend-e2e"
+  }
+}

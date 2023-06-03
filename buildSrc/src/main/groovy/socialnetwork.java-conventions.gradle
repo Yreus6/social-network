@@ -6,6 +6,7 @@ group = 'com.htcompany'
 
 dependencies {
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testFixturesImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
 
 // Disable the test report for the individual test task
@@ -44,7 +45,7 @@ configurations.create('binaryTestResultsElements') {
         attribute(Category.CATEGORY_ATTRIBUTE, objects.named(Category, Category.DOCUMENTATION))
         attribute(DocsType.DOCS_TYPE_ATTRIBUTE, objects.named(DocsType, 'test-report-data'))
     }
-    outgoing.artifact(test.binaryResultsDirectory)
+    outgoing.artifact(layout.buildDirectory.dir('test-results/test').get().asFile)
 }
 
 configurations.create('binaryIntegrationTestResultsElements') {
@@ -54,7 +55,7 @@ configurations.create('binaryIntegrationTestResultsElements') {
         attribute(Category.CATEGORY_ATTRIBUTE, objects.named(Category, Category.DOCUMENTATION))
         attribute(DocsType.DOCS_TYPE_ATTRIBUTE, objects.named(DocsType, 'integration-test-report-data'))
     }
-    outgoing.artifact(integrationTest.binaryResultsDirectory)
+    outgoing.artifact(layout.buildDirectory.dir('test-results/integrationTest').get().asFile)
 }
 
 // Do not generate reports for individual projects
@@ -74,6 +75,21 @@ configurations.create('transitiveSourcesElements') {
         attribute(DocsType.DOCS_TYPE_ATTRIBUTE, objects.named(DocsType, 'source-folders'))
     }
     sourceSets.main.java.srcDirs.forEach {
+        outgoing.artifact(it)
+    }
+}
+
+configurations.create('transitiveClassesElements') {
+    visible = false
+    canBeResolved = false
+    canBeConsumed = true
+    extendsFrom(configurations.implementation)
+    attributes {
+        attribute(Usage.USAGE_ATTRIBUTE, objects.named(Usage, Usage.JAVA_RUNTIME))
+        attribute(Category.CATEGORY_ATTRIBUTE, objects.named(Category, Category.DOCUMENTATION))
+        attribute(DocsType.DOCS_TYPE_ATTRIBUTE, objects.named(DocsType, 'class-folders'))
+    }
+    sourceSets.main.output.classesDirs.forEach {
         outgoing.artifact(it)
     }
 }

@@ -15,6 +15,22 @@ management:
 spring:
   application:
     name: Social Network Application
+  main:
+    allow-bean-definition-overriding: true
 
 server:
   port: 8080
+
+okta:
+  oauth2:
+    issuer: https://login.dev4fun.online/oauth2/default
+
+logging:
+  level:
+    com.htcompany: DEBUG
+
+application:
+  cors:
+    allowed-origins:
+      - http://localhost:4200
+    allowed-methods: '*'
