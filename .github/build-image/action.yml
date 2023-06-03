@@ -23,7 +23,7 @@ runs:
     - name: Build prod
       run: |
         yarn nx build sn-application
-        yarn nx build social-network-frontend --prod --base-href=socivio-ui/
+        yarn nx build social-network-frontend --prod
       shell: bash
 
     - name: Login to docker

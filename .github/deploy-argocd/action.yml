@@ -48,4 +48,6 @@ runs:
         argocd app set socivio-api -p image.tag=${{ inputs.version }}
         argocd app set socivio-ui -p image.tag=${{ inputs.version }}
         argocd app sync socivio-api socivio-ui
+        argocd app actions run socivio-api restart --kind Rollout --resource-name socivio-api
+        argocd app actions run socivio-ui restart --kind Rollout --resource-name socivio-ui
       shell: bash
