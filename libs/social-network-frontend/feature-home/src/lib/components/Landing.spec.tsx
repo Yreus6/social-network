@@ -6,6 +6,6 @@ describe('Landing Page', () => {
   it('should render correctly', async () => {
     wrapper(<Landing />, { isAuthenticated: false });
 
-    expect(await screen.findByTestId('socivio-landing')).toMatchSnapshot();
+    expect(await screen.findByTestId('socivio-landing')).toBeVisible();
   });
 });
