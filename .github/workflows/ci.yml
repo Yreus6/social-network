@@ -36,11 +36,12 @@ jobs:
         env:
           AUTH_USERNAME: ${{ secrets.CI_AUTH_USERNAME }}
           AUTH_PASSWORD: ${{ secrets.CI_AUTH_PASSWORD }}
-          ADMIN_USERNAME: ${{ secrets.CI_ADMIN_USERNAME }}
-          ADMIN_PASSWORD: ${{ secrets.CI_ADMIN_PASSWORD }}
+          AUTH2_USERNAME: ${{ secrets.CI_AUTH2_USERNAME }}
+          AUTH2_PASSWORD: ${{ secrets.CI_AUTH2_PASSWORD }}
           OKTA_DOMAIN: ${{ secrets.OKTA_DOMAIN }}
           OKTA_CLIENTID: ${{ secrets.OKTA_CLIENTID }}
           PERCY_TOKEN: ${{ secrets.PERCY_TOKEN }}
+          API_URL: http://127.0.0.1:8080
         run: yarn nx run-many --target=e2e-ci --all --parallel
 
       - name: Merge Jest Reports
