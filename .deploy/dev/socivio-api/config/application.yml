@@ -25,10 +25,10 @@ spring:
       - classpath:/graphql/greeting/
       - classpath:/graphql/user/
   neo4j:
-    uri: neo4j+s://8903bc2e.databases.neo4j.io
+    uri: neo4j+s://c805f4ee.databases.neo4j.io
     authentication:
       username: neo4j
-      password: LnhaRqYKYgl_m9KemJgdpwZRdxojfZgxy9t1LgDYE1w
+      password: byZfDFOcpSwASwKUCo8n5hyyUCR5SJCu3RxCS7ninkM
   data:
     neo4j:
       database: neo4j
