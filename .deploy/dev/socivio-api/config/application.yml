@@ -16,6 +16,9 @@ spring:
     name: Social Network Application
   main:
     allow-bean-definition-overriding: true
+  graphql:
+    websocket:
+      path: /graphql
 
 server:
   port: 8080
