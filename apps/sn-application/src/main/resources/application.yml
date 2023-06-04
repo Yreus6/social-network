@@ -45,7 +45,7 @@ okta:
   oauth2:
     issuer: https://login.dev4fun.online/oauth2/default
   client:
-    token: 00p7rbQB1nbndrnJYFGEUJVjCV8OKbPo_OjgVnTczo
+    token: 00zyG5Q8smejzTJSH6MAOF50DGt5AVVYjnwfRKh1Gp
     org-url: https://login.dev4fun.online
 
 logging:
