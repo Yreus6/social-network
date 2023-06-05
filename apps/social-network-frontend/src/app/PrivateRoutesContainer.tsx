@@ -1,15 +1,56 @@
 import React from 'react';
-import { Switch } from 'react-router-dom';
+import { Route, Switch } from 'react-router-dom';
 import { PrivateRoute } from '@sn-htc/social-network-frontend/components-routes';
 import { AUTHORITIES } from '@sn-htc/social-network-frontend/config-constants';
-import Protected from './Protected';
+import { Friends, Page, Profile, Settings } from '@sn-htc/social-network-frontend/feature-user';
+import { useGetUserFromOktaQuery } from '@sn-htc/social-network-frontend/data-access-user';
+import { MDBSpinner } from 'mdb-react-ui-kit';
+import { useOktaAuth } from '@okta/okta-react';
 
 const PrivateRoutesContainer = () => {
+  const { authState } = useOktaAuth();
+  const { data, isLoading, error } = useGetUserFromOktaQuery();
+
+  if (error && authState && authState.isAuthenticated) {
+    return (
+      <Page>
+        <div className='d-flex justify-content-center align-items-center vh-100'>
+          Oops! Something went wrong.
+        </div>
+      </Page>
+    );
+  }
+
+  if (isLoading && authState && authState.isAuthenticated) {
+    return (
+      <Page>
+        <div className='d-flex justify-content-center align-items-center vh-100'>
+          <MDBSpinner role='status'>
+            <span className='visually-hidden'>Loading...</span>
+          </MDBSpinner>
+        </div>
+      </Page>
+    );
+  }
+
   return (
     <Switch>
-      <PrivateRoute exact path='/protected' hasAnyAuthorities={[AUTHORITIES.ADMIN]}>
-        <Protected />
+      <PrivateRoute exact path='/settings' hasAnyAuthorities={[AUTHORITIES.USER]}>
+        <Page>
+          {data?.getCurrentUser ? <Settings user={data.getCurrentUser} /> : <div />}
+        </Page>
       </PrivateRoute>
+      <PrivateRoute exact path='/profile' hasAnyAuthorities={[AUTHORITIES.USER]}>
+        <Page>
+          {data?.getCurrentUser ? <Profile user={data.getCurrentUser} /> : <div />}
+        </Page>
+      </PrivateRoute>
+      <PrivateRoute exact path='/friends' hasAnyAuthorities={[AUTHORITIES.USER]}>
+        <Page>
+          {data?.getCurrentUser ? <Friends user={data.getCurrentUser} /> : <div />}
+        </Page>
+      </PrivateRoute>
+      <Route path='*' render={() => <h1>Not Found</h1>} />
     </Switch>
   );
 };

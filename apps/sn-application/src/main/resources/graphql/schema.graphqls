@@ -1,7 +1,0 @@
-type Query {
-    greeting: String
-}
-
-type Subscription {
-    greeting: Int
-}

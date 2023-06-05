@@ -1,0 +1,9 @@
+spring:
+  graphql:
+    schema:
+      locations:
+        - classpath:/graphql/shared/
+        - classpath:/graphql/user/
+        - classpath:/graphql/seed/
+  main:
+    allow-bean-definition-overriding: true

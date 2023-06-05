@@ -1,0 +1,9 @@
+mutation EditPhoneForUser($userId: ID!, $phoneInput: PhoneInput!) {
+    editPhone(userId: $userId, phoneInput: $phoneInput) {
+        id
+        phoneNumber {
+            phone
+            mode
+        }
+    }
+}

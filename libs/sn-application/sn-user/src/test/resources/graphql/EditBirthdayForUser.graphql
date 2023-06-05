@@ -1,0 +1,9 @@
+mutation EditBirthdayForUser($userId: ID!, $birthdayInput: BirthdayInput!) {
+    editBirthday(userId: $userId, birthdayInput: $birthdayInput) {
+        id
+        birthday {
+            birthdate
+            mode
+        }
+    }
+}

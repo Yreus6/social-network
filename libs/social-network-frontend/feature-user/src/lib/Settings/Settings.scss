@@ -1,0 +1,38 @@
+.setting {
+  .setting-title, .mfa-title {
+    font-size: 18px;
+  }
+
+  .mfa-description {
+    font-size: 14px;
+    font-weight: 300;
+  }
+
+  .mfa-link {
+    text-decoration: underline;
+    cursor: pointer;
+  }
+
+  .setting-card {
+    border: 1px solid #DDDEDF;
+    background: #FFFFFF;
+    margin-top: 1.5rem;
+    box-shadow: 0 10px 40px -24px rgba(75, 78, 83, 0.4);
+    border-radius: 5px;
+  }
+
+  .setting-main {
+    border-left: 1px solid rgba(82, 85, 90, 0.6);
+  }
+
+  .setting-nav {
+    .nav-link {
+      padding: 4px 8px;
+      margin: 10px;
+
+      &:hover {
+        background-color: initial;
+      }
+    }
+  }
+}

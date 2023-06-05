@@ -42,11 +42,13 @@ export const OktaSignInWidget = ({ config, onSuccess, onError }) => {
         }
       } else {
         const backLink = widgetRef.current?.querySelector('.auth-footer .link');
-        backLink?.addEventListener('click', (e) => {
-          e.preventDefault();
-          e.stopPropagation();
-          history.push('/signin');
-        });
+        if (backLink?.innerHTML.includes('sign in')) {
+          backLink?.addEventListener('click', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            history.push('/signin');
+          });
+        }
       }
     });
 

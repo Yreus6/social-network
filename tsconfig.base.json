@@ -32,11 +32,32 @@
       "@sn-htc/social-network-frontend/data-access-home": [
         "libs/social-network-frontend/data-access-home/src/index.ts"
       ],
+      "@sn-htc/social-network-frontend/data-access-user": [
+        "libs/social-network-frontend/data-access-user/src/index.ts"
+      ],
       "@sn-htc/social-network-frontend/feature-auth": [
         "libs/social-network-frontend/feature-auth/src/index.ts"
       ],
       "@sn-htc/social-network-frontend/feature-home": [
         "libs/social-network-frontend/feature-home/src/index.ts"
+      ],
+      "@sn-htc/social-network-frontend/feature-user": [
+        "libs/social-network-frontend/feature-user/src/index.ts"
+      ],
+      "@sn-htc/social-network-frontend/ui-cards": [
+        "libs/social-network-frontend/ui-cards/src/index.ts"
+      ],
+      "@sn-htc/social-network-frontend/ui-crossbar": [
+        "libs/social-network-frontend/ui-crossbar/src/index.ts"
+      ],
+      "@sn-htc/social-network-frontend/ui-dropdowns": [
+        "libs/social-network-frontend/ui-dropdowns/src/index.ts"
+      ],
+      "@sn-htc/social-network-frontend/ui-form": [
+        "libs/social-network-frontend/ui-form/src/index.ts"
+      ],
+      "@sn-htc/social-network-frontend/ui-inputs": [
+        "libs/social-network-frontend/ui-inputs/src/index.ts"
       ],
       "@sn-htc/social-network-frontend/utils-testing": [
         "libs/social-network-frontend/utils-testing/src/index.ts"

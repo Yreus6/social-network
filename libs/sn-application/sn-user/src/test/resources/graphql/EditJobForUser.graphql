@@ -1,0 +1,15 @@
+mutation EditJobForUser($userId: ID!, $jobId: ID!, $jobInput: JobInput!) {
+    editJob(userId: $userId, jobId: $jobId, jobInput: $jobInput) {
+        id
+        company
+        position
+        city
+        description
+        isCurrentWork
+        dateRange {
+            fromDate
+            toDate
+        }
+        mode
+    }
+}

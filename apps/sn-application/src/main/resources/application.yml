@@ -23,6 +23,20 @@ spring:
     cors:
       allowed-origins: http://localhost:4200
       allowed-methods: '*'
+    schema:
+      locations:
+        - classpath:/graphql/shared/
+        - classpath:/graphql/user/
+        - classpath:/graphql/seed/
+
+  neo4j:
+    uri: neo4j+s://c805f4ee.databases.neo4j.io
+    authentication:
+      username: neo4j
+      password: byZfDFOcpSwASwKUCo8n5hyyUCR5SJCu3RxCS7ninkM
+  data:
+    neo4j:
+      database: neo4j
 
 server:
   port: 8080
@@ -30,7 +44,11 @@ server:
 okta:
   oauth2:
     issuer: https://login.dev4fun.online/oauth2/default
+  client:
+    token: 00zyG5Q8smejzTJSH6MAOF50DGt5AVVYjnwfRKh1Gp
+    org-url: https://login.dev4fun.online
 
 logging:
   level:
     com.htcompany: DEBUG
+    org.springframework.data.neo4j: DEBUG

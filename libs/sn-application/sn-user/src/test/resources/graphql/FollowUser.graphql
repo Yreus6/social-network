@@ -1,0 +1,5 @@
+mutation FollowUser($userId: ID!, $followedId: ID!) {
+    follow(userId: $userId, followedId: $followedId) {
+        id
+    }
+}

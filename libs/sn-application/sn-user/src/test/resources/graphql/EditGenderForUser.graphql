@@ -1,0 +1,6 @@
+mutation EditGenderForUser($userId: ID!, $gender: String!) {
+    editGender(userId: $userId, gender: $gender) {
+        id
+        gender
+    }
+}

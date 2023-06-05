@@ -1,0 +1,5 @@
+mutation ConfirmFriendRequestForUser($userId: ID!, $targetId: ID!) {
+    confirmFriendRequest(userId: $userId, targetId: $targetId) {
+        id
+    }
+}

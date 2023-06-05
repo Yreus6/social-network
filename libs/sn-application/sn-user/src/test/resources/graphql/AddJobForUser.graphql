@@ -1,0 +1,14 @@
+mutation AddJobForUser($userId: ID!, $jobInput: JobInput!) {
+    addJob(userId: $userId, jobInput: $jobInput) {
+        id
+        company
+        position
+        city
+        description
+        dateRange {
+            fromDate
+            toDate
+        }
+        mode
+    }
+}

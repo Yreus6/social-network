@@ -1,0 +1,20 @@
+query GetFriendRequestsForUser($userId: ID!, $first: Int, $last: Int, $before: String, $after: String) {
+    getFriendRequests(userId: $userId, first: $first, last: $last, before: $before, after: $after) {
+        totalCount
+        pageInfo {
+            hasNextPage
+            hasPreviousPage
+            startCursor
+            endCursor
+        }
+        edges {
+            node {
+                id
+                firstName
+                middleName
+                lastName
+            }
+            cursor
+        }
+    }
+}

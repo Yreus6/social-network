@@ -1,0 +1,11 @@
+mutation EditAddressForUser($userId: ID!, $addressInput: AddressInput!) {
+    editAddress(userId: $userId, addressInput: $addressInput) {
+        id
+        address {
+            city
+            region
+            country
+            mode
+        }
+    }
+}

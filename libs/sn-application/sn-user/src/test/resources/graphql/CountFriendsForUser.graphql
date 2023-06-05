@@ -1,0 +1,3 @@
+query CountFriendsForUser($userId: ID!) {
+    countFriends(userId: $userId)
+}

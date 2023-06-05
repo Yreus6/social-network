@@ -1,5 +1,17 @@
 {
-    "name": "Social Network Schema",
-    "schemaPath": "./src/main/resources/graphql/schema.graphqls",
-    "extensions": {}
+    "name": "Socivio Schema",
+    "projects": {
+        "user": {
+            "includes": [
+                "./src/main/resources/graphql/shared/**",
+                "./src/main/resources/graphql/user/**"
+            ]
+        },
+        "seed": {
+            "includes": [
+                "./src/main/resources/graphql/shared/**",
+                "./src/main/resources/graphql/seed/**"
+            ]
+        }
+    }
 }

@@ -52,9 +52,11 @@
         }
       },
       "tags": [],
-      "implicitDependencies": ["sn-application-common"]
+      "implicitDependencies": [
+        "sn-user"
+      ]
     },
-    "sn-application-common": {
+    "sn-common": {
       "root": "libs/sn-application/sn-common",
       "projectType": "library",
       "sourceRoot": "libs/sn-application/sn-common/src",
@@ -69,7 +71,47 @@
           }
         },
         "test": {
-          "executor": "@jnxplus/nx-boot-gradle:test"
+          "executor": "./tools/executors/gradle-test:test"
+        }
+      },
+      "tags": []
+    },
+    "sn-domain": {
+      "root": "libs/sn-application/sn-domain",
+      "projectType": "library",
+      "sourceRoot": "libs/sn-application/sn-domain/src",
+      "targets": {
+        "build": {
+          "executor": "@jnxplus/nx-boot-gradle:build"
+        },
+        "lint": {
+          "executor": "@jnxplus/nx-boot-gradle:lint",
+          "options": {
+            "linter": "checkstyle"
+          }
+        },
+        "test": {
+          "executor": "./tools/executors/gradle-test:test"
+        }
+      },
+      "tags": []
+    },
+    "sn-user": {
+      "root": "libs/sn-application/sn-user",
+      "projectType": "library",
+      "sourceRoot": "libs/sn-application/sn-user/src",
+      "targets": {
+        "build": {
+          "executor": "@jnxplus/nx-boot-gradle:build"
+        },
+        "lint": {
+          "executor": "@jnxplus/nx-boot-gradle:lint",
+          "options": {
+            "linter": "checkstyle"
+          }
+        },
+        "test": {
+          "executor": "./tools/executors/gradle-test:test"
         }
       },
       "tags": []
@@ -289,6 +331,34 @@
       },
       "tags": []
     },
+    "social-network-frontend-data-access-user": {
+      "root": "libs/social-network-frontend/data-access-user",
+      "sourceRoot": "libs/social-network-frontend/data-access-user/src",
+      "projectType": "library",
+      "tags": [],
+      "targets": {
+        "lint": {
+          "executor": "@nrwl/linter:eslint",
+          "outputs": ["{options.outputFile}"],
+          "options": {
+            "lintFilePatterns": [
+              "libs/social-network-frontend/data-access-user/**/*.{ts,tsx,js,jsx}"
+            ]
+          }
+        },
+        "test": {
+          "executor": "@nrwl/jest:jest",
+          "outputs": [
+            "coverage/libs/social-network-frontend/data-access-user",
+            "build/test-results/jest"
+          ],
+          "options": {
+            "jestConfig": "libs/social-network-frontend/data-access-user/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
     "social-network-frontend-e2e": {
       "root": "apps/social-network-frontend-e2e",
       "sourceRoot": "apps/social-network-frontend-e2e/src",
@@ -384,6 +454,174 @@
         }
       },
       "tags": []
+    },
+    "social-network-frontend-feature-user": {
+      "root": "libs/social-network-frontend/feature-user",
+      "sourceRoot": "libs/social-network-frontend/feature-user/src",
+      "projectType": "library",
+      "tags": [],
+      "targets": {
+        "lint": {
+          "executor": "@nrwl/linter:eslint",
+          "outputs": ["{options.outputFile}"],
+          "options": {
+            "lintFilePatterns": [
+              "libs/social-network-frontend/feature-user/**/*.{ts,tsx,js,jsx}"
+            ]
+          }
+        },
+        "test": {
+          "executor": "@nrwl/jest:jest",
+          "outputs": [
+            "coverage/libs/social-network-frontend/feature-user",
+            "build/test-results/jest"
+          ],
+          "options": {
+            "jestConfig": "libs/social-network-frontend/feature-user/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
+    "social-network-frontend-ui-cards": {
+      "root": "libs/social-network-frontend/ui-cards",
+      "sourceRoot": "libs/social-network-frontend/ui-cards/src",
+      "projectType": "library",
+      "tags": [],
+      "targets": {
+        "lint": {
+          "executor": "@nrwl/linter:eslint",
+          "outputs": ["{options.outputFile}"],
+          "options": {
+            "lintFilePatterns": [
+              "libs/social-network-frontend/ui-cards/**/*.{ts,tsx,js,jsx}"
+            ]
+          }
+        },
+        "test": {
+          "executor": "@nrwl/jest:jest",
+          "outputs": [
+            "coverage/libs/social-network-frontend/ui-cards",
+            "build/test-results/jest"
+          ],
+          "options": {
+            "jestConfig": "libs/social-network-frontend/ui-cards/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
+    "social-network-frontend-ui-crossbar": {
+      "root": "libs/social-network-frontend/ui-crossbar",
+      "sourceRoot": "libs/social-network-frontend/ui-crossbar/src",
+      "projectType": "library",
+      "tags": [],
+      "targets": {
+        "lint": {
+          "executor": "@nrwl/linter:eslint",
+          "outputs": ["{options.outputFile}"],
+          "options": {
+            "lintFilePatterns": [
+              "libs/social-network-frontend/ui-crossbar/**/*.{ts,tsx,js,jsx}"
+            ]
+          }
+        },
+        "test": {
+          "executor": "@nrwl/jest:jest",
+          "outputs": [
+            "coverage/libs/social-network-frontend/ui-crossbar",
+            "build/test-results/jest"
+          ],
+          "options": {
+            "jestConfig": "libs/social-network-frontend/ui-crossbar/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
+    "social-network-frontend-ui-dropdowns": {
+      "root": "libs/social-network-frontend/ui-dropdowns",
+      "sourceRoot": "libs/social-network-frontend/ui-dropdowns/src",
+      "projectType": "library",
+      "tags": [],
+      "targets": {
+        "lint": {
+          "executor": "@nrwl/linter:eslint",
+          "outputs": ["{options.outputFile}"],
+          "options": {
+            "lintFilePatterns": [
+              "libs/social-network-frontend/ui-dropdowns/**/*.{ts,tsx,js,jsx}"
+            ]
+          }
+        },
+        "test": {
+          "executor": "@nrwl/jest:jest",
+          "outputs": [
+            "coverage/libs/social-network-frontend/ui-dropdowns",
+            "build/test-results/jest"
+          ],
+          "options": {
+            "jestConfig": "libs/social-network-frontend/ui-dropdowns/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
+    "social-network-frontend-ui-form": {
+      "root": "libs/social-network-frontend/ui-form",
+      "sourceRoot": "libs/social-network-frontend/ui-form/src",
+      "projectType": "library",
+      "tags": [],
+      "targets": {
+        "lint": {
+          "executor": "@nrwl/linter:eslint",
+          "outputs": ["{options.outputFile}"],
+          "options": {
+            "lintFilePatterns": [
+              "libs/social-network-frontend/ui-form/**/*.{ts,tsx,js,jsx}"
+            ]
+          }
+        },
+        "test": {
+          "executor": "@nrwl/jest:jest",
+          "outputs": [
+            "coverage/libs/social-network-frontend/ui-form",
+            "build/test-results/jest"
+          ],
+          "options": {
+            "jestConfig": "libs/social-network-frontend/ui-form/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
+    "social-network-frontend-ui-inputs": {
+      "root": "libs/social-network-frontend/ui-inputs",
+      "sourceRoot": "libs/social-network-frontend/ui-inputs/src",
+      "projectType": "library",
+      "tags": [],
+      "targets": {
+        "lint": {
+          "executor": "@nrwl/linter:eslint",
+          "outputs": ["{options.outputFile}"],
+          "options": {
+            "lintFilePatterns": [
+              "libs/social-network-frontend/ui-inputs/**/*.{ts,tsx,js,jsx}"
+            ]
+          }
+        },
+        "test": {
+          "executor": "@nrwl/jest:jest",
+          "outputs": [
+            "coverage/libs/social-network-frontend/ui-inputs",
+            "build/test-results/jest"
+          ],
+          "options": {
+            "jestConfig": "libs/social-network-frontend/ui-inputs/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
     },
     "social-network-frontend-utils-testing": {
       "root": "libs/social-network-frontend/utils-testing",

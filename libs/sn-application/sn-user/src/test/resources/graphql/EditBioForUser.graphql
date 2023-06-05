@@ -1,0 +1,6 @@
+mutation EditBioForUser($userId: ID!, $biography: String!) {
+    editBio(userId: $userId, biography: $biography) {
+        id
+        biography
+    }
+}

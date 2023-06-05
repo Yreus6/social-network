@@ -1,0 +1,5 @@
+mutation RemoveEducationForUser($userId: ID!, $educationId: ID!) {
+    removeEducation(userId: $userId, educationId: $educationId) {
+        id
+    }
+}

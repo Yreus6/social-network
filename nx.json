@@ -18,8 +18,7 @@
           "build",
           "lint",
           "test",
-          "e2e",
-          "e2e-ci"
+          "e2e"
         ]
       }
     }

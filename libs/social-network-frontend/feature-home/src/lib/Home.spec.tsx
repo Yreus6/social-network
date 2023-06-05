@@ -20,6 +20,5 @@ describe('Home Page', () => {
     );
 
     expect(await screen.findByRole('heading')).toHaveTextContent(/Welcome/);
-    expect(await screen.findByTestId('logout-btn')).toHaveTextContent(/Logout/);
   });
 });

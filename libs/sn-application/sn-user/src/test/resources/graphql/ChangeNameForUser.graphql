@@ -1,0 +1,8 @@
+mutation ChangeNameForUser($userId: ID!, $nameInput: NameInput!) {
+    changeName(userId: $userId, nameInput: $nameInput) {
+        id
+        firstName
+        middleName
+        lastName
+    }
+}

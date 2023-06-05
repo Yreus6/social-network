@@ -1,0 +1,3 @@
+query CountMutualFriendsForUsers($userId: ID!, $otherId: ID!) {
+    countMutualFriends(userId: $userId, otherId: $otherId)
+}

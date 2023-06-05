@@ -7,4 +7,8 @@ dependencies {
     integrationTestReportData project(':apps:sn-application')
     testReportData project(':libs:sn-application:sn-common')
     integrationTestReportData project(':libs:sn-application:sn-common')
+    testReportData project(':libs:sn-application:sn-domain')
+    integrationTestReportData project(':libs:sn-application:sn-domain')
+    testReportData project(':libs:sn-application:sn-user')
+    integrationTestReportData project(':libs:sn-application:sn-user')
 }

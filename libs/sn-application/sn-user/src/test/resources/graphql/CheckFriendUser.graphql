@@ -1,0 +1,3 @@
+query CheckFriendUser($userId: ID!, $otherId: ID!) {
+    checkFriend(userId: $userId, otherId: $otherId)
+}

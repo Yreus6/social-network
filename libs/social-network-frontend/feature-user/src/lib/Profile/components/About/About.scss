@@ -1,0 +1,28 @@
+.add-info-profile {
+  font-size: 16px;
+  line-height: 18px;
+  cursor: pointer;
+
+  &:hover > span {
+    text-decoration: underline;
+  }
+}
+
+.about-nav {
+  .nav-link {
+    padding: 4px 8px;
+    margin: 10px;
+
+    &:hover {
+      background-color: initial;
+    }
+  }
+}
+
+.about-header {
+  font-size: 22px;
+}
+
+.about-content-header {
+  font-size: 18px;
+}

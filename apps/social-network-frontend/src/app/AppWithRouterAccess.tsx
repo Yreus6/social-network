@@ -16,6 +16,7 @@ const AppWithRouterAccess = () => {
 
   const restoreOriginalUri = async (_oktaAuth: OktaAuth, originalUri: string) => {
     history.replace(toRelativeUrl(originalUri || '/', window.location.origin));
+    history.go(0);
   };
 
   return (
@@ -29,6 +30,7 @@ const AppWithRouterAccess = () => {
         <Route path='/signin' render={() => <Login config={oktaSignInConfig} />} />
         <Route path='/signin/callback' component={LoginCallback} />
         <PrivateRoutesContainer />
+        <Route path='*' render={() => <h1>Not Found</h1>} />
       </Switch>
     </Security>
   );

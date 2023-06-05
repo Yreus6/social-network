@@ -1,0 +1,15 @@
+query GetJobsForUser($userId: ID!) {
+    getJobs(userId: $userId) {
+        id
+        company
+        position
+        city
+        description
+        isCurrentWork
+        dateRange {
+            fromDate
+            toDate
+        }
+        mode
+    }
+}

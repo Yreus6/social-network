@@ -1,0 +1,5 @@
+mutation DeclineFriendRequestForUser($userId: ID!, $targetId: ID!) {
+    declineFriendRequest(userId: $userId, targetId: $targetId) {
+        id
+    }
+}
