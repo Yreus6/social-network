@@ -39,11 +39,6 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
 
-      - name: Install apollo rover
-        run: |
-          curl -sSL https://rover.apollo.dev/nix/latest | sh
-          echo "$HOME/.rover/bin" >> $GITHUB_PATH
-
       - name: Deploy to argocd
         uses: ./.github/deploy-argocd
         with:
@@ -53,9 +48,3 @@ jobs:
           server: ${{ secrets.ARGOCD_SERVER }}
           username: ${{ secrets.ARGOCD_USERNAME }}
           password: ${{ secrets.ARGOCD_PASSWORD }}
-
-      - name: Upload GraphQL Schema
-        env:
-          APOLLO_KEY: ${{ secrets.APOLLO_KEY }}
-        run: |
-          rover graph publish Socivio-Graph@current --schema ./apps/sn-application/src/main/resources/graphql/schema.graphqls

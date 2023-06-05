@@ -19,11 +19,11 @@ spring:
   graphql:
     websocket:
       path: /graphql
-  schema:
-    locations:
-      - classpath:/graphql/shared/
-      - classpath:/graphql/greeting/
-      - classpath:/graphql/user/
+    schema:
+      locations:
+        - classpath:/graphql/shared/
+        - classpath:/graphql/greeting/
+        - classpath:/graphql/user/
   neo4j:
     uri: neo4j+s://c805f4ee.databases.neo4j.io
     authentication:

@@ -39,7 +39,7 @@ runs:
         file: ./apps/sn-application/Dockerfile
         push: true
         tags: wizard2020abc/social-network-backend:${{ inputs.version }}
-        build-args: JAR_FILE=./apps/sn-application/build/libs/*.jar
+        build-args: JAR_FILE=./apps/sn-application/build/libs/sn-application-0.0.1-SNAPSHOT.jar
 
     - name: Build and push Socivio UI image
       uses: docker/build-push-action@v4
