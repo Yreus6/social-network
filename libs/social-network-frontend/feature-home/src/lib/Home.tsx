@@ -33,7 +33,7 @@ export const Home = () => {
       {authState.isAuthenticated && userInfo &&
         <Page>
           <div className='d-flex justify-content-center align-items-center'>
-            <h1 className='me-2'>Welcome {userInfo.name}</h1>
+            <h1 className='me-2'>Hello {userInfo.name}</h1>
           </div>
         </Page>
       }
