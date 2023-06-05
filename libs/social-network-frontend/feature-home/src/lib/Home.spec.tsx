@@ -19,6 +19,6 @@ describe('Home Page', () => {
       { isAuthenticated: true }
     );
 
-    expect(await screen.findByRole('heading')).toHaveTextContent(/Welcome/);
+    expect(await screen.findByRole('heading')).toHaveTextContent(/Hello/);
   });
 });
