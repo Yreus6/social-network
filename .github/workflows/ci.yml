@@ -41,7 +41,7 @@ jobs:
           OKTA_DOMAIN: ${{ secrets.OKTA_DOMAIN }}
           OKTA_CLIENTID: ${{ secrets.OKTA_CLIENTID }}
           PERCY_TOKEN: ${{ secrets.PERCY_TOKEN }}
-          API_URL: http://127.0.0.1:8080
+          API_URL: http://localhost:8080
         run: yarn nx run-many --target=e2e-ci --all --parallel
 
       - name: Merge Jest Reports

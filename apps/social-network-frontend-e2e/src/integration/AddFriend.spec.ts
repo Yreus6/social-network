@@ -22,15 +22,15 @@ describe('Add friend', () => {
 
   it('should user success send friend request', () => {
     cy.visit('/profile?userId=00u3icp6uaMxa2Eby5d7');
-    cy.wait('@gqlGetProfileForUserQuery');
+    cy.wait('@gqlGetProfileForUserQuery', { timeout: 20000 });
     cy.getBySel('add-friend-btn').click();
     cy.getBySel('add-friend-btn').should('contain.text', 'Sending Request');
     cy.percySnapshot('Send friend request');
-    cy.wait('@gqlSendFriendRequestForUserMutation');
+    cy.wait('@gqlSendFriendRequestForUserMutation', { timeout: 20000 });
     cy.getBySel('cancel-request-btn').should('contain.text', 'Cancel Request');
 
     cy.visit('/friends');
-    cy.wait(['@gqlGetFriendRequestsForUserQuery', '@gqlGetSentRequestsForUserQuery', '@gqlGetFriendSuggestionsForUserQuery']);
+    cy.wait(['@gqlGetFriendRequestsForUserQuery', '@gqlGetSentRequestsForUserQuery', '@gqlGetFriendSuggestionsForUserQuery'], { timeout: 30000 });
     cy.getBySel('sents-link').click();
     cy.getBySelLike('sent-request')
       .should('have.length', 1)

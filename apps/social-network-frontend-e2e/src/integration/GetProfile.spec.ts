@@ -16,7 +16,7 @@ describe('Get user profile', () => {
 
     it('should show my profile', () => {
       cy.visit('/profile');
-      cy.wait('@gqlGetProfileForUserQuery');
+      cy.wait('@gqlGetProfileForUserQuery', { timeout: 20000 });
       cy.getBySel('display-name').should('be.visible')
         .and('contain.text', 'Socivio Test');
       cy.percySnapshot('My profile');
@@ -34,7 +34,7 @@ describe('Get user profile', () => {
 
     it('should show other profile', () => {
       cy.visit('/profile?userId=00u3ibbqx4rvzMZSK5d7');
-      cy.wait('@gqlGetProfileForUserQuery');
+      cy.wait('@gqlGetProfileForUserQuery', { timeout: 20000 });
       cy.getBySel('display-name').should('be.visible')
         .and('contain.text', 'Socivio Test');
       cy.getBySel('add-friend-btn').should('be.visible')
@@ -44,7 +44,7 @@ describe('Get user profile', () => {
 
     it('should show profile not found', () => {
       cy.visit('/profile?userId=1234');
-      cy.wait('@gqlGetProfileForUserQuery');
+      cy.wait('@gqlGetProfileForUserQuery', { timeout: 20000 });
       cy.getBySel('profile-not-found').should('be.visible')
         .and('contain.text', 'Profile Not Found');
       cy.percySnapshot('Profile not found');

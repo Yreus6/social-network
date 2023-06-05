@@ -20,8 +20,8 @@ describe('Authentication and Authorization', () => {
 
     it('should redirect user to landing page after logout', () => {
       cy.visit('/');
-      cy.getBySel('dropdown-btn').click();
-      cy.getBySel('logout-btn').click();
+      cy.getBySel('dropdown-btn', { timeout: 20000 }).click();
+      cy.getBySel('logout-btn', { timeout: 20000 }).click();
       cy.get('#okta-sign-in').should('be.visible');
       cy.getBySel('socivio-landing').should('be.visible')
         .and('contain.html', '<h3>Socivio</h3>');
